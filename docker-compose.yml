@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    container_name: issue-front
+    # 対話モード
+    tty: true
+    # Dockerfileの場所
+    build:
+        context: ./
+        dockerfile: ./app/Dockerfile
+    working_dir: /home
+    # ホストOSとコンテナ内でソースコードを共有する
+    # cachedで高速化
+    volumes:
+      - ./:/home:cached
+    # コンテナ内部の3000を外部から3000でアクセスする
+    ports:
+      - 3000:3000
+    environment:
+      - HOST=0.0.0.0
