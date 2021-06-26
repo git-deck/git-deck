@@ -1,20 +1,41 @@
-version: '3'
+version: "3"
 services:
-  app:
+  vue:
     container_name: issue-front
     # 対話モード
     tty: true
     # Dockerfileの場所
     build:
-        context: ./
-        dockerfile: ./app/Dockerfile
+      context: ./
+      dockerfile: ./frontend/Dockerfile
     working_dir: /home
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
-      - ./:/home:cached
+      - ./frontend:/home:cached
     # コンテナ内部の3000を外部から3000でアクセスする
     ports:
       - 3000:3000
     environment:
       - HOST=0.0.0.0
+
+  flask:
+    container_name: issue-backend
+    # 対話モード
+    tty: true
+    # Dockerfileの場所
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    working_dir: /home
+    # ホストOSとコンテナ内でソースコードを共有する
+    # cachedで高速化
+    volumes:
+      - ./backend:/home:cached
+    # コンテナ内部の5000を外部から5000でアクセスする
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app
+    command: flask run --host 0.0.0.0 --port 5000
