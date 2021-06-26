@@ -14,6 +14,7 @@ env = dotenv_values(".env")
 app = Flask(__name__)
 if "FLASK_SECRET_KEY" in env:
     app.secret_key = env["FLASK_SECRET_KEY"]
+app.config['JSON_AS_ASCII'] = False
 
 
 @app.route('/')
