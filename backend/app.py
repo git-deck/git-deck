@@ -12,12 +12,14 @@ from dotenv import dotenv_values
 env = dotenv_values(".env")
 
 app = Flask(__name__)
-app.secret_key = env["FLASK_SECRET_KEY"]
-app.config['JSON_AS_ASCII'] = False
+if "FLASK_SECRET_KEY" in env:
+    app.secret_key = env["FLASK_SECRET_KEY"]
+
 
 @app.route('/')
 def hello():
     return 'hello'
+
 
 @app.route('/oauth')
 def oauth():
