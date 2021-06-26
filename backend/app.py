@@ -1,6 +1,6 @@
 import requests
 from urllib.parse import parse_qs
-from flask import Flask, request, redirect, session, url_for
+from flask import Flask, request, redirect, session, url_for, jsonify
 from github import Github
 from dotenv import dotenv_values
 
