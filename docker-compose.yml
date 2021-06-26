@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   vue:
     container_name: issue-front
@@ -6,8 +6,8 @@ services:
     tty: true
     # Dockerfileの場所
     build:
-        context: ./
-        dockerfile: ./frontend/app/Dockerfile
+      context: ./
+      dockerfile: ./frontend/Dockerfile
     working_dir: /home
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
@@ -25,8 +25,8 @@ services:
     tty: true
     # Dockerfileの場所
     build:
-        context: ./
-        dockerfile: ./backend/Dockerfile
+      context: ./
+      dockerfile: ./backend/Dockerfile
     working_dir: /home
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
