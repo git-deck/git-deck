@@ -1,0 +1,30 @@
+// 左端のバー
+.sidebar {
+    flex: 0 0 auto;
+    background-color: $git-black;
+    width: 60px;
+    height: 100%;
+    
+    .material-icons {
+        color: white;
+        font-size: 50px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 0px;
+        width: 100%;
+        border: none;
+        background: transparent;
+    }
+
+    img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        display: block;
+        margin: 0 auto;
+    }
+
+}

@@ -1,0 +1,74 @@
+// タイムライン
+.column {
+    flex: 0 0 auto;
+    height: 100vh;
+    width: 320px;
+    border-right: 3px solid;
+    border-color: $border;
+    display: flex;
+    flex-direction: column;
+    
+    // ヘッダー
+    & > header {
+        border-bottom: 1px solid;
+        border-color: $border;
+        min-height: 50px;
+        max-height: 70px;
+        display: flex;
+        padding: 10px;
+        
+        button {
+            border: none;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0 2.5px;
+            background: transparent;
+        }
+        
+        .repoicon{
+            font-size: 16px;
+            padding-top: 1.5px;
+            padding-right: 3px;
+            color: gray
+        }
+
+        .chat {
+            font-size: 20px;
+            padding-top: 3px;
+            color: gray;
+        }
+
+        .tune {
+            font-size: 20px;
+            padding-top: 2px;
+            color: gray;
+        }
+
+        .title {
+            flex: 1;
+            // 2行を超えるタイトルは…で省略
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            word-break:break-all;
+            color: $git-blue;
+            & > .reponame{
+                font-weight: bold;
+            }
+        }
+    }
+
+    & > .settings {
+        height: 100px;
+        border-bottom: 1px solid;
+        border-color: $border;
+    }
+
+    // 投稿部分
+    & > main {
+        flex: 1;
+        overflow-y: scroll;
+    }
+}
