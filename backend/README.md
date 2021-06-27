@@ -22,17 +22,12 @@ docker compose up
 
 ## データベースの設定
 
-1. dbコンテナを起動する. 完全に起動が完了してから2.に進んでください
-```
-docker compose up db
-```
-
-2. flaskコンテナを起動する.
+1. flaskコンテナを起動する. 勝手にdbコンテナも立ち上がる.
 ```
 docker compose up flask
 ```
 
-3. flaskコンテナに接続し, データベースのmigrationを行う.
+2. flaskコンテナに接続し, データベースのmigrationを行う.
 ```
 docker exec -it issue-backend /bin/bash
 flask db init
