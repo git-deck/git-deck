@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    <Sidebar />
-    <Timeline />
-  </div>
+  <div class="sidebar"></div>
 </template>
 
 <script lang="ts">

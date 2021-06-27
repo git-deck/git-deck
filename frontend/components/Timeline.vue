@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <Sidebar />
-    <Timeline />
+  <div class="column">
+    <div class="header">title</div>
+    <div>main</div>
   </div>
 </template>
 
