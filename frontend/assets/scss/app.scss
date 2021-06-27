@@ -1,1 +1,7 @@
+// 共通で使うものたち
 @import 'common';
+@import 'variables';
+
+// scssファイルを増やしたらここに追加
+@import 'sidebar';
+@import 'timeline';
