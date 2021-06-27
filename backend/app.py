@@ -134,7 +134,7 @@ def labels(owner, repo):
         gql("""
         query($owner:String!, $repo:String!) {
             repository(owner: $owner, name: $repo) {
-                labels(last:100) {
+                labels(first:100) {
                     edges {
                         node {
                             name
@@ -156,18 +156,17 @@ def labels(owner, repo):
 
 
 # 指定したリポジトリのタイムライン取得
-# GET /timeline/<owner>/<repo>
-# x GET /timeline/<owner>/<repo>?label=bug,documentation
-# x GET /timeline/<owner>/<repo>?since=2018-06-29
-# x label: labelでOR検索
-# x since: updated_atが since以降のものだけとってくる
+#  GET /timeline/<owner>/<repo>
+#  GET /timeline/<owner>/<repo>?label=bug,documentation
+# クエリパラメータ:
+#  label: labelでOR検索. 現状Ideaに対応するlabelがないので, Ideaは弾かれない.
+# 備考
+#  OPENなIssueだけ取ってくる仕様にした.
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
-    #since = datetime.datetime.strptime(request.args['since'], '%Y-%m-%d') if 'since' in request.args else NotSet
-    #labels = request.args['label'].split(',') if 'label' in request.args else None
-    #issues(last:100, filterBy: {labels: ["bug","documentation"], states:OPEN, since: "2021-01-09T18:55:30.000Z"}) {
+    labels = request.args['label'].split(',') if 'label' in request.args else None
 
-    issue_and_comments = get_issue_and_comments(owner, repo)
+    issue_and_comments = get_issue_and_comments(owner, repo, labels)
     ideas = get_ideas(owner, repo)
 
     timeline = issue_and_comments + ideas
@@ -176,12 +175,18 @@ def timeline(owner, repo):
     return jsonify(list(reversed(sorted(timeline, key=lambda element: element['updatedAt']))))
 
 
-def get_issue_and_comments(owner, repo):
+def get_issue_and_comments(owner, repo, labels):
+    filt = {
+        'states': 'OPEN',
+    }
+    if labels is not None:
+        filt['labels'] = labels
+
     issues = github_client().execute(
         gql("""
-        query($owner:String!, $repo:String!) {
+        query($owner:String!, $repo:String!, $filter:IssueFilters!) {
             repository(owner: $owner, name: $repo) {
-                issues(last:100) {
+                issues(first:100, filterBy: $filter) {
                     edges {
                         node {
                             number
@@ -195,7 +200,7 @@ def get_issue_and_comments(owner, repo):
                                 url
                                 avatarUrl
                             }
-                            assignees(last:100) {
+                            assignees(first:100) {
                                 edges {
                                     node {
                                         login
@@ -204,7 +209,7 @@ def get_issue_and_comments(owner, repo):
                                     }
                                 }
                             }
-                            labels(last:100) {
+                            labels(first:100) {
                                 edges {
                                     node {
                                         name
@@ -212,7 +217,7 @@ def get_issue_and_comments(owner, repo):
                                     }
                                 }
                             }
-                            comments(last:100) {
+                            comments(first:100) {
                                 edges {
                                     node {
                                         body
@@ -235,7 +240,8 @@ def get_issue_and_comments(owner, repo):
         """),
         variable_values={
             "owner": owner,
-            "repo": repo 
+            "repo": repo,
+            "filter": filt
         }
     )
 
