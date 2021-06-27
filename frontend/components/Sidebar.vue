@@ -1,6 +1,9 @@
 <template>
   <div class="sidebar">
-    <span class="material-icons"> add </span>
+    <button><span class="material-icons"> add </span></button>
+    <button>
+      <span class="material-icons"> account_circle </span>
+    </button>
   </div>
 </template>
 
