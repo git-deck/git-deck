@@ -2,7 +2,7 @@
   <div class="sidebar">
     <button><span class="material-icons"> add </span></button>
     <button>
-      <span class="material-icons"> account_circle </span>
+      <img src="https://github.com/knknk98.png" alt="icon" />
     </button>
   </div>
 </template>
