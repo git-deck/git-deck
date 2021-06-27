@@ -39,3 +39,25 @@ services:
       - FLASK_ENV=development
       - FLASK_APP=app
     command: flask run --host 0.0.0.0 --port 5000
+    links:
+      - mysql
+
+  mysql:
+    container_name: issue-mysql
+    image: mysql
+    platform: linux/x86_64
+    # Dockerfileの場所
+    #build:
+    #  context: ./
+    #  dockerfile: ./mysql/Dockerfile
+    #working_dir: /home
+    # ホストOSとコンテナ内でソースコードを共有する
+    # cachedで高速化
+    volumes:
+      - ./mysql/data:/var/lib/mysql # データの永続化
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d  # 初期化時に実行するSQL
+    # コンテナ内部の3000を外部から3000でアクセスする
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
