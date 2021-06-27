@@ -135,3 +135,4 @@ dist
 .DS_Store
 __pycache__
 db/data
+backend/migrations

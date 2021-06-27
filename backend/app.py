@@ -8,6 +8,7 @@ import datetime
 import json
 
 from database import init_db
+from model import Idea
 
 
 # .env ファイルから環境変数を取得する
@@ -22,7 +23,7 @@ if "FLASK_SECRET_KEY" in env:
 app.config['JSON_AS_ASCII'] = False
 
 
-db = init_db(app)
+init_db(app)
 
 
 @app.route('/')
@@ -166,7 +167,17 @@ def timeline(owner, repo):
     #labels = request.args['label'].split(',') if 'label' in request.args else None
     #issues(last:100, filterBy: {labels: ["bug","documentation"], states:OPEN, since: "2021-01-09T18:55:30.000Z"}) {
 
-    resp = github_client().execute(
+    issue_and_comments = get_issue_and_comments(owner, repo)
+    ideas = get_ideas(owner, repo)
+
+    timeline = issue_and_comments + ideas
+
+    # updated_at が新しい順に並べる
+    return jsonify(list(reversed(sorted(timeline, key=lambda element: element['updatedAt']))))
+
+
+def get_issue_and_comments(owner, repo):
+    issues = github_client().execute(
         gql("""
         query($owner:String!, $repo:String!) {
             repository(owner: $owner, name: $repo) {
@@ -227,15 +238,44 @@ def timeline(owner, repo):
             "repo": repo 
         }
     )
-    print("resp:", resp)
 
-    timeline = []
-    for issue_node in resp["repository"]["issues"]["edges"]:
-        timeline.append(issue_node["node"])
+    issue_and_comments = []
+
+    for issue_node in issues["repository"]["issues"]["edges"]:
+        issue_and_comments.append(issue_node["node"])
 
         for comment_node in issue_node["node"]["comments"]["edges"]:
-            timeline.append(comment_node["node"])
-        
-    # updated_at が新しい順に並べる
-    print("len:", len(timeline))
-    return jsonify(list(reversed(sorted(timeline, key=lambda tweet: tweet['updatedAt']))))
+            issue_and_comments.append(comment_node["node"])
+
+    return issue_and_comments
+
+
+def get_repo_id(owner, repo):
+    return github_client().execute(
+        gql("""
+        query($owner:String!, $repo:String!) {
+            repository(owner: $owner, name: $repo) {
+                id
+            }
+        }
+        """),
+        variable_values={
+            "owner": owner,
+            "repo": repo 
+        }
+    )["repository"]["id"]
+
+
+def get_ideas(owner, repo):
+    ideas = Idea.query.filter(Idea.repo_id == get_repo_id(owner, repo)).all()
+    return [
+        {
+            'body': idea.body,
+            'author': {
+                'login': idea.author_login,
+                # TODO: 'url': ,
+                # TODO: 'avatarUrl': ,
+            },
+            'createdAt': idea.created_at.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'updatedAt': idea.updated_at.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        } for idea in ideas]
