@@ -1,4 +1,4 @@
-# Guide
+## OAuthの確認方法
 
 1. https://github.com/settings/applications/new でOAuthアプリケーションを登録.
 Authorization callback URLは http://localhost:5000/callback/github に設定すること.
@@ -19,3 +19,23 @@ docker compose up
 5. http://localhost:5000/oauth にアクセスし, 飛ばされたページでAuthorizeする
 
 6. http://localhost:5000/user にリダイレクトされて, Githubのユーザ名が表示されてたらOK
+
+## データベースの設定
+
+1. dbコンテナを起動する. 完全に起動が完了してから2.に進んでください
+```
+docker compose up db
+```
+
+2. flaskコンテナを起動する.
+```
+docker compose up flask
+```
+
+3. flaskコンテナに接続し, データベースのmigrationを行う.
+```
+docker exec -it issue-backend /bin/bash
+flask db init
+flask db migrate
+flask db upgrade
+```
