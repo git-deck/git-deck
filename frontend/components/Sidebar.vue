@@ -1,5 +1,7 @@
 <template>
-  <div class="sidebar"></div>
+  <div class="sidebar">
+    <span class="material-icons"> add </span>
+  </div>
 </template>
 
 <script lang="ts">

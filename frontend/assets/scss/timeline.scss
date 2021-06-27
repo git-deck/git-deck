@@ -5,4 +5,16 @@
     width: 320px;
     border-right: 3px solid;
     border-color: $border;
+    display: flex;
+    flex-direction: column;
+    
+    & > header {
+        border-bottom: 1px solid;
+        border-color: $border;
+    }
+
+    & > main {
+        flex: 1;
+        overflow-y: scroll;
+    }
 }

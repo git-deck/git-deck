@@ -1,7 +1,7 @@
 <template>
   <div class="column">
-    <div class="header">title</div>
-    <div>main</div>
+    <header>title</header>
+    <main>main</main>
   </div>
 </template>
 
