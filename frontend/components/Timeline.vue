@@ -10,14 +10,14 @@
           >sushi-sushi-sushi-sushi-sushi-sushi-sushi-sushi-</a
         ></span
       >
-      <button>
+      <button @click="showModal">
         <span class="material-icons chat"> chat_bubble_outline </span>
       </button>
       <button @click="clickSettings">
         <span class="material-icons tune"> tune </span>
       </button>
     </header>
-
+    <modal name="editor-modal">投稿画面</modal>
     <div v-if="settingOpened" class="settings"></div>
 
     <main>main</main>
@@ -45,6 +45,9 @@ export default Vue.extend({
     // ラベル絞り込みボタンの開閉
     clickSettings() {
       this.settingOpened = !this.settingOpened
+    },
+    showModal() {
+      this.$modal.show('editor-modal')
     },
   },
 })
