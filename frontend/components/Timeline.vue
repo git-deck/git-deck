@@ -1,7 +1,9 @@
 <template>
   <div class="column">
     <header>
-      <span class="material-icons repoicon"> book </span>
+      <span class="repoicon">
+        <Octicon :icon="Octicons.repo" />
+      </span>
       <span class="title"
         ><a class="username" href="https://github.com/knknk98/">knknk98/</a
         ><a class="reponame" href="https://github.com/knknk98/sushi-chat/"
@@ -24,6 +26,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+const { Octicon, Octicons } = require('octicons-vue')
 
-export default Vue.extend({})
+export default Vue.extend({
+  components: { Octicon },
+  data() {
+    return {
+      Octicons,
+    }
+  },
+})
 </script>
