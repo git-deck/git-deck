@@ -13,12 +13,12 @@
       <button>
         <span class="material-icons chat"> chat_bubble_outline </span>
       </button>
-      <button>
+      <button @click="clickSettings">
         <span class="material-icons tune"> tune </span>
       </button>
     </header>
 
-    <div class="settings"></div>
+    <div v-if="settingOpened" class="settings"></div>
 
     <main>main</main>
   </div>
@@ -28,12 +28,24 @@
 import Vue from 'vue'
 const { Octicon, Octicons } = require('octicons-vue')
 
+type DataType = {
+  Octicons: any
+  settingOpened: boolean
+}
+
 export default Vue.extend({
   components: { Octicon },
-  data() {
+  data(): DataType {
     return {
       Octicons,
+      settingOpened: false,
     }
+  },
+  methods: {
+    // ラベル絞り込みボタンの開閉
+    clickSettings() {
+      this.settingOpened = !this.settingOpened
+    },
   },
 })
 </script>
