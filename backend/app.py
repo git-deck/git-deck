@@ -6,8 +6,8 @@ from gql.transport.requests import RequestsHTTPTransport
 from dotenv import dotenv_values
 import datetime
 import json
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+
+from database import init_db
 
 
 # .env ファイルから環境変数を取得する
@@ -21,20 +21,8 @@ if "FLASK_SECRET_KEY" in env:
     app.secret_key = env["FLASK_SECRET_KEY"]
 app.config['JSON_AS_ASCII'] = False
 
-# mysql
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}/{}?charset=utf8'.format(
-    'root',
-    'pass',
-    'localhost',
-    'issue-twitter'
-)
-db = SQLAlchemy()
-db.init_app(app)
-Migrate(app, db)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+db = init_db(app)
 
 
 @app.route('/')

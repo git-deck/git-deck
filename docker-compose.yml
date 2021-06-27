@@ -40,24 +40,27 @@ services:
       - FLASK_APP=app
     command: flask run --host 0.0.0.0 --port 5000
     links:
-      - mysql
+      - db
+    depends_on:
+      - "db"
+    networks: 
+        - default
 
-  mysql:
-    container_name: issue-mysql
+  db:
+    container_name: issue-db
     image: mysql
-    platform: linux/x86_64
-    # Dockerfileの場所
-    #build:
-    #  context: ./
-    #  dockerfile: ./mysql/Dockerfile
-    #working_dir: /home
+    platform: 'linux/x86_64'
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
-    volumes:
-      - ./mysql/data:/var/lib/mysql # データの永続化
-      - ./mysql/initdb.d:/docker-entrypoint-initdb.d  # 初期化時に実行するSQL
-    # コンテナ内部の3000を外部から3000でアクセスする
+    #volumes:
+      #- ./db/data:/var/lib/mysql # データの永続化
+      #- ./db/initdb.d:/docker-entrypoint-initdb.d  # 初期化時に実行するSQL
+    # コンテナ内部の3306を外部から3306でアクセスする
     ports:
       - 3306:3306
+    expose:
+      - 3306
     environment:
       - MYSQL_ROOT_PASSWORD=pass
+    networks: 
+      - default
