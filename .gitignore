@@ -134,5 +134,7 @@ dist
 
 .DS_Store
 __pycache__
-db/data
+db/data/*
 backend/migrations
+
+!.gitkeep
