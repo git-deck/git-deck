@@ -45,18 +45,14 @@ services:
 
   db:
     container_name: issue-db
-    image: mysql
-    platform: 'linux/x86_64'
+    # Dockerfileの場所
+    build:
+      context: ./
+      dockerfile: ./db/Dockerfile
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
-    #volumes:
-      #- ./db/data:/var/lib/mysql # データの永続化
-      #- ./db/initdb.d:/docker-entrypoint-initdb.d  # 初期化時に実行するSQL
-    # コンテナ内部の3306を外部から3306でアクセスする
-    ports:
-      - 3306:3306
-    expose:
-      - 3306
+    volumes:
+      - ./db/data:/var/lib/mysql # データの永続化
     environment:
       - MYSQL_ROOT_PASSWORD=pass
     healthcheck:
