@@ -22,6 +22,6 @@ def init_database():
 def init_db(app):
     init_database()
     # mysql
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:pass@db:3306/issue_twitter?charset=utf8'
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:pass@db:3306/issue_twitter?charset=utf8"
     db.init_app(app)
     Migrate(app, db)
