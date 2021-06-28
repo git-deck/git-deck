@@ -18,8 +18,7 @@
       </button>
     </header>
     <modal name="editor-modal">投稿画面</modal>
-    <div v-if="settingOpened" class="settings"></div>
-
+    <Setting v-if="settingOpened" />
     <main>main</main>
   </div>
 </template>
