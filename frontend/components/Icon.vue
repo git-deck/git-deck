@@ -1,7 +1,5 @@
 <template>
-  <div class="user-icon">
-    <img src="https://github.com/knknk98.png" alt="icon" />
-  </div>
+  <img class="user-icon" src="https://github.com/knknk98.png" alt="icon" />
 </template>
 
 <script lang="ts">
