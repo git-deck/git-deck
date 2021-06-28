@@ -4,7 +4,7 @@
       <span class="material-icons"> add </span>
     </button>
     <button>
-      <img src="https://github.com/knknk98.png" alt="icon" />
+      <img class="user-icon" src="https://github.com/knknk98.png" alt="icon" />
     </button>
     <modal name="column-modal">カラム追加画面</modal>
   </div>

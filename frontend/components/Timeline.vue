@@ -19,7 +19,9 @@
     </header>
     <modal name="editor-modal">投稿画面</modal>
     <Setting v-if="settingOpened" />
-    <main>main</main>
+    <main>
+      <Comment />
+    </main>
   </div>
 </template>
 
