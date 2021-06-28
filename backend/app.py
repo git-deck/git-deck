@@ -472,4 +472,4 @@ def post_idea():
     )
     db.session.add(idea)
     db.session.commit()
-    return 'post_idea'
+    return 'Idea is created successfully'
