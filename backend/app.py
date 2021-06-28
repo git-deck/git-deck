@@ -157,18 +157,19 @@ def labels(owner, repo):
 
 # 指定したリポジトリのタイムライン取得
 #  GET /timeline/<owner>/<repo>
-#  GET /timeline/<owner>/<repo>?label=bug,documentation
+#  GET /timeline/<owner>/<repo>?labels=bug,documentation
 # クエリパラメータ:
 #  label: labelでOR検索. 現状Ideaに対応するlabelがないので, Ideaは弾かれない.
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
-    labels = request.args["label"].split(",") if "label" in request.args else None
+    labels = request.args["labels"].split(",") if "labels" in request.args else None
 
-    issue_and_comments = get_issue_and_comments(owner, repo, labels)
+    #issue_and_comments = get_issue_and_comments(owner, repo, labels)
     pullrequest_and_comments = get_pullrequest_and_comments(owner, repo, labels)
     ideas = get_ideas(owner, repo)
 
-    timeline = issue_and_comments + pullrequest_and_comments + ideas
+    #timeline = issue_and_comments + pullrequest_and_comments + ideas
+    timeline = pullrequest_and_comments + ideas
 
     # updated_at が新しい順に並べる
     return jsonify(list(reversed(sorted(timeline, key=lambda element: element["updatedAt"]))))
@@ -257,53 +258,58 @@ def get_issue_and_comments(owner, repo, labels):
 
 
 def get_pullrequest_and_comments(owner, repo, labels):
-    pullrequests = github_client().execute(
-        gql("""
-        query($owner:String!, $repo:String!, $labels:[String!]) {
-            repository(owner: $owner, name: $repo) {
-                pullRequests(first:100, labels: $labels) {
-                    edges {
-                        node {
-                            number
-                            title
-                            state
-                            url
-                            createdAt
-                            updatedAt
-                            body
-                            author {
-                                login
+    print(owner)
+    print(repo)
+    print(labels)
+    if labels is None:
+        pullrequests = github_client().execute(
+            gql("""
+            query($owner:String!, $repo:String!) {
+                repository(owner: $owner, name: $repo) {
+                    pullRequests(first:100) {
+                        edges {
+                            node {
+                                number
+                                title
+                                state
                                 url
-                                avatarUrl
-                            }
-                            assignees(first:100) {
-                                edges {
-                                    node {
-                                        login
-                                        url
-                                        avatarUrl
-                                    }
+                                createdAt
+                                updatedAt
+                                body
+                                author {
+                                    login
+                                    url
+                                    avatarUrl
                                 }
-                            }
-                            labels(first:100) {
-                                edges {
-                                    node {
-                                        name
-                                        color
-                                    }
-                                }
-                            }
-                            comments(first:100) {
-                                edges {
-                                    node {
-                                        body
-                                        createdAt
-                                        updatedAt
-                                        url
-                                        author {
+                                assignees(first:100) {
+                                    edges {
+                                        node {
                                             login
                                             url
                                             avatarUrl
+                                        }
+                                    }
+                                }
+                                labels(first:100) {
+                                    edges {
+                                        node {
+                                            name
+                                            color
+                                        }
+                                    }
+                                }
+                                comments(first:100) {
+                                    edges {
+                                        node {
+                                            body
+                                            createdAt
+                                            updatedAt
+                                            url
+                                            author {
+                                                login
+                                                url
+                                                avatarUrl
+                                            }
                                         }
                                     }
                                 }
@@ -312,15 +318,79 @@ def get_pullrequest_and_comments(owner, repo, labels):
                     }
                 }
             }
-        }
-        """),
-        variable_values={
-            "owner": owner,
-            "repo": repo,
-            "labels": labels
-        }
-    )
+            """),
+            variable_values={
+                "owner": owner,
+                "repo": repo,
+            }
+        )
 
+    else:
+        pullrequests = github_client().execute(
+            gql("""
+            query($owner:String!, $repo:String!, $labels:[String!]) {
+                repository(owner: $owner, name: $repo) {
+                    pullRequests(first:100, labels: $labels) {
+                        edges {
+                            node {
+                                number
+                                title
+                                state
+                                url
+                                createdAt
+                                updatedAt
+                                body
+                                author {
+                                    login
+                                    url
+                                    avatarUrl
+                                }
+                                assignees(first:100) {
+                                    edges {
+                                        node {
+                                            login
+                                            url
+                                            avatarUrl
+                                        }
+                                    }
+                                }
+                                labels(first:100) {
+                                    edges {
+                                        node {
+                                            name
+                                            color
+                                        }
+                                    }
+                                }
+                                comments(first:100) {
+                                    edges {
+                                        node {
+                                            body
+                                            createdAt
+                                            updatedAt
+                                            url
+                                            author {
+                                                login
+                                                url
+                                                avatarUrl
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            """),
+            variable_values={
+                "owner": owner,
+                "repo": repo,
+                "labels": labels
+            }
+        )
+
+    print(pullrequests)
     pullrequest_and_comments = []
 
     for pullrequest_node in pullrequests["repository"]["pullRequests"]["edges"]:
@@ -374,10 +444,10 @@ def get_ideas(owner, repo):
 
     return [
         {
-            "body" idea.body,
-            "author" {
-                "login" idea.author_login,
-                "url" authors[idea.author_login]["url"],
+            "body": idea.body,
+            "author": {
+                "login": idea.author_login,
+                "url": authors[idea.author_login]["url"],
                 "avatarUrl": authors[idea.author_login]["avatarUrl"],
             },
             "createdAt": idea.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
