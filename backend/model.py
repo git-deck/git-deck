@@ -3,7 +3,7 @@ from database import db
 
 
 class Idea(db.Model):
-    __tablename__ = 'ideas'
+    __tablename__ = "ideas"
     id = db.Column(db.Integer, primary_key=True)
     repo_id = db.Column(db.String(255), nullable=False)
     body = db.Column(db.String(255), nullable=False)
