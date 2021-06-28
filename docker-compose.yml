@@ -49,13 +49,12 @@ services:
     build:
       context: ./
       dockerfile: ./db/Dockerfile
-    # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
-      - ./db/data:/var/lib/mysql # データの永続化
+      - "./db/data:/var/lib/mysql:cached" # データの永続化
     environment:
       - MYSQL_ROOT_PASSWORD=pass
     healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-ppass"]
-        timeout: 20s
-        retries: 10
+      test: ["CMD", "mysqladmin" ,"ping", "-ppass"]
+      timeout: 20s
+      retries: 10

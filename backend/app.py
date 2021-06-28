@@ -7,7 +7,7 @@ from dotenv import dotenv_values
 import datetime
 import json
 
-from database import init_db
+from database import init_db, db
 from model import Idea
 
 
@@ -56,6 +56,12 @@ def callback():
     # アクセストークンをsessionに保存し, 後から使えるようにする
     session["access_token"] = access_token
     return redirect(url_for("user"))
+
+
+@app.route("/logout")
+def logout():
+    del session["access_token"]
+    return redirect(url_for("hello"))
 
 
 def github_client():
@@ -454,3 +460,16 @@ def get_ideas(owner, repo):
             "updatedAt": idea.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "category": "idea",
         } for idea in ideas]
+
+
+@app.route("/ideas", methods=["POST"])
+def post_idea():
+    print(request.form)
+    idea = Idea(
+        get_repo_id(request.form["owner"], request.form["repo"]),
+        request.form["body"],
+        request.form["author_login"]
+    )
+    db.session.add(idea)
+    db.session.commit()
+    return 'Idea is created successfully'
