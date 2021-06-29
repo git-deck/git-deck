@@ -1,7 +1,10 @@
 <template>
   <div class="comment">
-    <Icon class="icon" />
-    <div class="contents">
+    <div class="iconItem">
+      <Icon class="icon" />
+      <div class="thread-line"></div>
+    </div>
+    <div class="titleItem">
       <span class="title">チャット画面UIの実装</span>
       <span class="number">#245</span>
       <div class="assign">
@@ -10,16 +13,21 @@
         />
         ...
       </div>
+    </div>
+    <div class="markItem">
+      <Octicon :icon="Octicons.gitPullRequest" class-name="comment-type-mark" />
+    </div>
+    <div class="dateItem">2日</div>
+    <div class="textItem">
+      <div class="text">ああああああああああ</div>
       <div class="labels">
         <span class="label">bug</span>
         <span class="label">backend</span>
         <span class="label">frontend</span>
-        <span class="label">good first issue</span>
+        <span class="label">good first</span>
       </div>
-      <div class="text"></div>
+      <div class="readmore">このスレッドを全て表示</div>
     </div>
-    <Octicon :icon="Octicons.gitPullRequest" class-name="comment-type-mark" />
-    <div class="date">2日</div>
   </div>
 </template>
 
