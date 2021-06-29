@@ -165,23 +165,22 @@ def labels(owner, repo):
 #  GET /timeline/<owner>/<repo>
 #  GET /timeline/<owner>/<repo>?labels=bug,documentation
 # クエリパラメータ:
-#  label: labelでOR検索. 現状Ideaに対応するlabelがないので, Ideaは弾かれない.
+#  labels: labelでOR検索. 現状ideaに対応するlabelがないので, ideaは弾かれない.
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
     labels = request.args["labels"].split(",") if "labels" in request.args else None
 
-    #issue_and_comments = get_issue_and_comments(owner, repo, labels)
-    pullrequest_and_comments = get_pullrequest_and_comments(owner, repo, labels)
+    issues = get_issues(owner, repo, labels)
+    pull_requests = get_pull_requests(owner, repo, labels)
     ideas = get_ideas(owner, repo)
 
-    #timeline = issue_and_comments + pullrequest_and_comments + ideas
-    timeline = pullrequest_and_comments + ideas
+    timeline = issues + pull_requests + ideas
 
     # updated_at が新しい順に並べる
     return jsonify(list(reversed(sorted(timeline, key=lambda element: element["updatedAt"]))))
 
 
-def get_issue_and_comments(owner, repo, labels):
+def get_issues(owner, repo, labels):
     filt = {}
     if labels is not None:
         filt["labels"] = labels
@@ -190,7 +189,7 @@ def get_issue_and_comments(owner, repo, labels):
         gql("""
         query($owner:String!, $repo:String!, $filter:IssueFilters!) {
             repository(owner: $owner, name: $repo) {
-                issues(first:100, filterBy: $filter) {
+                issues(first:100, filterBy: $filter, orderBy: {field:UPDATED_AT, direction:DESC}) {
                     edges {
                         node {
                             number
@@ -248,31 +247,21 @@ def get_issue_and_comments(owner, repo, labels):
             "repo": repo,
             "filter": filt
         }
-    )
+    )["repository"]["issues"]["edges"]
 
-    issue_and_comments = []
+    for issue in issues:
+        issue["node"]["category"] = "issue"
 
-    for issue_node in issues["repository"]["issues"]["edges"]:
-        issue_node["node"]["category"] = "issue"
-        issue_and_comments.append(issue_node["node"])
-
-        for comment_node in issue_node["node"]["comments"]["edges"]:
-            comment_node["node"]["category"] = "issueComment"
-            issue_and_comments.append(comment_node["node"])
-
-    return issue_and_comments
+    return [issue["node"] for issue in issues]
 
 
-def get_pullrequest_and_comments(owner, repo, labels):
-    print(owner)
-    print(repo)
-    print(labels)
+def get_pull_requests(owner, repo, labels):
     if labels is None:
-        pullrequests = github_client().execute(
+        pull_requests = github_client().execute(
             gql("""
             query($owner:String!, $repo:String!) {
                 repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100) {
+                    pullRequests(first:100, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
                             node {
                                 number
@@ -329,14 +318,14 @@ def get_pullrequest_and_comments(owner, repo, labels):
                 "owner": owner,
                 "repo": repo,
             }
-        )
+        )["repository"]["pullRequests"]["edges"]
 
     else:
-        pullrequests = github_client().execute(
+        pull_requests = github_client().execute(
             gql("""
             query($owner:String!, $repo:String!, $labels:[String!]) {
                 repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100, labels: $labels) {
+                    pullRequests(first:100, labels: $labels, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
                             node {
                                 number
@@ -394,20 +383,12 @@ def get_pullrequest_and_comments(owner, repo, labels):
                 "repo": repo,
                 "labels": labels
             }
-        )
+        )["repository"]["pullRequests"]["edges"]
 
-    print(pullrequests)
-    pullrequest_and_comments = []
+    for pull_request in pull_requests:
+        pull_request["node"]["category"] = "pullRequest"
 
-    for pullrequest_node in pullrequests["repository"]["pullRequests"]["edges"]:
-        pullrequest_and_comments.append(pullrequest_node["node"])
-        pullrequest_node["node"]["category"] = "pullRequest"
-
-        for comment_node in pullrequest_node["node"]["comments"]["edges"]:
-            comment_node["node"]["category"] = "pullRequestComment"
-            pullrequest_and_comments.append(comment_node["node"])
-
-    return pullrequest_and_comments
+    return [pull_request["node"] for pull_request in pull_requests]
 
 
 def get_repo_id(owner, repo):
