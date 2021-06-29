@@ -9,6 +9,7 @@ import json
 
 from database import init_db, db
 from model import Idea
+import utils
 
 
 # .env ファイルから環境変数を取得する
@@ -177,7 +178,21 @@ def timeline(owner, repo):
     timeline = issues + pull_requests + ideas
 
     # updated_at が新しい順に並べる
-    return jsonify(list(reversed(sorted(timeline, key=lambda element: element["updatedAt"]))))
+    timeline = list(reversed(sorted(timeline, key=lambda elem: elem["updatedAt"])))
+
+    # howLongAgo を設定
+    timeline = list(map(set_how_long_ago, timeline))
+
+    return jsonify(timeline)
+
+
+def set_how_long_ago(elem):
+    elem["howLongAgo"] = utils.how_long_ago(datetime.datetime.strptime(elem["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
+    if elem["category"] in ["issue", "pullRequest"]:
+        for comment in elem["comments"]["edges"]:
+            comment["node"]["howLongAgo"] = \
+            utils.how_long_ago(datetime.datetime.strptime(comment["node"]["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
+    return elem
 
 
 def get_issues(owner, repo, labels):
