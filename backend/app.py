@@ -165,7 +165,7 @@ def labels(owner, repo):
 #  GET /timeline/<owner>/<repo>
 #  GET /timeline/<owner>/<repo>?labels=bug,documentation
 # クエリパラメータ:
-#  labels: labelでOR検索. 現状Ideaに対応するlabelがないので, Ideaは弾かれない.
+#  labels: labelでOR検索. 現状ideaに対応するlabelがないので, ideaは弾かれない.
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
     labels = request.args["labels"].split(",") if "labels" in request.args else None
@@ -189,7 +189,7 @@ def get_issues(owner, repo, labels):
         gql("""
         query($owner:String!, $repo:String!, $filter:IssueFilters!) {
             repository(owner: $owner, name: $repo) {
-                issues(first:100, filterBy: $filter) {
+                issues(first:100, filterBy: $filter, orderBy: {field:UPDATED_AT, direction:DESC}) {
                     edges {
                         node {
                             number
@@ -261,7 +261,7 @@ def get_pull_requests(owner, repo, labels):
             gql("""
             query($owner:String!, $repo:String!) {
                 repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100) {
+                    pullRequests(first:100, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
                             node {
                                 number
@@ -325,7 +325,7 @@ def get_pull_requests(owner, repo, labels):
             gql("""
             query($owner:String!, $repo:String!, $labels:[String!]) {
                 repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100, labels: $labels) {
+                    pullRequests(first:100, labels: $labels, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
                             node {
                                 number
