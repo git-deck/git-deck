@@ -3,46 +3,50 @@
     flex: 0 0 auto;
     height: 100vh;
     width: 320px;
-    border-right: 3px solid;
+    border-left: 6px solid;
+    border-right: 6px solid;
     border-color: $border;
     display: flex;
     flex-direction: column;
-    
+
     // ヘッダー
     & > header {
         border-bottom: 1px solid;
         border-color: $border;
-        min-height: 50px;
+        min-height: 30px;
         max-height: 70px;
         display: flex;
-        padding: 10px;
-        
-        button {
-            border: none;
-            width: 20px;
-            height: 20px;
-            padding: 0;
-            margin: 0 2.5px;
-            background: transparent;
-        }
+        padding: 17px 14px 10px 17px;   
         
         .repoicon{
-            font-size: 16px;
-            padding-top: 1.5px;
-            padding-right: 3px;
-            color: gray
+            height: 16px;
+            width: 16px;
+            //padding-right: 6px;
+            color: $git-blue;
+            //background-color: lightskyblue;
         }
 
         .chat {
-            font-size: 20px;
-            padding-top: 3px;
+            border: none;
+            width: 20px;
+            height: 20px;
+            background: transparent;
             color: gray;
+            margin-right: 10px;
+            .material-icons {
+                font-size: 20px;
+            }
         }
 
         .tune {
-            font-size: 20px;
-            padding-top: 2px;
+            border: none;
+            width: 20px;
+            height: 20px;
+            background: transparent;
             color: gray;
+            .material-icons {
+                font-size: 20px;
+            }
         }
 
         .title {
@@ -57,6 +61,7 @@
             & > .reponame{
                 font-weight: bold;
             }
+            margin-right: 7px;
         }
     }
 
@@ -64,5 +69,121 @@
     & > main {
         flex: 1;
         overflow-y: scroll;
+
+        & > .comment {
+            padding-top: 8px;
+            padding-left: 10px;
+            padding-right: 0px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid;
+            border-color: $border;
+            display: grid;
+            grid-template-rows: min-content 1fr;
+            grid-template-columns: 35px 1fr min-content 28px;
+            grid-template-areas:
+            "areaIcon areaTitle areaMark areaDate"
+            "areaIcon areaText areaText areaText";
+
+            &>.iconItem {
+                grid-area: areaIcon;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .pullRequest {
+                    border: 2px solid;
+                    border-color: $git-green;
+                }
+                .issue{
+                    border: 2px solid;
+                    border-color: $git-green;
+                }
+                .idea{
+                    border: 2px solid;
+                    border-color: $idea-color;
+                }
+                .thread-line{
+                    flex: 1;
+                    width: 3px;
+                    background-color: $border;
+                }
+            }
+            &>.titleItem {
+                grid-area: areaTitle;
+                min-width: 0;
+                word-break:break-all;
+                margin: 0 7px;
+                & > .title {
+                    font-weight: bold;
+                    font-size: 12px;   
+                }
+                
+                & > .number {
+                    color: gray;
+                    font-size: 12px;
+                }
+                & > .assign {
+                    display: flex;
+                    align-items: flex-end;
+                    color: gray;
+                    .assigner {
+                        height: 20px;
+                        width: 20px;
+                        margin-right: 1px;
+                    }
+                }
+            }
+            &>.markItem {
+                grid-area: areaMark;
+                margin-right: 7px;
+                .comment-type-mark {
+                    height: 20px;
+                    width: 20px;
+                    color: white;
+                    display: table-cell;
+                    border-radius: 50%;
+                }
+                .pull-request {
+                    padding: 3px;
+                    background-color: $git-green;
+                }
+                .issue {
+                    padding: 2px;
+                    background-color: $git-green;
+                }
+                .idea {
+                    padding-top: 2px;
+                    padding-bottom: 2px;
+                    padding-right: 3px;
+                    padding-left: 2px;
+                    background-color: $idea-color;
+                }
+            }
+            &>.dateItem {
+                grid-area: areaDate;
+                color: gray;
+                font-size: 12px;
+                display: inline-block;
+            }
+            &>.textItem {
+                grid-area: areaText;
+                //background-color: indianred;
+                margin: 0 7px;
+                & > .labels {
+                    .label{
+                        font-size: 6px;
+                        padding: 0px 10px;
+                        border-radius: 24px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        background-color: hotpink;
+                    }
+                }
+                & > .readmore {
+                    color: $git-blue;
+                }
+            }
+
+        }
     }
 }

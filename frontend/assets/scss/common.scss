@@ -4,9 +4,18 @@
     height: 100vh;
     width: 100vw;
     color: $git-black;
+    font-size: 14px;
 }
 
 a {
     color: $git-blue;
     text-decoration: none;
+}
+
+.user-icon {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    display: block;
 }
