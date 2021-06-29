@@ -464,11 +464,10 @@ def get_ideas(owner, repo):
 
 @app.route("/ideas", methods=["POST"])
 def post_idea():
-    print(request.form)
     idea = Idea(
-        get_repo_id(request.form["owner"], request.form["repo"]),
-        request.form["body"],
-        request.form["author_login"]
+        get_repo_id(request.json["owner"], request.json["repo"]),
+        request.json["body"],
+        request.json["author_login"]
     )
     db.session.add(idea)
     db.session.commit()
