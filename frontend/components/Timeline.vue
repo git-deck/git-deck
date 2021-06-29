@@ -1,26 +1,27 @@
 <template>
   <div class="column">
     <header>
-      <span class="repoicon">
-        <Octicon :icon="Octicons.repo" />
-      </span>
+      <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
       <span class="title"
         ><a class="username" href="https://github.com/knknk98/">knknk98/</a
         ><a class="reponame" href="https://github.com/knknk98/sushi-chat/"
-          >sushi-sushi-sushi-sushi-sushi-sushi-sushi-sushi-</a
+          >sushi-sushi-sushi</a
         ></span
       >
-      <button @click="showModal">
-        <span class="material-icons chat"> chat_bubble_outline </span>
+      <button class="chat" @click="showModal">
+        <span class="material-icons"> chat_bubble_outline </span>
       </button>
-      <button @click="clickSettings">
-        <span class="material-icons tune"> tune </span>
+      <button class="tune" @click="clickSettings">
+        <span class="material-icons"> tune </span>
       </button>
     </header>
     <modal name="editor-modal">投稿画面</modal>
     <Setting v-if="settingOpened" />
     <main>
-      <Comment />
+      <Comment type="pullRequest" />
+      <Comment type="issue" />
+      <Comment type="idea" />
+      <Comment type="reply" />
     </main>
   </div>
 </template>
