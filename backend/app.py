@@ -35,7 +35,8 @@ def hello():
 @app.route("/oauth")
 def oauth():
     # あなたのGitHubアカウントをこのアプリに連携していいですか？の画面にリダイレクトする
-    url = "https://github.com/login/oauth/authorize?client_id={}".format(env["GITHUB_CLIENT_ID"])
+    # scope=repo: プライベートリポジトリも検索
+    url = "https://github.com/login/oauth/authorize?client_id={}&scope=repo".format(env["GITHUB_CLIENT_ID"])
     return redirect(url)
 
 
@@ -95,31 +96,6 @@ def user():
         """)
     )
     return "Hello, {}".format(resp["viewer"]["login"])
-
-
-# GraphQL に移行するため削除
-#
-# # issueを表示
-# @app.route("/repos/<repo>/issues")
-# def issues(repo):
-#     g = Github(session["access_token"])
-#     user = g.get_user()
-#     repo = g.get_repo("{}/{}".format(user.login, repo))
-#     issues = repo.get_issues()
-#     issues = list(map(lambda issue: {"title": issue.title, "number": issue.number}, issues))
-#     return jsonify(issues)
-# 
-# 
-# # 指定されたissueのコメントを表示
-# @app.route("/repos/<repo>/issues/<int:issue_number>/comments")
-# def comments(repo, issue_number):
-#     g = Github(session["access_token"])
-#     user = g.get_user()
-#     repo = g.get_repo("{}/{}".format(user.login, repo))
-#     issue = repo.get_issue(issue_number)
-#     comments = issue.get_comments()
-#     comments = list(map(lambda comment: {"user": comment.user.login, "body": comment.body}, comments))
-#     return jsonify(comments) 
 
 
 # 指定されたリポジトリのラベル一覧
