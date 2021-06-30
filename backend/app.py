@@ -165,9 +165,9 @@ def timeline(owner, repo):
 def set_how_long_ago(elem):
     elem["howLongAgo"] = utils.how_long_ago(datetime.datetime.strptime(elem["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
     if elem["category"] in ["issue", "pullRequest"]:
-        for comment in elem["comments"]["edges"]:
-            comment["node"]["howLongAgo"] = \
-            utils.how_long_ago(datetime.datetime.strptime(comment["node"]["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
+        for comment in elem["comments"]:
+            comment["howLongAgo"] = \
+            utils.how_long_ago(datetime.datetime.strptime(comment["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
     return elem
 
 
@@ -240,10 +240,15 @@ def get_issues(owner, repo, labels):
         }
     )["repository"]["issues"]["edges"]
 
+    issues = [issue["node"] for issue in issues]
     for issue in issues:
-        issue["node"]["category"] = "issue"
+        remove_edge_and_nodes(issue, "comments")
+        remove_edge_and_nodes(issue, "assignees")
+        remove_edge_and_nodes(issue, "labels")
 
-    return [issue["node"] for issue in issues]
+        issue["category"] = "issue"
+
+    return issues
 
 
 def get_pull_requests(owner, repo, labels):
@@ -376,10 +381,15 @@ def get_pull_requests(owner, repo, labels):
             }
         )["repository"]["pullRequests"]["edges"]
 
+    pull_requests = [pull_request["node"] for pull_request in pull_requests]
     for pull_request in pull_requests:
-        pull_request["node"]["category"] = "pullRequest"
+        remove_edge_and_nodes(pull_request, "comments")
+        remove_edge_and_nodes(pull_request, "assignees")
+        remove_edge_and_nodes(pull_request, "labels")
 
-    return [pull_request["node"] for pull_request in pull_requests]
+        pull_request["category"] = "pull_request"
+
+    return pull_requests
 
 
 def get_repo_id(owner, repo):
@@ -444,3 +454,8 @@ def post_idea():
     db.session.add(idea)
     db.session.commit()
     return 'Idea is created successfully'
+
+
+def remove_edge_and_nodes(obj, key):
+    if key in obj:
+        obj[key] = [el["node"] for el in obj[key]["edges"]]
