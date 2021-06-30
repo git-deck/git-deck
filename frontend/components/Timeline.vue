@@ -2,7 +2,7 @@
   <div class="column">
     <header>
       <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
-      <span class=title
+      <span class="title"
         ><a class="username" href="https://github.com/knknk98/">knknk98/</a
         ><a class="reponame" href="https://github.com/knknk98/sushi-chat/"
           >sushi-sushi-sushi</a
@@ -65,16 +65,16 @@ export default Vue.extend({
 // FIXME: テストデータを入れたいけど, Cannot set property 'category' of undefined と怒られる.
 // FIXME: テストデータを入れたいけど, Cannot set property 'category' of undefined と怒られる.
 const CONTENTS_DUMMY_DATA: Content[] = [
-    {
-        author: {
-            avatarUrl: "https://avatars.githubusercontent.com/u/34413567?v=4",
-            login: "habara-k",
-            url: "https://github.com/habara-k"
-        },
-        body: "あぁ^～心がぴょんぴょんするんじゃぁ^～",
-        category: "idea",
-        howLongAgo: "1h",
-    },
+    //{
+    //    author: {
+    //        avatarUrl: "https://avatars.githubusercontent.com/u/34413567?v=4",
+    //        login: "habara-k",
+    //        url: "https://github.com/habara-k"
+    //    },
+    //    body: "あぁ^～心がぴょんぴょんするんじゃぁ^～",
+    //    category: "idea",
+    //    howLongAgo: "1h",
+    //},
     // {
     //     assignees: [
     //         {
