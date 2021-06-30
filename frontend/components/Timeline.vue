@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Content, Idea } from '@/models/types'
+import { Content } from '@/models/types'
 
 const { Octicon, Octicons } = require('octicons-vue')
 
