@@ -9,8 +9,7 @@ export default {
     link: [
       {
         rel: 'stylesheet',
-        href:
-          'https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css',
+        href: 'https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css',
       },
       {
         rel: 'preconnect',

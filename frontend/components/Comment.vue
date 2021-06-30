@@ -44,10 +44,10 @@
         ああああああああああ
       </div>
       <div v-if="type === 'issue'" class="labels">
-        <span class="label">bug</span>
-        <span class="label">backend</span>
-        <span class="label">frontend</span>
-        <span class="label">good first</span>
+        <Label color="pink" message="bug" />
+        <Label color="pink" message="backend" />
+        <Label color="pink" message="frontend" />
+        <Label color="pink" message="good first" />
       </div>
       <div
         v-if="(type === 'issue') | (type === 'pullRequest') && thread"
