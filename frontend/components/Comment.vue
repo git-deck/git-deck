@@ -1,5 +1,10 @@
 <template>
-  <div class="comment">
+  <div
+    class="comment"
+    :class="{
+      thread: thread,
+    }"
+  >
     <div class="iconItem">
       <Icon :class="type" />
       <div v-if="thread" class="thread-line"></div>

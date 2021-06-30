@@ -18,10 +18,12 @@
     <modal name="editor-modal">投稿画面</modal>
     <Setting v-if="settingOpened" />
     <main>
-      <Comment type="pullRequest" />
+      <Comment type="pullRequest" thread="true" />
+      <Comment type="reply" thread="true" />
+      <Comment type="reply" thread="true" />
+      <Comment type="reply" />
       <Comment type="issue" />
       <Comment type="idea" />
-      <Comment type="reply" />
     </main>
   </div>
 </template>
