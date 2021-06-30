@@ -387,7 +387,7 @@ def get_pull_requests(owner, repo, labels):
         remove_edge_and_nodes(pull_request, "assignees")
         remove_edge_and_nodes(pull_request, "labels")
 
-        pull_request["category"] = "pull_request"
+        pull_request["category"] = "pullRequest"
 
     return pull_requests
 
