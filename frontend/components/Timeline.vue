@@ -97,8 +97,8 @@ const CONTENTS_DUMMY_DATA: Content[] = [
     howLongAgo: '16h',
     labels: [
       {
-        color: 'd73a4a',
-        name: 'bug',
+        color: '#8EF61B',
+        name: 'speed up',
       },
     ],
     number: 21,
@@ -136,11 +136,11 @@ const CONTENTS_DUMMY_DATA: Content[] = [
     howLongAgo: '2d',
     labels: [
       {
-        color: 'd73a4a',
+        color: '#d73a4a',
         name: 'bug',
       },
       {
-        color: '008672',
+        color: '#008672',
         name: 'help wanted',
       },
     ],
@@ -168,7 +168,7 @@ const CONTENTS_DUMMY_DATA: Content[] = [
     howLongAgo: '2d',
     labels: [
       {
-        color: 'd73a4a',
+        color: '#d73a4a',
         name: 'bug',
       },
     ],
@@ -196,8 +196,8 @@ const CONTENTS_DUMMY_DATA: Content[] = [
     howLongAgo: '2d',
     labels: [
       {
-        color: 'd73a4a',
-        name: 'bug',
+        color: '#0075ca',
+        name: 'documentation',
       },
     ],
     number: 9,
