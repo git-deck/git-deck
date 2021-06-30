@@ -17,7 +17,7 @@
         :how-long-ago="content.howLongAgo"
         :thread="content.comments.length > 0"
         :type="content.category"
-      ></Comment>
+      />
       <Comment
         v-for="(comment, index) in content.comments"
         :key="index"
@@ -26,7 +26,7 @@
         :how-long-ago="comment.howLongAgo"
         :type="'reply'"
         :thread="index + 1 < content.comments.length"
-      ></Comment>
+      />
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
       <span class="title"
         ><a class="username" href="https://github.com/knknk98/">knknk98/</a
         ><a class="reponame" href="https://github.com/knknk98/sushi-chat/"
-          >sushi-sushi-sushi</a
+          >sushi-sushi-</a
         ></span
       >
       <button class="chat" @click="showModal">
@@ -23,14 +23,6 @@
         :key="index"
         :content="content"
       ></ContentBox>
-      <!-- <div>
-        <Comment type="pullRequest" thread />
-        <Comment type="reply" thread />
-        <Comment type="reply" thread />
-        <Comment type="reply" />
-      </div>
-      <Comment type="issue" />
-      <Comment type="idea" /> -->
     </main>
   </div>
 </template>
