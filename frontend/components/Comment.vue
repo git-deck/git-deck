@@ -10,9 +10,9 @@
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div class="titleItem">
-      <span class="title">{{title}}</span>
+      <span class="title">{{ title }}</span>
       <span v-if="(type === 'issue') | (type === 'pullRequest')" class="number"
-        >#{{number}}</span
+        >#{{ number }}</span
       >
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon class="assigner" /> <Icon class="assigner" /><Icon
@@ -38,13 +38,15 @@
         class-name="comment-type-mark idea"
       />
     </div>
-    <div class="dateItem">2日</div>
+    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
       <div v-if="(type === 'reply') | (type === 'idea')" class="text">
-        {{body}}
+        {{ body }}
       </div>
       <div v-if="type === 'issue'" class="labels">
-        <span v-for="(label,index) in labels" :key="index" class="label">{{label.name}}</span>
+        <span v-for="(label, index) in labels" :key="index" class="label">{{
+          label.name
+        }}</span>
       </div>
       <div
         v-if="(type === 'issue') | (type === 'pullRequest') && thread"
@@ -75,7 +77,7 @@ export default Vue.extend({
     },
     title: {
       type: String,
-      default: "チャット画面UIの実装"
+      default: 'チャット画面UIの実装',
     },
     number: {
       type: Number,
@@ -83,26 +85,31 @@ export default Vue.extend({
     },
     body: {
       type: String,
-      default: "あああ〜ああ〜ああ"
+      default: 'あああ〜ああ〜ああ',
+    },
+    howLongAgo: {
+      type: String,
+      default: '2日',
     },
     labels: {
       type: Array,
-      default: function() {
+      default() {
         return [
           {
-            name: "bug",
+            name: 'bug',
           },
           {
-            name: "backend",
+            name: 'backend',
           },
           {
-            name: "frontend",
+            name: 'frontend',
           },
           {
-            name: "good first",
+            name: 'good first',
           },
-        ]}
-    }
+        ]
+      },
+    },
   },
   data(): DataType {
     return {
