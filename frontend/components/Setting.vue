@@ -1,30 +1,38 @@
 <template>
   <div class="label_column">
-    <header>
-      <button class="filter_list">
-        <span class="material-icons"> filter_list </span>
-      </button>
-      <span class="m">ラベルで絞り込む</span>
+    <button class="filter_list">
+      <span class="material-icons"> filter_list </span>
+    </button>
+    <span class="filter_message">ラベルで絞り込む</span>
 
-      <div class="labels">
-        <Label :color="color" :message="message" />
-      </div>
-    </header>
+    <div v-for="item in items" :key="item.color" class="labels">
+      <Label :color="item.color" :message="item.message"></Label>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-
-type DataType = {
-  color: string
-  message: string
-}
+import Label from '@/components/Label.vue'
 export default Vue.extend({
-  data(): DataType {
+  components: {
+    Label: Label,
+  },
+  data() {
     return {
-      color: '#ff0f00',
-      message: 'ex_label',
+      items: [
+        {
+          // numberが識別子
+          number: 1,
+          color: '#ff0f00',
+          message: 'label',
+        },
+        {
+          number: 2,
+          color: '#00ffff',
+          message: 'bug',
+        },
+      ],
     }
   },
 })
