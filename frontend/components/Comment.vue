@@ -58,7 +58,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Label } from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
