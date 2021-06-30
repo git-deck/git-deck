@@ -10,9 +10,9 @@
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div class="titleItem">
-      <span class="title">チャット画面UIの実装</span>
+      <span class="title">{{title}}</span>
       <span v-if="(type === 'issue') | (type === 'pullRequest')" class="number"
-        >#245</span
+        >#{{number}}</span
       >
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon class="assigner" /> <Icon class="assigner" /><Icon
@@ -41,13 +41,10 @@
     <div class="dateItem">2日</div>
     <div class="textItem">
       <div v-if="(type === 'reply') | (type === 'idea')" class="text">
-        ああああああああああ
+        {{body}}
       </div>
       <div v-if="type === 'issue'" class="labels">
-        <span class="label">bug</span>
-        <span class="label">backend</span>
-        <span class="label">frontend</span>
-        <span class="label">good first</span>
+        <span v-for="(label,index) in labels" :key="index" class="label">{{label.name}}</span>
       </div>
       <div
         v-if="(type === 'issue') | (type === 'pullRequest') && thread"
@@ -61,6 +58,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Label } from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
@@ -76,6 +74,36 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String,
+      default: "チャット画面UIの実装"
+    },
+    number: {
+      type: Number,
+      default: 245,
+    },
+    body: {
+      type: String,
+      default: "あああ〜ああ〜ああ"
+    },
+    labels: {
+      type: Array,
+      default: function() {
+        return [
+          {
+            name: "bug",
+          },
+          {
+            name: "backend",
+          },
+          {
+            name: "frontend",
+          },
+          {
+            name: "good first",
+          },
+        ]}
+    }
   },
   data(): DataType {
     return {
