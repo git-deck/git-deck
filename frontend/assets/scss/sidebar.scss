@@ -5,21 +5,63 @@
     width: 60px;
     height: 100%;
     
-    .material-icons {
-        color: white;
-        font-size: 40px;
-    }
+    &>.menu{
+        .material-icons {
+            color: white;
+            font-size: 40px;
+        }
 
-    button {
-        margin-top: 10px;
-        padding: 0px;
+        button {
+            margin-top: 10px;
+            padding: 0px;
+            width: 100%;
+            border: none;
+            background: transparent;
+        }
+
+        img {
+            margin: 0 auto;
+        }
+
+    }
+}
+
+.modal-content {
+    padding: 30px;
+    & > .header {
+        display: inline-flex;
+        border-bottom: 1px solid;
+        border-color: $border;
+        align-items: baseline;
         width: 100%;
-        border: none;
-        background: transparent;
-    }
 
-    img {
-        margin: 0 auto;
-    }
+        .topic{
+            flex: 1;
+            font-size: 24px;
+        }
 
+        .material-icons {
+            font-size: 24px;
+            color: gray;
+        }
+        button {
+            padding: 0px;
+            border: none;
+            background: transparent;
+        }
+
+
+    }
+    & > .main-contents {
+        padding-top: 25px;
+
+        input {
+            margin-top: 10px;
+            margin-right: 20px;
+        }
+
+        button {
+            padding: 2px 10px;
+        }
+    }
 }
