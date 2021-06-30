@@ -35,7 +35,8 @@ def hello():
 @app.route("/oauth")
 def oauth():
     # あなたのGitHubアカウントをこのアプリに連携していいですか？の画面にリダイレクトする
-    url = "https://github.com/login/oauth/authorize?client_id={}".format(env["GITHUB_CLIENT_ID"])
+    # scope=repo: プライベートリポジトリも検索
+    url = "https://github.com/login/oauth/authorize?client_id={}&scope=repo".format(env["GITHUB_CLIENT_ID"])
     return redirect(url)
 
 
@@ -95,31 +96,6 @@ def user():
         """)
     )
     return "Hello, {}".format(resp["viewer"]["login"])
-
-
-# GraphQL に移行するため削除
-#
-# # issueを表示
-# @app.route("/repos/<repo>/issues")
-# def issues(repo):
-#     g = Github(session["access_token"])
-#     user = g.get_user()
-#     repo = g.get_repo("{}/{}".format(user.login, repo))
-#     issues = repo.get_issues()
-#     issues = list(map(lambda issue: {"title": issue.title, "number": issue.number}, issues))
-#     return jsonify(issues)
-# 
-# 
-# # 指定されたissueのコメントを表示
-# @app.route("/repos/<repo>/issues/<int:issue_number>/comments")
-# def comments(repo, issue_number):
-#     g = Github(session["access_token"])
-#     user = g.get_user()
-#     repo = g.get_repo("{}/{}".format(user.login, repo))
-#     issue = repo.get_issue(issue_number)
-#     comments = issue.get_comments()
-#     comments = list(map(lambda comment: {"user": comment.user.login, "body": comment.body}, comments))
-#     return jsonify(comments) 
 
 
 # 指定されたリポジトリのラベル一覧
@@ -189,9 +165,9 @@ def timeline(owner, repo):
 def set_how_long_ago(elem):
     elem["howLongAgo"] = utils.how_long_ago(datetime.datetime.strptime(elem["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
     if elem["category"] in ["issue", "pullRequest"]:
-        for comment in elem["comments"]["edges"]:
-            comment["node"]["howLongAgo"] = \
-            utils.how_long_ago(datetime.datetime.strptime(comment["node"]["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
+        for comment in elem["comments"]:
+            comment["howLongAgo"] = \
+            utils.how_long_ago(datetime.datetime.strptime(comment["updatedAt"], "%Y-%m-%dT%H:%M:%SZ"))
     return elem
 
 
@@ -264,10 +240,15 @@ def get_issues(owner, repo, labels):
         }
     )["repository"]["issues"]["edges"]
 
+    issues = [issue["node"] for issue in issues]
     for issue in issues:
-        issue["node"]["category"] = "issue"
+        remove_edge_and_nodes(issue, "comments")
+        remove_edge_and_nodes(issue, "assignees")
+        remove_edge_and_nodes(issue, "labels")
 
-    return [issue["node"] for issue in issues]
+        issue["category"] = "issue"
+
+    return issues
 
 
 def get_pull_requests(owner, repo, labels):
@@ -400,10 +381,15 @@ def get_pull_requests(owner, repo, labels):
             }
         )["repository"]["pullRequests"]["edges"]
 
+    pull_requests = [pull_request["node"] for pull_request in pull_requests]
     for pull_request in pull_requests:
-        pull_request["node"]["category"] = "pullRequest"
+        remove_edge_and_nodes(pull_request, "comments")
+        remove_edge_and_nodes(pull_request, "assignees")
+        remove_edge_and_nodes(pull_request, "labels")
 
-    return [pull_request["node"] for pull_request in pull_requests]
+        pull_request["category"] = "pullRequest"
+
+    return pull_requests
 
 
 def get_repo_id(owner, repo):
@@ -468,3 +454,8 @@ def post_idea():
     db.session.add(idea)
     db.session.commit()
     return 'Idea is created successfully'
+
+
+def remove_edge_and_nodes(obj, key):
+    if key in obj:
+        obj[key] = [el["node"] for el in obj[key]["edges"]]

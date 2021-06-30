@@ -10,9 +10,9 @@
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div class="titleItem">
-      <span class="title">チャット画面UIの実装</span>
+      <span class="title">{{ title }}</span>
       <span v-if="(type === 'issue') | (type === 'pullRequest')" class="number"
-        >#245</span
+        >#{{ number }}</span
       >
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon class="assigner" /> <Icon class="assigner" /><Icon
@@ -38,16 +38,15 @@
         class-name="comment-type-mark idea"
       />
     </div>
-    <div class="dateItem">2日</div>
+    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
       <div v-if="(type === 'reply') | (type === 'idea')" class="text">
-        ああああああああああ
+        {{ body }}
       </div>
       <div v-if="type === 'issue'" class="labels">
-        <Label color="pink" message="bug" />
-        <Label color="pink" message="backend" />
-        <Label color="pink" message="frontend" />
-        <Label color="pink" message="good first" />
+        <span v-for="(label, index) in labels" :key="index" class="label">{{
+          label.name
+        }}</span>
       </div>
       <div
         v-if="(type === 'issue') | (type === 'pullRequest') && thread"
@@ -75,6 +74,41 @@ export default Vue.extend({
     thread: {
       type: Boolean,
       default: false,
+    },
+    title: {
+      type: String,
+      default: 'チャット画面UIの実装',
+    },
+    number: {
+      type: Number,
+      default: 245,
+    },
+    body: {
+      type: String,
+      default: 'あああ〜ああ〜ああ',
+    },
+    howLongAgo: {
+      type: String,
+      default: '2日',
+    },
+    labels: {
+      type: Array,
+      default() {
+        return [
+          {
+            name: 'bug',
+          },
+          {
+            name: 'backend',
+          },
+          {
+            name: 'frontend',
+          },
+          {
+            name: 'good first',
+          },
+        ]
+      },
     },
   },
   data(): DataType {
