@@ -43,16 +43,16 @@
       <div v-if="(type === 'reply') | (type === 'idea')" class="text">
         {{ body }}
       </div>
-      <div v-if="type === 'issue'" class="labels">
+      <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"
           :key="index"
           :message="label.name"
-          color="pink"
+          :color="label.color"
         />
       </div>
       <div
-        v-if="(type === 'issue') | (type === 'pullRequest') && thread"
+        v-if="(type === 'issue' || type === 'pullRequest') && thread"
         class="readmore"
       >
         このスレッドを全て表示
