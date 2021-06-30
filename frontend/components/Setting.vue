@@ -1,13 +1,28 @@
 <template>
   <div class="label_column">
-    <button class="filter_list">
-      <span class="material-icons"> filter_list </span>
-    </button>
-    <span class="filter_message">ラベルで絞り込む</span>
+    <header>
+      <div class="top">
+        <button class="filter_list">
+          <span class="material-icons"> filter_list </span>
+        </button>
 
-    <div v-for="item in items" :key="item.color" class="labels">
-      <Label :color="item.color" :message="item.message"></Label>
-    </div>
+        <span class="filter_message">ラベルで絞り込む</span>
+
+        <button class="Refresh">
+          <span class="material-icons"> replay </span>
+        </button>
+      </div>
+      <div v-for="item in items" :key="item.color" class="labels">
+        <Label :color="item.color" :message="item.message"></Label>
+      </div>
+      <div class="bottom">
+        <button class="Refresh">
+          <span class="material-icons"> close </span>
+        </button>
+
+        <span class="message">このカラムを削除</span>
+      </div>
+    </header>
   </div>
 </template>
 
