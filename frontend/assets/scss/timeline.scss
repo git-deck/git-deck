@@ -156,18 +156,7 @@
             }
             &>.textItem {
                 grid-area: areaText;
-                //background-color: indianred;
                 margin: 0 7px;
-                & > .labels {
-                    .label{
-                        font-size: 6px;
-                        padding: 0px 10px;
-                        border-radius: 24px;
-                        display: inline-block;
-                        vertical-align: middle;
-                        background-color: hotpink;
-                    }
-                }
                 & > .readmore {
                     padding: 3px 0;
                     font-size: 12px;
