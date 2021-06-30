@@ -410,33 +410,12 @@ def get_repo_id(owner, repo):
 
 def get_ideas(owner, repo):
     ideas = Idea.query.filter(Idea.repo_id == get_repo_id(owner, repo)).all()
-
-    authors = {}
-    for idea in ideas:
-        authors[idea.author_login] = {}
-
-    authors = {
-        author: github_client().execute(gql("""
-            query($login:String!) {
-                user(login: $login) {
-                    url
-                    avatarUrl
-                }
-            }
-            """),
-            variable_values={
-                "login": author,
-            })["user"]
-        for author in authors
-    }
-
-    return [
-        {
+    return [{
             "body": idea.body,
             "author": {
                 "login": idea.author_login,
-                "url": authors[idea.author_login]["url"],
-                "avatarUrl": authors[idea.author_login]["avatarUrl"],
+                "url": "https://github.com/{}".format(idea.author_login),
+                "avatarUrl": "https://github.com/{}.png".format(idea.author_login),
             },
             "createdAt": idea.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "updatedAt": idea.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
