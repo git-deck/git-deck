@@ -15,7 +15,7 @@
         <span class="material-icons"> tune </span>
       </button>
     </header>
-    <modal name="editor-modal">投稿画面</modal>
+    <PostModal />
     <Setting v-if="settingOpened" />
     <main>
       <ContentBox

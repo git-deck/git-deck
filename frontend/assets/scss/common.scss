@@ -29,3 +29,33 @@ a {
     vertical-align: middle;
     background-color: hotpink;
 }
+
+.modal-content {
+    padding: 30px;
+    & > .header {
+        display: inline-flex;
+        border-bottom: 1px solid;
+        border-color: $border;
+        align-items: baseline;
+        width: 100%;
+
+        .topic{
+            flex: 1;
+            font-size: 24px;
+        }
+
+        .material-icons {
+            font-size: 24px;
+            color: gray;
+        }
+        button {
+            padding: 0px;
+            border: none;
+            background: transparent;
+        }
+
+    }
+    & > .main-contents {
+        padding-top: 25px;
+    }
+}
