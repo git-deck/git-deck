@@ -18,7 +18,7 @@
     <modal name="editor-modal">投稿画面</modal>
     <Setting v-if="settingOpened" />
     <main>
-      <Content v-for="(content,index) in contents" :key="index" type="idea"></Content>
+      <ContentBox v-for="(content,index) in contents" :key="index" type="idea"></ContentBox>
       <Comment type="pullRequest" thread />
       <Comment type="reply" thread />
       <Comment type="reply" thread />
@@ -65,16 +65,16 @@ export default Vue.extend({
 // FIXME: テストデータを入れたいけど, Cannot set property 'category' of undefined と怒られる.
 // FIXME: テストデータを入れたいけど, Cannot set property 'category' of undefined と怒られる.
 const CONTENTS_DUMMY_DATA: Content[] = [
-    //{
-    //    author: {
-    //        avatarUrl: "https://avatars.githubusercontent.com/u/34413567?v=4",
-    //        login: "habara-k",
-    //        url: "https://github.com/habara-k"
-    //    },
-    //    body: "あぁ^～心がぴょんぴょんするんじゃぁ^～",
-    //    category: "idea",
-    //    howLongAgo: "1h",
-    //},
+    {
+        author: {
+            avatarUrl: "https://avatars.githubusercontent.com/u/34413567?v=4",
+            login: "habara-k",
+            url: "https://github.com/habara-k"
+        },
+        body: "あぁ^～心がぴょんぴょんするんじゃぁ^～",
+        category: "idea",
+        howLongAgo: "1h",
+    },
     // {
     //     assignees: [
     //         {

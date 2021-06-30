@@ -13,7 +13,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropOptions } from 'vue'
+import { Content } from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
@@ -21,7 +22,9 @@ type DataType = {
 export default Vue.extend({
   components: { Octicon },
   props: {
-    content: Object
+    content: {
+      type: Object,
+    } as PropOptions<Content>
   },
   data(): DataType {
     return {
