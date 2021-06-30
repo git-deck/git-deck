@@ -44,9 +44,12 @@
         {{ body }}
       </div>
       <div v-if="type === 'issue'" class="labels">
-        <span v-for="(label, index) in labels" :key="index" class="label">{{
-          label.name
-        }}</span>
+        <Label
+          v-for="(label, index) in labels"
+          :key="index"
+          :message="label.name"
+          color="pink"
+        />
       </div>
       <div
         v-if="(type === 'issue') | (type === 'pullRequest') && thread"
