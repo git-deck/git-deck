@@ -2,12 +2,12 @@
   <div class="label_column">
     <header>
       <div class="top">
-        <button class="filter_list">
-          <span class="material-icons"> filter_list </span>
-        </button>
-
-        <span class="filter_message">ラベルで絞り込む</span>
-
+        <div class="filterbutton">
+          <button class="filter_list">
+            <span class="material-icons"> filter_list </span>
+          </button>
+          <span class="filter_message">ラベルで絞り込む</span>
+        </div>
         <button class="Refresh">
           <span class="material-icons"> replay </span>
         </button>
@@ -20,13 +20,17 @@
           :message="item.message"
         ></LabelToButton>
       </div>
-      <div class="bottom">
-        <button class="Refresh">
-          <span class="material-icons"> close </span>
-        </button>
-      </div>
     </header>
-    <span class="message">このカラムを削除</span>
+    <div class="bottom">
+      <div class="bottomContent">
+        <div class="right">
+          <button class="Close">
+            <span class="material-icons"> close </span>
+          </button>
+          <span class="message">このカラムを削除</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,17 +66,16 @@ export default Vue.extend({
           message: 'bug',
         },
         {
-          color: '#f0f0f0',
-          message: 'bug',
-        },
-        {
-          color: '#000f00',
-          message: 'bug',
-        },
-        {
           color: '#0000ff',
-          message:
-            'yarukinasissssiiooooooooooooooooooooooooooooooooiiiiiiiiiiiiiiiiiiiiiiiiiiii',
+          message: 'bug',
+        },
+        {
+          color: '#00ff00',
+          message: 'ggggggggggggggggggggggggggggggggggggggggggg',
+        },
+        {
+          color: '#00f0f0',
+          message: 'bug',
         },
       ],
     }
