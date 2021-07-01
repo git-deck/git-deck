@@ -37,7 +37,11 @@ export default {
     '@nuxtjs/axios',
     'nuxt-webfontloader',
     '@nuxtjs/auth',
+    '@nuxtjs/markdownit',
   ],
+  markdownit: {
+    injected: true,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -50,5 +54,9 @@ export default {
     google: {
       families: ['Material Icons'],
     },
+  },
+
+  env: {
+    accessToken: process.env.NUXT_ENV_ACCESS_TOKEN || 'dummy_access_token',
   },
 }
