@@ -30,6 +30,12 @@
       //background-color: lightskyblue;
     }
 
+    & > .title {
+      & > .username:hover,
+      & > .reponame:hover {
+        text-decoration: underline;
+      }
+    }
     .chat {
       border: none;
       width: 20px;
