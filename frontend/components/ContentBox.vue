@@ -22,16 +22,17 @@
         :thread="content.comments.length > 0"
         :type="content.category"
         :state="content.state"
+        :readmore="readmore"
       />
       <Comment
-        v-for="(comment, index) in content.comments"
+        v-for="(comment, index) in lessComments"
         :key="index"
-        :title="content.author.login"
+        :title="comment.author.login"
         :body="comment.body"
-        :author="content.author"
+        :author="comment.author"
         :how-long-ago="comment.howLongAgo"
         :type="'reply'"
-        :thread="index + 1 < content.comments.length"
+        :thread="index + 1 < lessComments.length"
       />
     </div>
   </div>
@@ -47,6 +48,15 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<Content>,
+  },
+  computed: {
+    readmore() {
+      return this.content.comments.length > 2
+    },
+    lessComments() {
+      const len = this.content.comments.length
+      return this.content.comments.slice(len >= 2 ? len - 2 : 0, len)
+    },
   },
 })
 </script>

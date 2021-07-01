@@ -77,8 +77,100 @@ export default Vue.extend({
 
 const CONTENTS_DUMMY_DATA: Content[] = [
   {
+    assignees: [
+      {
+        avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+        login: 'habara-k',
+        url: 'https://github.com/habara-k',
+      },
+    ],
     author: {
       avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+      login: 'habara-k',
+      url: 'https://github.com/habara-k',
+    },
+    body: '',
+    category: 'pullRequest',
+    comments: [
+      {
+        author: {
+          avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+          login: 'habara-k',
+          url: 'https://github.com/habara-k',
+        },
+        body: 'HELP!! \r\nhttps://github.com/knknk98/issue-twitter/blob/b0aa3068041d6ffd8d1c351b7567dbb44f9108d5/frontend/components/Timeline.vue#L64-L66',
+        createdAt: '2021-06-30T11:27:12Z',
+        howLongAgo: '23h',
+        updatedAt: '2021-06-30T11:27:12Z',
+        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871321394',
+      },
+      {
+        author: {
+          avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+          login: 'habara-k',
+          url: 'https://github.com/habara-k',
+        },
+        body: '<img width="458" alt="スクリーンショット 2021-06-30 23 36 16" src="https://user-images.githubusercontent.com/34413567/123981299-325f6d00-d9fd-11eb-91fa-f2b513f0507f.png">\r\n',
+        createdAt: '2021-06-30T14:45:33Z',
+        howLongAgo: '19h',
+        updatedAt: '2021-06-30T14:45:33Z',
+        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871468660',
+      },
+      {
+        author: {
+          avatarUrl: 'https://avatars.githubusercontent.com/u/38308823?v=4',
+          login: 'yuta-ike',
+          url: 'https://github.com/yuta-ike',
+        },
+        body: 'やったぁ🎉🎉',
+        createdAt: '2021-06-30T14:49:51Z',
+        howLongAgo: '19h',
+        updatedAt: '2021-06-30T14:49:51Z',
+        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871472214',
+      },
+      {
+        author: {
+          avatarUrl:
+            'https://avatars.githubusercontent.com/u/65712721?u=8d33b92b7c5cca2cdfaa755054a865131d8704c7&v=4',
+          login: 'knknk98',
+          url: 'https://github.com/knknk98',
+        },
+        body: '![LGTM](https://image.lgtmoon.dev/132319)',
+        createdAt: '2021-06-30T14:50:33Z',
+        howLongAgo: '19h',
+        updatedAt: '2021-06-30T14:50:33Z',
+        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871472788',
+      },
+      {
+        author: {
+          avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+          login: 'habara-k',
+          url: 'https://github.com/habara-k',
+        },
+        body: '## TODO\r\n\r\n- [ ] avatarの画像\r\n- [ ] assigneesの画像\r\n- [ ] APIとの接続\r\n- [ ] 折りたたみ（Issueに飛ばす or ここで展開する）',
+        createdAt: '2021-06-30T14:51:22Z',
+        howLongAgo: '19h',
+        updatedAt: '2021-06-30T14:51:22Z',
+        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871473437',
+      },
+    ],
+    createdAt: '2021-06-30T11:26:03Z',
+    howLongAgo: '19h',
+    labels: [
+      {
+        color: '#008672',
+        name: 'help wanted',
+      },
+    ],
+    number: 26,
+    state: 'MERGED',
+    title: 'TLにAPIを繋げる',
+    updatedAt: '2021-06-30T14:51:32Z',
+    url: 'https://github.com/knknk98/issue-twitter/pull/26',
+  },
+  {
+    author: {
+      avatarUrl: 'https://github.com/habara-k.png',
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
@@ -89,13 +181,13 @@ const CONTENTS_DUMMY_DATA: Content[] = [
   {
     assignees: [
       {
-        avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+        avatarUrl: 'https://github.com/habara-k.png',
         login: 'habara-k',
         url: 'https://github.com/habara-k',
       },
     ],
     author: {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+      avatarUrl: 'https://github.com/habara-k.png',
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
@@ -117,13 +209,13 @@ const CONTENTS_DUMMY_DATA: Content[] = [
   {
     assignees: [
       {
-        avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+        avatarUrl: 'https://github.com/habara-k.png',
         login: 'habara-k',
         url: 'https://github.com/habara-k',
       },
     ],
     author: {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+      avatarUrl: 'https://github.com/habara-k.png',
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
@@ -132,7 +224,7 @@ const CONTENTS_DUMMY_DATA: Content[] = [
     comments: [
       {
         author: {
-          avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+          avatarUrl: 'https://github.com/habara-k.png',
           login: 'habara-k',
           url: 'https://github.com/habara-k',
         },
@@ -160,13 +252,28 @@ const CONTENTS_DUMMY_DATA: Content[] = [
   {
     assignees: [
       {
-        avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+        avatarUrl: 'https://github.com/habara-k.png',
         login: 'habara-k',
         url: 'https://github.com/habara-k',
       },
+      {
+        avatarUrl: 'https://github.com/knknk98.png',
+        login: 'knknk98',
+        url: 'https://github.com/knknk98',
+      },
+      {
+        avatarUrl: 'https://github.com/knknk98.png',
+        login: 'knknk98',
+        url: 'https://github.com/knknk98',
+      },
+      {
+        avatarUrl: 'https://github.com/knknk98.png',
+        login: 'knknk98',
+        url: 'https://github.com/knknk98',
+      },
     ],
     author: {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+      avatarUrl: 'https://github.com/habara-k.png',
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
@@ -188,19 +295,19 @@ const CONTENTS_DUMMY_DATA: Content[] = [
   {
     assignees: [
       {
-        avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+        avatarUrl: 'https://github.com/habara-k.png',
         login: 'habara-k',
         url: 'https://github.com/habara-k',
       },
       {
-        avatarUrl: 'https://avatars.githubusercontent.com/u/65712721?v=4',
-        login: 'habara-k',
+        avatarUrl: 'https://github.com/knknk98.png',
+        login: 'knknk98',
         url: 'https://github.com/knknk98',
       },
     ],
     author: {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/65712721?v=4',
-      login: 'habara-k',
+      avatarUrl: 'https://github.com/knknk98.png',
+      login: 'knknk98',
       url: 'https://github.com/knknk98',
     },
     body: '',
