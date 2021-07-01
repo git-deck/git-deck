@@ -1,7 +1,7 @@
 <template>
-  <button class="labelButton" @click="clickLabel">
+  <span style="cursor: pointer" class="labelButton" @click="clickLabel">
     <Label :color="getLabelColor(labelOpened)" :message="sendmessage"></Label>
-  </button>
+  </span>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -31,7 +31,7 @@ export default Vue.extend({
   data(): DataType {
     return {
       labelOpened: true,
-      sendcolor: '#ddddddd',
+      sendcolor: '#bbbbbb',
       sendmessage: this.message,
     }
   },

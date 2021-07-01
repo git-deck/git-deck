@@ -1,0 +1,38 @@
+.label_column{
+    & > header {
+        border-bottom: 1px solid;
+        border-color: $border;
+        min-height: 30px;
+        max-height: 80px;
+        display: flex;
+        padding: 20px;  
+        background: '#dddddd';
+        .top{
+            background: transparent;
+            .filter_list {
+                border: none;
+                width: 20px;
+                height: 20px;
+                background: transparent;
+                color: gray;
+                .material-icons {
+                    font-size: 20px;
+                }
+            }
+            // .filter_message{
+            //     font-size:
+            // }
+            .Refresh{
+                border: none;
+                width: 20px;
+                height: 20px;
+                background: transparent;
+                color: gray;
+                .material-icons {
+                    font-size: 20px;
+                }
+            }
+        }
+
+    }
+}

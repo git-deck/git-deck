@@ -24,10 +24,9 @@
         <button class="Refresh">
           <span class="material-icons"> close </span>
         </button>
-
-        <span class="message">このカラムを削除</span>
       </div>
     </header>
+    <span class="message">このカラムを削除</span>
   </div>
 </template>
 
@@ -49,6 +48,31 @@ export default Vue.extend({
         {
           color: '#00ffff',
           message: 'bug',
+        },
+        {
+          color: '#0000ff',
+          message: 'bug',
+        },
+        {
+          color: '#00ff00',
+          message: 'bug',
+        },
+        {
+          color: '#00f0f0',
+          message: 'bug',
+        },
+        {
+          color: '#f0f0f0',
+          message: 'bug',
+        },
+        {
+          color: '#000f00',
+          message: 'bug',
+        },
+        {
+          color: '#0000ff',
+          message:
+            'yarukinasissssiiooooooooooooooooooooooooooooooooiiiiiiiiiiiiiiiiiiiiiiiiiiii',
         },
       ],
     }
