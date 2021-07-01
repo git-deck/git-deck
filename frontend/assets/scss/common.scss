@@ -23,8 +23,40 @@ a {
 .label{
     font-size: 6px;
     padding: 0px 10px;
+    margin-right: 1.5px;
     border-radius: 24px;
     display: inline-block;
     vertical-align: middle;
-    background-color: hotpink;
+    //background-color: hotpink;
+    font-weight: bold;
+}
+
+.modal-content {
+    padding: 30px;
+    & > .header {
+        display: inline-flex;
+        border-bottom: 1px solid;
+        border-color: $border;
+        align-items: baseline;
+        width: 100%;
+
+        .topic{
+            flex: 1;
+            font-size: 24px;
+        }
+
+        .material-icons {
+            font-size: 24px;
+            color: gray;
+        }
+        button {
+            padding: 0px;
+            border: none;
+            background: transparent;
+        }
+
+    }
+    & > .main-contents {
+        padding-top: 25px;
+    }
 }

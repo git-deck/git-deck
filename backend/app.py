@@ -102,18 +102,18 @@ def user():
 # e.g.
 # [
 #   {
-#     "color": "d73a4a", 
+#     "color": "#d73a4a", 
 #     "name": "bug"
 #   }, 
 #   {
-#     "color": "0075ca", 
+#     "color": "#0075ca", 
 #     "name": "documentation"
 #   }, 
 #   ...
 # ]
 @app.route("/labels/<owner>/<repo>")
 def labels(owner, repo):
-    resp = github_client().execute(
+    labels = github_client().execute(
         gql("""
         query($owner:String!, $repo:String!) {
             repository(owner: $owner, name: $repo) {
@@ -132,10 +132,11 @@ def labels(owner, repo):
             "owner": owner,
             "repo": repo 
         }
-    )
+    )["repository"]["labels"]
     
-    ret = [edge["node"] for edge in resp["repository"]["labels"]["edges"]]
-    return jsonify(ret)
+    labels = remove_edge_and_nodes(labels)
+    labels = add_hash_to_labels(labels)
+    return jsonify(labels)
 
 
 # 指定したリポジトリのタイムライン取得
@@ -242,9 +243,10 @@ def get_issues(owner, repo, labels):
 
     issues = [issue["node"] for issue in issues]
     for issue in issues:
-        remove_edge_and_nodes(issue, "comments")
-        remove_edge_and_nodes(issue, "assignees")
-        remove_edge_and_nodes(issue, "labels")
+        issue["comments"] = remove_edge_and_nodes(issue["comments"])
+        issue["assignees"] = remove_edge_and_nodes(issue["assignees"])
+        issue["labels"] = remove_edge_and_nodes(issue["labels"])
+        issue["labels"] = add_hash_to_labels(issue["labels"])
 
         issue["category"] = "issue"
 
@@ -383,9 +385,10 @@ def get_pull_requests(owner, repo, labels):
 
     pull_requests = [pull_request["node"] for pull_request in pull_requests]
     for pull_request in pull_requests:
-        remove_edge_and_nodes(pull_request, "comments")
-        remove_edge_and_nodes(pull_request, "assignees")
-        remove_edge_and_nodes(pull_request, "labels")
+        pull_request["comments"] = remove_edge_and_nodes(pull_request["comments"])
+        pull_request["assignees"] = remove_edge_and_nodes(pull_request["assignees"])
+        pull_request["labels"] = remove_edge_and_nodes(pull_request["labels"])
+        pull_request["labels"] = add_hash_to_labels(pull_request["labels"])
 
         pull_request["category"] = "pullRequest"
 
@@ -410,33 +413,12 @@ def get_repo_id(owner, repo):
 
 def get_ideas(owner, repo):
     ideas = Idea.query.filter(Idea.repo_id == get_repo_id(owner, repo)).all()
-
-    authors = {}
-    for idea in ideas:
-        authors[idea.author_login] = {}
-
-    authors = {
-        author: github_client().execute(gql("""
-            query($login:String!) {
-                user(login: $login) {
-                    url
-                    avatarUrl
-                }
-            }
-            """),
-            variable_values={
-                "login": author,
-            })["user"]
-        for author in authors
-    }
-
-    return [
-        {
+    return [{
             "body": idea.body,
             "author": {
                 "login": idea.author_login,
-                "url": authors[idea.author_login]["url"],
-                "avatarUrl": authors[idea.author_login]["avatarUrl"],
+                "url": "https://github.com/{}".format(idea.author_login),
+                "avatarUrl": "https://github.com/{}.png".format(idea.author_login),
             },
             "createdAt": idea.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "updatedAt": idea.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -456,6 +438,12 @@ def post_idea():
     return 'Idea is created successfully'
 
 
-def remove_edge_and_nodes(obj, key):
-    if key in obj:
-        obj[key] = [el["node"] for el in obj[key]["edges"]]
+def add_hash_to_labels(labels):
+    return [
+        {
+            "color": "#{}".format(label["color"]),
+            "name": label["name"],
+        } for label in labels]
+
+def remove_edge_and_nodes(obj):
+    return [el["node"] for el in obj["edges"]]
