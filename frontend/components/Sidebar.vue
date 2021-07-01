@@ -41,8 +41,8 @@ export default Vue.extend({
       this.$modal.hide('column-modal')
     },
     append() {
-      const owner = 'hoge'
-      const repo = 'fuga'
+      const owner = 'knknk98'
+      const repo = 'issue-twitter'
       this.$emit('appendTimeline', owner, repo)
       this.hideModal()
     },

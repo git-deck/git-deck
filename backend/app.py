@@ -1,6 +1,7 @@
 import requests
 from urllib.parse import parse_qs
 from flask import Flask, request, redirect, session, url_for, jsonify
+from flask_cors import CORS
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from dotenv import dotenv_values
@@ -23,6 +24,7 @@ if "FLASK_SECRET_KEY" in env:
     app.secret_key = env["FLASK_SECRET_KEY"]
 app.config["JSON_AS_ASCII"] = False
 
+CORS(app)
 
 init_db(app)
 
@@ -62,7 +64,8 @@ def callback():
 
 @app.route("/logout")
 def logout():
-    del session["access_token"]
+    if "access_token" in session:
+        del session["access_token"]
     return redirect(url_for("hello"))
 
 
