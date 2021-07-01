@@ -3,10 +3,8 @@
     <header>
       <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
       <span class="title"
-        ><a class="username" href="https://github.com/knknk98/">knknk98/</a
-        ><a class="reponame" href="https://github.com/knknk98/sushi-chat/"
-          >sushi-sushi-</a
-        ></span
+        ><a class="username" :href="ownerUrl">{{ owner }}/</a
+        ><a class="reponame" :href="repoUrl">{{ repo }}</a></span
       >
       <button class="chat" @click="showModal">
         <span class="material-icons"> chat_bubble_outline </span>
@@ -41,6 +39,24 @@ type DataType = {
 
 export default Vue.extend({
   components: { Octicon },
+  props: {
+    owner: {
+      type: String,
+      required: true,
+    },
+    repo: {
+      type: String,
+      required: true,
+    },
+    ownerUrl: {
+      type: String,
+      required: true,
+    },
+    repoUrl: {
+      type: String,
+      required: true,
+    },
+  },
   data(): DataType {
     return {
       Octicons,
