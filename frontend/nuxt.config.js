@@ -55,4 +55,8 @@ export default {
       families: ['Material Icons'],
     },
   },
+
+  env: {
+    accessToken: process.env.NUXT_ENV_ACCESS_TOKEN || 'dummy_access_token',
+  },
 }

@@ -13,7 +13,6 @@ ENV TZ Asia/Tokyo
 RUN npm uninstall -g yarn && \
     npm install -g yarn && \
     yarn install && \
-    yarn add @nuxtjs/markdownit && \
     yarn global add @vue/cli nuxt create-nuxt-app
 
 # コンテナソースパス作成・移動

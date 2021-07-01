@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Sidebar v-on:appendTimeline="append" />
+    <Sidebar @appendTimeline="append" />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
@@ -43,14 +43,25 @@ export default Vue.extend({
   methods: {
     append(owner: string, repo: string) {
       // API叩くサンプル
+      // .env にアクセストークンを入れておく最悪実装
+      // TODO: Loginができたらアクセストークン取得
+      console.log('process.env.accessToken:', process.env.accessToken)
+      const self = this
       axios
-        .get('/', {
-          params: {
-            //labels: 'help wanted',
+        .get('/timeline/' + owner + '/' + repo, {
+          headers: {
+            AccessToken: process.env.accessToken,
           },
         })
         .then(function (response) {
           console.log(response)
+          self.timeline.push({
+            owner,
+            repo,
+            ownerUrl: 'https://github.com/' + owner,
+            repoUrl: 'https://github.com/' + owner + '/' + repo,
+            contents: response.data,
+          })
         })
         .catch(function (error) {
           console.log(error)
@@ -58,14 +69,6 @@ export default Vue.extend({
         .then(function () {
           // always executed
         })
-
-      this.timeline.push({
-        owner,
-        repo,
-        ownerUrl: 'https://github.com/' + owner,
-        repoUrl: 'https://github.com/' + owner + '/' + repo,
-        contents: CONTENTS_DUMMY_DATA,
-      })
     },
   },
 })

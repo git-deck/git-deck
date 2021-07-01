@@ -17,12 +17,16 @@
           </button>
         </div>
         <div class="main-contents">
-          <div>追加したいリポジトリ名を入力してください</div>
-          <input placeholder="username/repository" size="50%" /><button
-            @click="append"
+          <label for="repository-input" class="repositoryInputLabel"
+            >追加したいリポジトリ名を入力してください</label
           >
-            追加
-          </button>
+          <input
+            id="repository-input"
+            v-model="repositoryInput"
+            placeholder="username/repository"
+            class="inputField"
+            size="50%"
+          /><button class="addButton" @click="append">追加</button>
         </div>
       </div>
     </modal>
@@ -32,7 +36,16 @@
 <script lang="ts">
 import Vue from 'vue'
 
+type DataType = {
+  repositoryInput: String
+}
+
 export default Vue.extend({
+  data(): DataType {
+    return {
+      repositoryInput: '',
+    }
+  },
   methods: {
     showModal() {
       this.$modal.show('column-modal')
@@ -41,9 +54,11 @@ export default Vue.extend({
       this.$modal.hide('column-modal')
     },
     append() {
-      const owner = 'knknk98'
-      const repo = 'issue-twitter'
-      this.$emit('appendTimeline', owner, repo)
+      const parsed = this.repositoryInput.match(
+        /([a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38})/gi
+      )
+      console.log('parsed:', parsed)
+      this.$emit('appendTimeline', parsed[0], parsed[1])
       this.hideModal()
     },
   },

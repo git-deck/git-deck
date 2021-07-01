@@ -9,11 +9,18 @@
       <Icon :avatar-url="author.avatarUrl" :class="type" />
       <div v-if="thread" class="thread-line"></div>
     </div>
+    <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
     <div class="titleItem">
-      <span class="title">{{ title }}</span>
-      <span v-if="(type === 'issue') | (type === 'pullRequest')" class="number"
-        >#{{ number }}</span
-      >
+      <div class="titleLine">
+        <h1 class="title">
+          {{ title }}
+          <span
+            v-if="(type === 'issue') | (type === 'pullRequest')"
+            class="number"
+            >#{{ number }}</span
+          >
+        </h1>
+      </div>
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon
           v-for="(assignee, index) in assignees.slice(0, 3)"
@@ -69,23 +76,17 @@
           :color="label.color"
         />
       </div>
-      <a
-        v-if="
-          (type === 'issue' || type === 'pullRequest') && thread && readmore
-        "
-        :href="url"
-        target="_blank"
-        class="readmore"
-      >
-        このスレッドを全て表示
-      </a>
+    </div>
+    <div v-if="showReadMoreIcon" class="readmoreItem">
+      <a :href="url" target="_blank" class="readmore"> 返信をさらに表示 </a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-const { Octicon, Octicons } = require('octicons-vue')
+// @ts-ignore
+import { Octicon, Octicons } from 'octicons-vue'
 type DataType = {
   Octicons: any
 }
@@ -181,6 +182,15 @@ export default Vue.extend({
     return {
       Octicons,
     }
+  },
+  computed: {
+    showReadMoreIcon() {
+      return (
+        (this.type === 'issue' || this.type === 'pullRequest') &&
+        this.thread &&
+        this.readmore
+      )
+    },
   },
 })
 </script>

@@ -46,6 +46,11 @@ export default Vue.extend({
       items: [
         {
           // numberが識別子
+          color: '#ff0000',
+          message: 'すべて',
+        },
+        {
+          // numberが識別子
           color: '#ff0f00',
           message: 'label',
         },
