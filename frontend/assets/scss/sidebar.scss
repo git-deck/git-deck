@@ -10,8 +10,11 @@
     height: 100%;
 
     .material-icons {
-      color: white;
+      color: #AAB8C2;
       font-size: 40px;
+      &:hover{
+        color: white;
+      }
     }
     .add-button{
       position: absolute;
