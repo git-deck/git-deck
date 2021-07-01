@@ -7,6 +7,7 @@
         :author="content.author"
         :how-long-ago="content.howLongAgo"
         :type="'idea'"
+        :state="content.state"
       />
     </div>
     <div v-else>
@@ -20,6 +21,7 @@
         :how-long-ago="content.howLongAgo"
         :thread="content.comments.length > 0"
         :type="content.category"
+        :state="content.state"
       />
       <Comment
         v-for="(comment, index) in content.comments"
