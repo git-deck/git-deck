@@ -176,11 +176,16 @@ const CONTENTS_DUMMY_DATA: Content[] = [
         login: 'habara-k',
         url: 'https://github.com/habara-k',
       },
+      {
+        avatarUrl: 'https://avatars.githubusercontent.com/u/65712721?v=4',
+        login: 'habara-k',
+        url: 'https://github.com/knknk98',
+      },
     ],
     author: {
-      avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/65712721?v=4',
       login: 'habara-k',
-      url: 'https://github.com/habara-k',
+      url: 'https://github.com/knknk98',
     },
     body: '',
     category: 'pullRequest',
