@@ -34,6 +34,8 @@ a {
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    // ラベル内のテキストが選択されないようにする
+    user-select: none;
   }
 }
 
