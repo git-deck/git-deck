@@ -94,7 +94,7 @@ const CONTENTS_DUMMY_DATA: Content[] = [
       },
     ],
     number: 21,
-    state: 'MERGED',
+    state: 'OPEN',
     title: '[Fix] GET /timeline',
     url: 'https://github.com/knknk98/issue-twitter/pull/21',
   },

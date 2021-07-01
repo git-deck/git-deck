@@ -132,13 +132,25 @@
                     display: table-cell;
                     border-radius: 50%;
                 }
-                .pull-request {
+                .pull-request-open {
                     padding: 3px;
                     background-color: $git-green;
                 }
-                .issue {
+                .pull-request-closed {
+                    padding: 3px;
+                    background-color: $git-red;
+                }
+                .pull-request-merged {
+                    padding: 3px;
+                    background-color: $git-purple;
+                }
+                .issue-open {
                     padding: 2px;
                     background-color: $git-green;
+                }
+                .issue-closed {
+                    padding: 2px;
+                    background-color: $git-red;
                 }
                 .idea {
                     padding-top: 2px;

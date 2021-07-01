@@ -26,14 +26,29 @@
     </div>
     <div class="markItem">
       <Octicon
-        v-if="type === 'pullRequest'"
+        v-if="type === 'pullRequest' && state === 'OPEN'"
         :icon="Octicons.gitPullRequest"
-        class-name="comment-type-mark pull-request"
+        class-name="comment-type-mark pull-request-open"
       />
       <Octicon
-        v-if="type === 'issue'"
+        v-if="type === 'pullRequest' && state === 'CLOSED'"
+        :icon="Octicons.gitPullRequest"
+        class-name="comment-type-mark pull-request-closed"
+      />
+      <Octicon
+        v-if="type === 'pullRequest' && state === 'MERGED'"
+        :icon="Octicons.gitPullRequest"
+        class-name="comment-type-mark pull-request-merged"
+      />
+      <Octicon
+        v-if="type === 'issue' && state === 'OPEN'"
         :icon="Octicons.issueOpened"
-        class-name="comment-type-mark issue"
+        class-name="comment-type-mark issue-open"
+      />
+      <Octicon
+        v-if="type === 'issue' && state === 'CLOSED'"
+        :icon="Octicons.issueOpened"
+        class-name="comment-type-mark issue-closed"
       />
       <Octicon
         v-if="type === 'idea'"
@@ -84,6 +99,10 @@ export default Vue.extend({
     title: {
       type: String,
       default: 'チャット画面UIの実装',
+    },
+    state: {
+      type: String,
+      default: 'OPEN',
     },
     number: {
       type: Number,
