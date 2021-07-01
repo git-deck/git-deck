@@ -18,7 +18,9 @@
         </div>
         <div class="main-contents">
           <div>追加したいリポジトリ名を入力してください</div>
-          <input placeholder="username/repository" size="50%" /><button>
+          <input placeholder="username/repository" size="50%" /><button
+            @click="append"
+          >
             追加
           </button>
         </div>
@@ -37,6 +39,12 @@ export default Vue.extend({
     },
     hideModal() {
       this.$modal.hide('column-modal')
+    },
+    append() {
+      const owner = 'hoge'
+      const repo = 'fuga'
+      this.$emit('appendTimeline', owner, repo)
+      this.hideModal()
     },
   },
 })

@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <Sidebar />
-    <Timeline />
+    <Sidebar v-on:appendTimeline="append" />
+    <Timeline
+      v-for="(tl, index) in timeline"
+      :key="index"
+      :owner="tl.owner"
+      :repo="tl.repo"
+      :owner-url="tl.ownerUrl"
+      :repo-url="tl.repoUrl"
+    />
   </div>
 </template>
 
@@ -10,5 +17,38 @@ import Vue from 'vue'
 import VModal from 'vue-js-modal'
 
 Vue.use(VModal)
-export default Vue.extend({})
+
+type DataType = {
+  timeline: Object[]
+}
+export default Vue.extend({
+  data(): DataType {
+    return {
+      timeline: [
+        {
+          owner: 'knknk98',
+          repo: 'issue-twitter',
+          ownerUrl: 'https://github.com/knknk98',
+          repoUrl: 'https://github.com/knknk98/issue-twitter',
+        },
+        {
+          owner: 'knknk98',
+          repo: 'issue-twitter',
+          ownerUrl: 'https://github.com/knknk98',
+          repoUrl: 'https://github.com/knknk98/issue-twitter',
+        },
+      ],
+    }
+  },
+  methods: {
+    append(owner: string, repo: string) {
+      this.timeline.push({
+        owner,
+        repo,
+        ownerUrl: 'https://github.com/' + owner,
+        repoUrl: 'https://github.com/' + owner + '/' + repo,
+      })
+    },
+  },
+})
 </script>
