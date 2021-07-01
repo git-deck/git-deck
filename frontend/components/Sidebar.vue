@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
     <div class="menu">
-      <button @click="showModal">
-        <span class="material-icons"> add </span>
-      </button>
       <button>
         <Icon />
+      </button>
+      <button class="add-button" @click="showModal">
+        <span class="material-icons"> add </span>
       </button>
     </div>
     <modal name="column-modal" :click-to-close="false" :draggable="true">

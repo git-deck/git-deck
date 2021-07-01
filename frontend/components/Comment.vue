@@ -44,7 +44,7 @@
       />
       <Octicon
         v-if="type === 'pullRequest' && state === 'MERGED'"
-        :icon="Octicons.gitPullRequest"
+        :icon="Octicons.gitMerge"
         class-name="comment-type-mark pull-request-merged"
       />
       <Octicon
@@ -54,7 +54,7 @@
       />
       <Octicon
         v-if="type === 'issue' && state === 'CLOSED'"
-        :icon="Octicons.issueOpened"
+        :icon="Octicons.issueClosed"
         class-name="comment-type-mark issue-closed"
       />
       <Octicon

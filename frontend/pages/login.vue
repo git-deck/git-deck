@@ -8,7 +8,11 @@
         </div>
       </div>
       <div class="login-button">
+<<<<<<< HEAD
+        <div class="caption">login with your GitHub account</div>
+=======
         <div class="caption">Login with GitHub account</div>
+>>>>>>> main
         <button>
           <Octicon :icon="Octicons.markGithub" class-name="github-mark" />Log in
         </button>
