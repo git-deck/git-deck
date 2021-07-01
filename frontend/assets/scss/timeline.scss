@@ -1,13 +1,19 @@
+
 // タイムライン
 .column {
     flex: 0 0 auto;
     height: 100vh;
     width: 320px;
-    border-left: 6px solid;
-    border-right: 6px solid;
-    border-color: $border;
     display: flex;
     flex-direction: column;
+    border-left: 6px solid;
+    border-color: $border;
+    
+
+    &:last-child {
+        border-right: 6px solid;
+        border-color: $border;
+    }
 
     // ヘッダー
     & > header {

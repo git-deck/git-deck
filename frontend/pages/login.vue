@@ -1,15 +1,5 @@
 <template>
-  <div class="container">
-    <Sidebar @appendTimeline="append" />
-    <Timeline
-      v-for="(tl, index) in timeline"
-      :key="index"
-      :owner="tl.owner"
-      :repo="tl.repo"
-      :owner-url="tl.ownerUrl"
-      :repo-url="tl.repoUrl"
-    />
-  </div>
+  <div class="container">ログイン画面</div>
 </template>
 
 <script lang="ts">
