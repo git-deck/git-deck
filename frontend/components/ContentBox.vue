@@ -4,6 +4,7 @@
       <Comment
         :title="content.author.login"
         :body="content.body"
+        :author="content.author"
         :how-long-ago="content.howLongAgo"
         :type="'idea'"
       />
@@ -13,7 +14,9 @@
         :title="content.title"
         :number="content.number"
         :labels="content.labels"
+        :assignees="content.assignees"
         :body="content.body"
+        :author="content.author"
         :how-long-ago="content.howLongAgo"
         :thread="content.comments.length > 0"
         :type="content.category"
@@ -23,6 +26,7 @@
         :key="index"
         :title="content.author.login"
         :body="comment.body"
+        :author="content.author"
         :how-long-ago="comment.howLongAgo"
         :type="'reply'"
         :thread="index + 1 < content.comments.length"

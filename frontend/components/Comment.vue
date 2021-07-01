@@ -6,7 +6,7 @@
     }"
   >
     <div class="iconItem">
-      <Icon :class="type" />
+      <Icon :avatar-url="author.avatarUrl" :class="type" />
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div class="titleItem">
@@ -15,7 +15,10 @@
         >#{{ number }}</span
       >
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
-        <Icon class="assigner" /> <Icon class="assigner" /><Icon
+        <Icon
+          v-for="(assignee, index) in assignees"
+          :key="index"
+          :avatar-url="assignee.avatarUrl"
           class="assigner"
         />
         ...
@@ -94,6 +97,16 @@ export default Vue.extend({
       type: String,
       default: '2日',
     },
+    author: {
+      type: Object,
+      default() {
+        return {
+          login: 'habara-k',
+          avatarUrl: 'https://github.com/knknk98.png',
+          url: 'https://github.com/knknk98',
+        }
+      },
+    },
     labels: {
       type: Array,
       default() {
@@ -109,6 +122,25 @@ export default Vue.extend({
           },
           {
             name: 'good first',
+          },
+        ]
+      },
+    },
+    assignees: {
+      type: Array,
+      default() {
+        return [
+          {
+            avatarUrl: 'https://github.com/habara-k.png',
+          },
+          {
+            avatarUrl: 'https://github.com/knknk98.png',
+          },
+          {
+            avatarUrl: 'https://github.com/zwwaa-ku.png',
+          },
+          {
+            avatarUrl: 'https://github.com/yuta-ike.png',
           },
         ]
       },

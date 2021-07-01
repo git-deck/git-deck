@@ -1,9 +1,16 @@
 <template>
-  <img class="user-icon" src="https://github.com/knknk98.png" alt="icon" />
+  <img class="user-icon" :src="avatarUrl" alt="icon" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({})
+export default Vue.extend({
+  props: {
+    avatarUrl: {
+      type: String,
+      default: 'https://github.com/knknk98.png',
+    },
+  },
+})
 </script>
