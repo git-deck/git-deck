@@ -17,7 +17,8 @@
                     height: 25px;
                     background: transparent;
                     color: gray;
-                    padding:0px 4px 0px 0px;
+                    padding:0px;
+                    margin:0px 0px 4px 0px;
                     .material-icons {
                         font-size: 25px;
                     }
@@ -31,7 +32,7 @@
             }
             .Refresh{
                 margin:0 0 0 auto;
-                padding:0px 2px 0px 0px;
+                padding:0px 0px 0px 0px;
                 border: none;
                 width: 25px;
                 height: 25px;
@@ -42,11 +43,8 @@
                 }
             }
         }
-        .labels{
-            .labelButton{
-                padding: 0px 2px;
-            }
-        }
+        // .labels{
+        // }
 
     }
     &> .bottom{
@@ -60,7 +58,8 @@
                 margin: 0 0 0 auto;
                 .Close{
                     border: none;
-                    padding: 0px 4px 0px 0px;
+                    padding: 0px;
+                    margin : 0px 0px 2px 0px;
                     width: 20px;
                     height: 20px;
                     background: transparent;
