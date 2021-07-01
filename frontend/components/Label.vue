@@ -1,9 +1,11 @@
 <template>
-  <span
-    :style="{ backgroundColor: color, color: getColorByBgColor(color) }"
-    class="label"
-  >
-    {{ message }}
+  <span class="labelBlock">
+    <span
+      :style="{ backgroundColor: color, color: getColorByBgColor(color) }"
+      class="label"
+    >
+      {{ message }}
+    </span>
   </span>
 </template>
 <script lang="ts">

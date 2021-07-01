@@ -19,16 +19,18 @@ a {
     background-color: white;
     display: block;
 }
-
-.label{
-    font-size: 6px;
-    padding: 0px 10px;
-    margin-right: 1.5px;
-    border-radius: 24px;
-    display: inline-block;
-    vertical-align: middle;
-    //background-color: hotpink;
-    font-weight: bold;
+.labelBlock{
+    padding: 0px 2px 0px 0px;
+    .label{
+        font-size: 6px;
+        padding: 0px 10px;
+        margin-right: 1.5px;
+        border-radius: 24px;
+        display: inline-block;
+        vertical-align: middle;
+        //background-color: hotpink;
+        font-weight: bold;
+    }
 }
 
 .modal-content {
