@@ -37,7 +37,11 @@ export default {
     '@nuxtjs/axios',
     'nuxt-webfontloader',
     '@nuxtjs/auth',
+    '@nuxtjs/markdownit',
   ],
+  markdownit: {
+    injected: true,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

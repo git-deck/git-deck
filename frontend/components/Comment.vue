@@ -66,7 +66,7 @@
     <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
       <div v-if="(type === 'reply') | (type === 'idea')" class="text">
-        {{ body }}
+        <div v-html="$md.render(body)"></div>
       </div>
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
