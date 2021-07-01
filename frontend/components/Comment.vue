@@ -16,12 +16,12 @@
       >
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon
-          v-for="(assignee, index) in assignees"
+          v-for="(assignee, index) in assignees.slice(0, 3)"
           :key="index"
           :avatar-url="assignee.avatarUrl"
           class="assigner"
         />
-        ...
+        {{ assignees.length > 3 ? '...' : '' }}
       </div>
     </div>
     <div class="markItem">
@@ -69,12 +69,16 @@
           :color="label.color"
         />
       </div>
-      <div
-        v-if="(type === 'issue' || type === 'pullRequest') && thread"
+      <a
+        v-if="
+          (type === 'issue' || type === 'pullRequest') && thread && readmore
+        "
+        :href="url"
+        target="_blank"
         class="readmore"
       >
         このスレッドを全て表示
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -125,6 +129,14 @@ export default Vue.extend({
           url: 'https://github.com/knknk98',
         }
       },
+    },
+    url: {
+      type: String,
+      default: 'https://github.com/',
+    },
+    readmore: {
+      type: Boolean,
+      default: false,
     },
     labels: {
       type: Array,
