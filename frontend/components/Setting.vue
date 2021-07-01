@@ -12,8 +12,13 @@
           <span class="material-icons"> replay </span>
         </button>
       </div>
-      <div v-for="item in items" :key="item.color" class="labels">
-        <Label :color="item.color" :message="item.message"></Label>
+      <div class="labels">
+        <Label
+          v-for="(item, index) in items"
+          :key="index"
+          :color="item.color"
+          :message="item.message"
+        ></Label>
       </div>
       <div class="bottom">
         <button class="Refresh">
