@@ -1,7 +1,10 @@
 <template>
   <span class="labelBlock">
     <span
-      :style="{ backgroundColor: color, color: getColorByBgColor(color) }"
+      :style="{
+        backgroundColor: disabled ? 'rgb(197 197 197)' : color,
+        color: disabled ? 'white' : getColorByBgColor(color),
+      }"
       class="label"
     >
       {{ message }}
@@ -21,6 +24,10 @@ export default Vue.extend({
     message: {
       type: String,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {

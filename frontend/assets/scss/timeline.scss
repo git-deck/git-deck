@@ -1,204 +1,244 @@
-
 // タイムライン
 .column {
-    flex: 0 0 auto;
-    height: 100vh;
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    border-left: 6px solid;
+  flex: 0 0 auto;
+  height: 100vh;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-left: 6px solid;
+  border-color: $border;
+
+  &:last-child {
+    border-right: 6px solid;
     border-color: $border;
-    
+  }
 
-    &:last-child {
-        border-right: 6px solid;
-        border-color: $border;
+  // ヘッダー
+  & > header {
+    border-bottom: 1px solid;
+    border-color: $border;
+    min-height: 30px;
+    max-height: 80px;
+    display: flex;
+    padding: 20px;
+
+    .repoicon {
+      height: 18px;
+      width: 18px;
+      padding-right: 6px;
+      color: $git-blue;
+      //background-color: lightskyblue;
     }
 
-    // ヘッダー
-    & > header {
-        border-bottom: 1px solid;
-        border-color: $border;
-        //min-height: 30px;
-        max-height: 80px;
+    & > .title {
+      & > .username:hover,
+      & > .reponame:hover {
+        text-decoration: underline;
+      }
+    }
+    .chat {
+      border: none;
+      width: 20px;
+      height: 20px;
+      background: transparent;
+      color: gray;
+      cursor: pointer;
+      margin-right: 12px;
+      padding: 0;
+      border-radius: 2px;
+      &:hover {
+        background: rgb(240, 240, 240);
+      }
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+
+    .tune {
+      border: none;
+      width: 20px;
+      height: 20px;
+      background: transparent;
+      color: gray;
+      cursor: pointer;
+      padding: 0;
+      margin-right: -8px;
+      border-radius: 2px;
+      &:hover {
+        background: rgb(240, 240, 240);
+      }
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+
+    .title {
+      flex: 1;
+      // 2行を超えるタイトルは…で省略
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      word-break: break-all;
+      color: $git-blue;
+      line-height: tight;
+      & > .reponame {
+        font-weight: bold;
+      }
+      margin-right: 7px;
+    }
+  }
+
+  // 投稿部分
+  & > main {
+    flex: 1;
+    overflow-y: scroll;
+
+    & .comment {
+      //& > .comment {
+      padding-top: 12px;
+      padding-left: 12px;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid;
+      border-color: $border;
+      display: grid;
+      grid-template-rows: min-content 1fr;
+      grid-template-columns: 35px 1fr min-content 28px;
+      grid-template-areas:
+        'areaIcon         areaTitle areaMark areaDate'
+        'areaIcon         areaText  areaText areaText'
+        'dottedThreadLine readmore  readmore readmore';
+
+      & > .iconItem {
+        grid-area: areaIcon;
         display: flex;
-        padding: 20px;   
-        
-        .repoicon{
-            height:18px;
-            width: 18px;
-            padding-right: 6px;
-            color: $git-blue;
+        flex-direction: column;
+        align-items: center;
+
+        & > .thread-line {
+          flex: 1;
+          width: 3px;
+          background-color: $border;
+          justify-content: center;
+        }
+      }
+      & > .dottedThreadLine {
+        grid-area: dottedThreadLine;
+        margin: 0 auto;
+        border-right: 3px dotted $border;
+        transition: all 0.3s;
+      }
+      & > .titleItem {
+        grid-area: areaTitle;
+        min-width: 0;
+        word-break: break-all;
+        margin: 0 7px;
+        & > .titleLine {
+          & > .title {
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 4px;
+            & > .number {
+              font-weight: normal;
+              color: gray;
+            }
+          }
         }
 
-        .chat {
-            border: none;
-            width: 20px;
+        & > .assign {
+          display: flex;
+          align-items: flex-end;
+          color: gray;
+          margin: 4px 0;
+          .assigner {
             height: 20px;
-            background: transparent;
-            color: gray;
-            margin-right: 10px;
-            .material-icons {
-                font-size: 20px;
-            }
-        }
-
-        .tune {
-            border: none;
             width: 20px;
-            height: 20px;
-            background: transparent;
-            color: gray;
-            .material-icons {
-                font-size: 20px;
-            }
+            margin-right: 1px;
+          }
         }
+      }
+      & > .markItem {
+        grid-area: areaMark;
+        margin-right: 7px;
+        .comment-type-mark {
+          height: 20px;
+          width: 20px;
+          color: white;
+          display: table-cell;
+          border-radius: 50%;
+        }
+        .pull-request-open {
+          padding: 3px;
+          background-color: $git-green;
+        }
+        .pull-request-closed {
+          padding: 3px;
+          background-color: $git-red;
+        }
+        .pull-request-merged {
+          padding: 3px;
+          background-color: $git-purple;
+        }
+        .issue-open {
+          padding: 2px;
+          background-color: $git-green;
+        }
+        .issue-closed {
+          padding: 2px;
+          background-color: $git-red;
+        }
+        .idea {
+          padding-top: 4px;
+          padding-bottom: 4px;
+          padding-right: 4px;
+          padding-left: 4px;
+          background-color: $idea-color;
+        }
+      }
+      & > .dateItem {
+        grid-area: areaDate;
+        color: gray;
+        font-size: 12px;
+        display: inline-block;
+        text-align: right;
+      }
+      & > .textItem {
+        grid-area: areaText;
+        margin: 4px 7px 4px 7px;
+        word-break: break-all;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      & > .readmoreItem {
+        margin-top: 4px;
+        grid-area: readmore;
 
-        .title {
-            flex: 1;
-            // 2行を超えるタイトルは…で省略
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            overflow: hidden;
-            word-break:break-all;
-            color: $git-blue;
-            & > .reponame{
-                font-weight: bold;
-            }
-            margin-right: 7px;
+        & > .readmore {
+          font-size: 12px;
+          color: $git-blue;
+          text-align: center;
+          &:hover {
+            text-decoration: underline;
+          }
         }
+      }
     }
-
-    // 投稿部分
-    & > main {
-        flex: 1;
-        overflow-y: scroll;
-
-        & .comment {
-        //& > .comment {
-            padding-top: 15px;
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid;
-            border-color: $border;
-            display: grid;
-            grid-template-rows: min-content 1fr;
-            grid-template-columns: 35px 1fr min-content 28px;
-            grid-template-areas:
-            "areaIcon areaTitle areaMark areaDate"
-            "areaIcon areaText areaText areaText";
-
-            &>.iconItem {
-                grid-area: areaIcon;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-
-                .thread-line{
-                    flex: 1;
-                    width: 3px;
-                    background-color: $border;
-                }
-            }
-            &>.titleItem {
-                grid-area: areaTitle;
-                min-width: 0;
-                word-break:break-all;
-                margin: 0 7px;
-                & > .title {
-                    font-weight: bold;
-                    font-size: 12px;   
-                }
-                
-                & > .number {
-                    color: gray;
-                    font-size: 12px;
-                }
-                & > .assign {
-                    display: flex;
-                    align-items: flex-end;
-                    color: gray;
-                    .assigner {
-                        height: 20px;
-                        width: 20px;
-                        margin-right: 1px;
-                    }
-                }
-            }
-            &>.markItem {
-                grid-area: areaMark;
-                margin-right: 7px;
-                .comment-type-mark {
-                    height: 20px;
-                    width: 20px;
-                    color: white;
-                    display: table-cell;
-                    border-radius: 50%;
-                }
-                .pull-request-open {
-                    padding: 3px;
-                    background-color: $git-green;
-                }
-                .pull-request-closed {
-                    padding: 3px;
-                    background-color: $git-red;
-                }
-                .pull-request-merged {
-                    padding: 3px;
-                    background-color: $git-purple;
-                }
-                .issue-open {
-                    padding: 2px;
-                    background-color: $git-green;
-                }
-                .issue-closed {
-                    padding: 2px;
-                    background-color: $git-red;
-                }
-                .idea {
-                    padding-top: 2px;
-                    padding-bottom: 2px;
-                    padding-right: 3px;
-                    padding-left: 2px;
-                    background-color: $idea-color;
-                }
-            }
-            &>.dateItem {
-                grid-area: areaDate;
-                color: gray;
-                font-size: 12px;
-                display: inline-block;
-            }
-            &>.textItem {
-                grid-area: areaText;
-                margin: 0 7px;
-                word-break:break-all;
-                font-size: 12px;
-                & > .readmore {
-                    padding: 3px 0;
-                    font-size: 12px;
-                    color: $git-blue;
-                }
-            }
-
-        }
-        & .thread {
-            padding-bottom: 0;
-            border-bottom: none;
-            min-height: 60px;
-        }
+    & .thread {
+      padding-bottom: 0;
+      border-bottom: none;
+      min-height: 60px;
     }
+  }
 
-    // 投稿欄
-    .modal-content {
-        textarea {
-            width: 100%;
-            margin-bottom: 3px;
-        }
-        .repo {
-            padding-bottom: 15px;
-        }
+  // 投稿欄
+  .modal-content {
+    textarea {
+      width: 100%;
+      margin-bottom: 3px;
     }
+    .repo {
+      padding-bottom: 15px;
+    }
+  }
 }

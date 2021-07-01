@@ -1,6 +1,10 @@
 <template>
   <span style="cursor: pointer" class="labelButton" @click="clickLabel">
-    <Label :color="getLabelColor(labelOpened)" :message="sendmessage"></Label>
+    <Label
+      :color="color"
+      :message="sendmessage"
+      :disabled="!labelOpened"
+    ></Label>
   </span>
 </template>
 <script lang="ts">
@@ -16,7 +20,7 @@ type DataType = {
 export default Vue.extend({
   name: 'LabelToButton',
   components: {
-    Label: Label,
+    Label,
   },
   props: {
     color: {
@@ -36,10 +40,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    // ラベル絞り込みボタンの開閉
-    getLabelColor(getlabelOpened: boolean) {
-      return this.labelOpened ? this.color : '#dddddd'
-    },
     clickLabel() {
       this.labelOpened = !this.labelOpened
     },
