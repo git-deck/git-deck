@@ -13,12 +13,12 @@
         </button>
       </div>
       <div class="labels">
-        <Label
+        <LabelToButton
           v-for="(item, index) in items"
           :key="index"
           :color="item.color"
           :message="item.message"
-        ></Label>
+        ></LabelToButton>
       </div>
       <div class="bottom">
         <button class="Refresh">
@@ -33,22 +33,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Label from '@/components/Label.vue'
+import LabelToButton from '@/components/LabelToButton.vue'
 export default Vue.extend({
   components: {
-    Label: Label,
+    LabelToButton: LabelToButton,
   },
   data() {
     return {
       items: [
         {
           // numberが識別子
-          number: 1,
           color: '#ff0f00',
           message: 'label',
         },
         {
-          number: 2,
           color: '#00ffff',
           message: 'bug',
         },

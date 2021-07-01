@@ -22,7 +22,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    getColorByBgColor(hexcolor) {
+    getColorByBgColor(hexcolor: string) {
       const r = parseInt(hexcolor.substr(1, 2), 16)
       const g = parseInt(hexcolor.substr(3, 2), 16)
       const b = parseInt(hexcolor.substr(5, 2), 16)
@@ -31,13 +31,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-.label {
-  font-size: 6px;
-  padding: 0px 10px;
-  border-radius: 24px;
-  display: inline-block;
-  vertical-align: middle;
-}
-</style>
