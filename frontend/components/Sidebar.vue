@@ -22,6 +22,7 @@
           >
           <input
             id="repository-input"
+            v-model="repositoryInput"
             placeholder="username/repository"
             class="inputField"
             size="50%"
@@ -35,7 +36,16 @@
 <script lang="ts">
 import Vue from 'vue'
 
+type DataType = {
+  repositoryInput: String
+}
+
 export default Vue.extend({
+  data(): DataType {
+    return {
+      repositoryInput: '',
+    }
+  },
   methods: {
     showModal() {
       this.$modal.show('column-modal')
@@ -44,9 +54,11 @@ export default Vue.extend({
       this.$modal.hide('column-modal')
     },
     append() {
-      const owner = 'knknk98'
-      const repo = 'issue-twitter'
-      this.$emit('appendTimeline', owner, repo)
+      const parsed = this.repositoryInput.match(
+        /([a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38})/gi
+      )
+      console.log('parsed:', parsed)
+      this.$emit('appendTimeline', parsed[0], parsed[1])
       this.hideModal()
     },
   },

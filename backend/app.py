@@ -4,24 +4,23 @@ from flask import Flask, request, redirect, session, url_for, jsonify
 from flask_cors import CORS
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
-from dotenv import dotenv_values
 import datetime
 import json
+import os
 
 from database import init_db, db
 from model import Idea
 import utils
 
 
-# .env ファイルから環境変数を取得する
+# 環境変数
 # GITHUB_CLIENT_ID: https://github.com/settings/applications/new にアクセスして作る
 # GITHUB_CLIENT_SECRET: 上に同じ
 # FLASK_SECRET_KEY: flaskのsessionを使うためのシークレットーキー. 適当に設定すればいい.
-env = dotenv_values(".env")
 
 app = Flask(__name__)
-if "FLASK_SECRET_KEY" in env:
-    app.secret_key = env["FLASK_SECRET_KEY"]
+if "FLASK_SECRET_KEY" in os.environ:
+    app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.config["JSON_AS_ASCII"] = False
 
 CORS(app)
@@ -31,6 +30,7 @@ init_db(app)
 
 @app.route("/")
 def hello():
+    print('request.headers:', request.headers)
     return "hello"
 
 
@@ -51,8 +51,8 @@ def callback():
     # 入手したrequest.args["code"]を利用してユーザのアクセストークンを発行する
     url = "https://github.com/login/oauth/access_token?code={}&client_id={}&client_secret={}".format(
         request.args["code"],
-        env["GITHUB_CLIENT_ID"],
-        env["GITHUB_CLIENT_SECRET"],
+        os.environ["GITHUB_CLIENT_ID"],
+        os.environ["GITHUB_CLIENT_SECRET"],
     )
     r = requests.get(url)
     access_token = parse_qs(r.text)["access_token"][0]
@@ -70,14 +70,19 @@ def logout():
 
 
 def github_client():
-    print("access_token:", session["access_token"])
+    if "access_token" in session:
+        access_token = session["access_token"]
+    elif "AccessToken" in request.headers:
+        access_token = request.headers["AccessToken"]
+
+    print("access_token:", access_token)
     return Client(
         transport=RequestsHTTPTransport(
             url = "https://api.github.com/graphql",
             use_json = True,
             headers = {
                 "Content-type": "application/json",
-                "Authorization": "Bearer {}".format(session["access_token"])
+                "Authorization": "Bearer {}".format(access_token)
             },
             verify = False,
             retries = 3,
