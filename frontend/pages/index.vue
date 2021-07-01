@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Sidebar v-on:appendTimeline="append" />
+    <Sidebar @appendTimeline="append" />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
