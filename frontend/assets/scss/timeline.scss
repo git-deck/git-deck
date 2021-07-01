@@ -19,7 +19,7 @@
     & > header {
         border-bottom: 1px solid;
         border-color: $border;
-        min-height: 30px;
+        //min-height: 30px;
         max-height: 80px;
         display: flex;
         padding: 20px;   
@@ -29,7 +29,6 @@
             width: 18px;
             padding-right: 6px;
             color: $git-blue;
-            //background-color: lightskyblue;
         }
 
         .chat {
