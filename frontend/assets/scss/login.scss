@@ -1,0 +1,32 @@
+.login-page {
+    height: 100%;
+    width: 100%;
+    //background-image: url(https://beiz.jp/images_P/white/white_00039.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: $git-black;
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 80px;
+    .caption{
+        width: 600px;
+        &>.title{
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        &>.subtext{
+            
+        }
+    }
+    
+    button{
+        width: 200px;
+        height: 50px;
+    }
+}
