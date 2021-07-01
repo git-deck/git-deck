@@ -23,6 +23,7 @@
         :type="content.category"
         :state="content.state"
         :readmore="readmore"
+        :url="content.url"
       />
       <Comment
         v-for="(comment, index) in lessComments"

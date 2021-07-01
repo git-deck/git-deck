@@ -141,18 +141,6 @@ const CONTENTS_DUMMY_DATA: Content[] = [
         updatedAt: '2021-06-30T14:50:33Z',
         url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871472788',
       },
-      {
-        author: {
-          avatarUrl: 'https://avatars.githubusercontent.com/u/34413567?v=4',
-          login: 'habara-k',
-          url: 'https://github.com/habara-k',
-        },
-        body: '## TODO\r\n\r\n- [ ] avatarの画像\r\n- [ ] assigneesの画像\r\n- [ ] APIとの接続\r\n- [ ] 折りたたみ（Issueに飛ばす or ここで展開する）',
-        createdAt: '2021-06-30T14:51:22Z',
-        howLongAgo: '19h',
-        updatedAt: '2021-06-30T14:51:22Z',
-        url: 'https://github.com/knknk98/issue-twitter/pull/26#issuecomment-871473437',
-      },
     ],
     createdAt: '2021-06-30T11:26:03Z',
     howLongAgo: '19h',

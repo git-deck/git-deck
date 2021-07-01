@@ -69,14 +69,16 @@
           :color="label.color"
         />
       </div>
-      <div
+      <a
         v-if="
           (type === 'issue' || type === 'pullRequest') && thread && readmore
         "
+        :href="url"
+        target="_blank"
         class="readmore"
       >
         このスレッドを全て表示
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -127,6 +129,10 @@ export default Vue.extend({
           url: 'https://github.com/knknk98',
         }
       },
+    },
+    url: {
+      type: String,
+      default: 'https://github.com/',
     },
     readmore: {
       type: Boolean,
