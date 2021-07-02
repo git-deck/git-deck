@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="main-contents">
-        <div class="repo">to knknk98/reporeporepo</div>
+        <div class="repo">to {{ owner }}/{{ repo }}</div>
         <textarea v-model="ideaBody"></textarea>
         <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
         <button @click="append">投稿する</button>
