@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="menu">
       <button>
-        <Icon />
+        <Icon :avatar-url="avatarUrl" />
       </button>
       <button class="add-button" @click="showModal">
         <span class="material-icons"> add </span>
@@ -44,6 +44,12 @@ type DataType = {
 }
 
 export default Vue.extend({
+  props: {
+    avatarUrl: {
+      type: String,
+      required: true,
+    },
+  },
   data(): DataType {
     return {
       repositoryInput: '',

@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Sidebar ref="sidebar" @appendTimeline="append" />
+    <Sidebar
+      ref="sidebar"
+      :avatar-url="$auth.state.user.avatar_url"
+      @appendTimeline="append"
+    />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
