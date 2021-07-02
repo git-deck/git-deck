@@ -46,6 +46,7 @@
         {{ assignees.length > 3 ? '...' : '' }}
       </div>
     </div>
+    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="markItem">
       <Octicon
         v-if="type === 'pullRequest' && state === 'OPEN'"
@@ -78,7 +79,6 @@
         class-name="comment-type-mark idea"
       />
     </div>
-    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
       <div v-html="$md.render(body)"></div>
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">

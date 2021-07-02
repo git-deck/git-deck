@@ -103,9 +103,9 @@
       border-color: $border;
       display: grid;
       grid-template-rows: min-content 1fr;
-      grid-template-columns: 35px 1fr min-content max-content;
+      grid-template-columns: 35px 1fr max-content min-content;
       grid-template-areas:
-        'areaIcon         areaTitle areaMark areaDate'
+        'areaIcon         areaTitle areaDate areaMark'
         'areaIcon         areaText  areaText areaText'
         'dottedThreadLine readmore  readmore readmore';
 
@@ -162,7 +162,6 @@
       }
       & > .markItem {
         grid-area: areaMark;
-        margin-right: 7px;
         .comment-type-mark {
           height: 20px;
           width: 20px;
@@ -201,6 +200,7 @@
       }
       & > .dateItem {
         grid-area: areaDate;
+        margin-right: 7px;
         color: gray;
         font-size: 12px;
         text-align: right;
