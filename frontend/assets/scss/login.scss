@@ -13,14 +13,18 @@
     align-items: center;
     padding: 80px;
     &>.caption{
-        width: 600px;
+        width: 500px;
         &>.title{
+            display: inline-flex;
             font-weight: bold;
             font-size: 36px;
             margin-bottom: 16px;
-        }
-        &>.subtext{
-            
+            align-items: flex-end;
+            .cat-icon{
+                height: 60px;
+                width: 60px;
+                margin-left: 12px;
+            }
         }
     }
     
