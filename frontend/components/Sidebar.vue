@@ -13,7 +13,7 @@
         Signed in as
         <span class="user-name">{{ userName }}</span>
       </p>
-      <button>Log out</button>
+      <button @click="logout">Log out</button>
     </div>
     <modal name="column-modal" :click-to-close="false" :draggable="true">
       <div class="modal-content">
@@ -114,6 +114,9 @@ export default Vue.extend({
     },
     clickMyAvatar() {
       this.isOpenedPulldownMenu = !this.isOpenedPulldownMenu
+    },
+    logout() {
+      this.$auth.logout()
     },
   },
 })
