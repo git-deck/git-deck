@@ -39,7 +39,7 @@ import Vue from 'vue'
 import LabelToButton from '@/components/LabelToButton.vue'
 export default Vue.extend({
   components: {
-    LabelToButton: LabelToButton,
+    LabelToButton,
   },
   data() {
     return {

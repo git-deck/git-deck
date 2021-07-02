@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Sidebar @appendTimeline="append" />
+    <Sidebar ref="sidebar" @appendTimeline="append" />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
@@ -25,6 +25,7 @@ Vue.use(VModal)
 
 type DataType = {
   timeline: Object[]
+  addingColumnErrorMsg: String
 }
 export default Vue.extend({
   data(): DataType {
@@ -38,19 +39,16 @@ export default Vue.extend({
           contents: CONTENTS_DUMMY_DATA,
         },
       ],
+      addingColumnErrorMsg: '',
     }
   },
   methods: {
     append(owner: string, repo: string) {
-      // API叩くサンプル
-      // .env にアクセストークンを入れておく最悪実装
-      // TODO: Loginができたらアクセストークン取得
-      console.log('process.env.accessToken:', process.env.accessToken)
       const self = this
       axios
         .get('/timeline/' + owner + '/' + repo, {
           headers: {
-            AccessToken: process.env.accessToken,
+            Authorization: this.$auth.getToken('github'),
           },
         })
         .then(function (response) {
@@ -62,9 +60,12 @@ export default Vue.extend({
             repoUrl: 'https://github.com/' + owner + '/' + repo,
             contents: response.data,
           })
+          self.addingColumnErrorMsg = ''
+          self.$refs.sidebar.hideModal()
         })
         .catch(function (error) {
           console.log(error)
+          self.$refs.sidebar.setErrorMsg('リポジトリが見つかりませんでした')
         })
         .then(function () {
           // always executed
