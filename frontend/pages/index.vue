@@ -9,11 +9,11 @@
     <multipane class="vertical-panes" layout="vertical">
       <template v-for="(tl, index) in timeline">
         <Timeline
-          :id="index"
-          :key="index + 'timeline'"
+          :id="tl.id"
+          :key="tl.id"
           :owner="tl.owner"
           :repo="tl.repo"
-          :useDummyData="tl.useDummyData"
+          :use-dummy-data="tl.useDummyData"
           @closeTimeline="close"
         />
         <multipane-resizer :key="index + 'resizer'"></multipane-resizer>
@@ -50,16 +50,19 @@ export default Vue.extend({
           owner: 'knknk98',
           repo: 'issue-twitter',
           useDummyData: true,
+          id: Math.floor(Math.random() * 1000000000),
         },
         {
           owner: 'knknk98',
           repo: 'issue-twitter',
           useDummyData: true,
+          id: Math.floor(Math.random() * 1000000000),
         },
         {
           owner: 'knknk98',
           repo: 'issue-twitter',
           useDummyData: true,
+          id: Math.floor(Math.random() * 1000000000),
         },
       ],
       addingColumnErrorMsg: '',
@@ -76,10 +79,12 @@ export default Vue.extend({
       this.timeline.push({
         owner,
         repo,
+        id: Math.floor(Math.random() * 1000000000),
       })
     },
     close(id: number) {
-      this.timeline.splice(id, 1)
+      const index = this.timeline.findIndex((x) => x.id === id)
+      this.timeline.splice(index, 1)
     },
   },
 })
