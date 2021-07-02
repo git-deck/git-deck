@@ -13,8 +13,8 @@
         <span class="material-icons"> tune </span>
       </button>
     </header>
-    <PostModal />
-    <Setting v-if="settingOpened" />
+    <PostModal :owner="owner" :repo="repo" />
+    <Setting v-if="settingOpened" :labels="labels" />
     <main>
       <ContentBox
         v-for="(content, index) in contents"
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Content } from '@/models/types'
+import { Content, Label } from '@/models/types'
 
 const { Octicon, Octicons } = require('octicons-vue')
 
@@ -39,6 +39,10 @@ type DataType = {
 export default Vue.extend({
   components: { Octicon },
   props: {
+    labels: {
+      type: Array,
+      required: true,
+    } as PropOptions<Label[]>,
     contents: {
       type: Array,
       required: true,
