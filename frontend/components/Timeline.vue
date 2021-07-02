@@ -15,7 +15,7 @@
       </button>
     </header>
     <PostModal :owner="owner" :repo="repo" />
-    <Setting v-if="settingOpened" :labels="labels" @loatTimeline="load" />
+    <Setting v-if="settingOpened" :labels="labels" @loatTimeline="load" @closeTimeline="close" />
     <main>
       <ContentBox
         v-for="(content, index) in contents"
@@ -45,6 +45,10 @@ type DataType = {
 export default Vue.extend({
   components: { Octicon },
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     useDummyData: {
       type: Boolean,
       default: false,
@@ -78,6 +82,10 @@ export default Vue.extend({
     this.load()
   },
   methods: {
+    close() {
+      console.log('id:', this.id)
+      this.$emit('closeTimeline', this.id)
+    },
     load() {
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {

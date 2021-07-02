@@ -9,9 +9,11 @@
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
+      :id="index"
       :owner="tl.owner"
       :repo="tl.repo"
       :useDummyData="tl.useDummyData"
+      @closeTimeline="close"
     />
   </div>
 </template>
@@ -56,6 +58,9 @@ export default Vue.extend({
         owner,
         repo,
       })
+    },
+    close(id: number) {
+      this.timeline.splice(id, 1)
     },
   },
 })
