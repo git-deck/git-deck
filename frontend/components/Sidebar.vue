@@ -23,7 +23,7 @@
           <input
             id="repository-input"
             v-model="repositoryInput"
-            placeholder="username/repository"
+            placeholder="owner/repository"
             class="inputField"
             size="50%"
           />
