@@ -27,7 +27,6 @@
       width: 18px;
       padding-right: 6px;
       color: $git-blue;
-      //background-color: lightskyblue;
     }
 
     & > .title {
@@ -104,7 +103,7 @@
       border-color: $border;
       display: grid;
       grid-template-rows: min-content 1fr;
-      grid-template-columns: 35px 1fr min-content 28px;
+      grid-template-columns: 35px 1fr min-content max-content;
       grid-template-areas:
         'areaIcon         areaTitle areaMark areaDate'
         'areaIcon         areaText  areaText areaText'
@@ -204,7 +203,6 @@
         grid-area: areaDate;
         color: gray;
         font-size: 12px;
-        display: inline-block;
         text-align: right;
       }
       & > .textItem {
