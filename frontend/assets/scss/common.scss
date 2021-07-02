@@ -98,6 +98,10 @@ a {
       background: $git-black;
       color: white;
     }
+    & > .addButton:disabled{
+      background: #ccc;
+      color: white;
+    }
 
     & > .postButton{
       background-color: $idea-color;
