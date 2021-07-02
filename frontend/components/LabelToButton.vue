@@ -13,7 +13,6 @@ import Label from '@/components/Label.vue'
 
 type DataType = {
   labelOpened: boolean
-  sendcolor: string
   sendmessage: string
 }
 
@@ -35,7 +34,6 @@ export default Vue.extend({
   data(): DataType {
     return {
       labelOpened: true,
-      sendcolor: '#bbbbbb',
       sendmessage: this.message,
     }
   },
