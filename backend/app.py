@@ -30,6 +30,11 @@ def hello():
     print('request.headers:', request.headers)
     return "hello"
 
+@app.route("/repo_id/<owner>/<repo>")
+def repo_id(owner, repo):
+    id = get_repo_id(owner, repo)
+    return id
+
 
 def github_client():
     authorization = request.headers["Authorization"]

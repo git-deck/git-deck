@@ -44,6 +44,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:5000'
 
 type DataType = {
   repositoryInput: String
@@ -89,8 +92,24 @@ export default Vue.extend({
       if (parsed == null || parsed.length < 2) {
         this.setErrorMsg('入力形式が正しくありません')
       } else {
-        this.$emit('appendTimeline', parsed[0], parsed[1])
-        // this.hideModal()
+        const owner = parsed[0]
+        const repo = parsed[1]
+        const self = this
+        axios
+          .get('/repo_id/' + owner + '/' + repo, {
+            headers: {
+              Authorization: self.$auth.getToken('github'),
+            },
+          })
+          .then((response) => {
+            console.log('response:', response)
+            this.$emit('appendTimeline', parsed[0], parsed[1])
+            this.hideModal()
+          })
+          .catch((error) => {
+            console.log('error:', error)
+            this.setErrorMsg('リポジトリが見つかりません')
+          })
       }
     },
     clickMyAvatar() {
