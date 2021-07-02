@@ -247,6 +247,13 @@
     }
     .repo {
       padding-bottom: 15px;
+      color: gray;
+      .address{
+        color: $git-blue;
+        background-color: #EBF5FF;
+        padding: 5px 10px;
+        border-radius: 7px;
+      }
     }
   }
 }

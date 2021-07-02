@@ -140,7 +140,7 @@ export default Vue.extend({
       this.settingOpened = !this.settingOpened
     },
     showModal() {
-      this.$modal.show('editor-modal')
+      this.$modal.show(this.owner + this.repo)
     },
   },
 })
