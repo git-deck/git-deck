@@ -15,7 +15,12 @@
       </button>
     </header>
     <PostModal :owner="owner" :repo="repo" />
-    <Setting v-if="settingOpened" :labels="labels" @loatTimeline="load" @closeTimeline="close" />
+    <Setting
+      v-if="settingOpened"
+      :labels="labels"
+      @loatTimeline="load"
+      @closeTimeline="close"
+    />
     <main>
       <ContentBox
         v-for="(content, index) in contents"
@@ -101,11 +106,14 @@ export default Vue.extend({
           },
         }
       )
-      const labelsRequest = axios.get('/labels/' + this.owner + '/' + this.repo, {
-        headers: {
-          Authorization: this.$auth.getToken('github'),
-        },
-      })
+      const labelsRequest = axios.get(
+        '/labels/' + this.owner + '/' + this.repo,
+        {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        }
+      )
       const self = this
       axios
         .all([timelineRequest, labelsRequest])
@@ -293,7 +301,7 @@ const CONTENTS_DUMMY_DATA: Content[] = [
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
-    body: '## 問題点\r\n\r\ndbコンテナの`mysqld`が立ち上がる前に、flaskコンテナのアプリがdbに接続しに行っちゃう。\r\n\r\nそのため、時間を空けて別々に立ち上げないとバグる。\r\n\r\nhttps://github.com/knknk98/issue-twitter/pull/10#issue-678574393',
+    body: '<!-- ## 問題点\r\n\r\ndbコンテナの`mysqld`が立ち上がる前に、flaskコンテナのアプリがdbに接続しに行っちゃう。\r\n\r\nそのため、時間を空けて別々に立ち上げないとバグる。\r\n --> \r\nhttps://github.com/knknk98/issue-twitter/pull/10#issue-678574393',
     category: 'issue',
     comments: [
       {
