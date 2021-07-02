@@ -5,12 +5,12 @@
   width: 320px;
   display: flex;
   flex-direction: column;
-  border-left: 6px solid;
+  border-right: 6px solid;
   border-color: $border;
   background-color: white;
 
-  &:last-child {
-    border-right: 6px solid;
+  &:first-child {
+    border-left: 6px solid;
     border-color: $border;
   }
 
