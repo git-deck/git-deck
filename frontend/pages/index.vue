@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Sidebar @appendTimeline="append" />
+    <Sidebar ref="sidebar" @appendTimeline="append" />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
@@ -25,6 +25,7 @@ Vue.use(VModal)
 
 type DataType = {
   timeline: Object[]
+  addingColumnErrorMsg: String
 }
 export default Vue.extend({
   data(): DataType {
@@ -38,6 +39,7 @@ export default Vue.extend({
           contents: CONTENTS_DUMMY_DATA,
         },
       ],
+      addingColumnErrorMsg: '',
     }
   },
   methods: {
@@ -58,9 +60,12 @@ export default Vue.extend({
             repoUrl: 'https://github.com/' + owner + '/' + repo,
             contents: response.data,
           })
+          self.addingColumnErrorMsg = ''
+          self.$refs.sidebar.hideModal()
         })
         .catch(function (error) {
           console.log(error)
+          self.$refs.sidebar.setErrorMsg('リポジトリが見つかりませんでした')
         })
         .then(function () {
           // always executed
