@@ -6,7 +6,10 @@
     }"
   >
     <div class="iconItem">
-      <Icon :avatar-url="author.avatarUrl" :class="type" />
+      <Icon
+        :avatar-url="author == null ? '' : author.avatarUrl"
+        :class="type"
+      />
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
