@@ -8,7 +8,7 @@
           </button>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
-        <button class="Refresh" @click="refresh">
+        <button class="Refresh" @click="$emit('loatTimeline')">
           <span class="material-icons"> replay </span>
         </button>
       </div>
@@ -32,7 +32,7 @@
     <div class="bottom">
       <div class="bottomContent">
         <div class="right">
-          <button class="Close">
+          <button class="Close" @click="$emit('closeTimeline')">
             <span class="material-icons"> close </span>
           </button>
           <span class="message">このカラムを削除</span>
@@ -71,11 +71,6 @@ export default Vue.extend({
         },
       ],
     }
-  },
-  methods: {
-    refresh() {
-      this.$emit('loatTimeline')
-    },
   },
 })
 </script>
