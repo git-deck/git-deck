@@ -2,8 +2,8 @@
   <div class="container">
     <Sidebar
       ref="sidebar"
-      :user-name="$auth.state.user.login"
-      :avatar-url="$auth.state.user.avatar_url"
+      :user-name="userName"
+      :avatar-url="avatarUrl"
       @appendTimeline="append"
     />
     <Timeline
@@ -28,6 +28,8 @@ Vue.use(VModal)
 type DataType = {
   timeline: Object[]
   addingColumnErrorMsg: String
+  avatarUrl: String
+  userName: String
 }
 export default Vue.extend({
   data(): DataType {
@@ -40,7 +42,13 @@ export default Vue.extend({
         },
       ],
       addingColumnErrorMsg: '',
+      avatarUrl: '',
+      userName: '',
     }
+  },
+  created() {
+    this.avatarUrl = this.$auth.user.avatar_url
+    this.userName = this.$auth.user.login
   },
   methods: {
     append(owner: string, repo: string) {

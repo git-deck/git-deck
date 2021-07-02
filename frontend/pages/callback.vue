@@ -1,3 +1,1 @@
-<template>
-  <p>callback...</p>
-</template>
+<template></template>
