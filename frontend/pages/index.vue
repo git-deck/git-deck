@@ -2,16 +2,18 @@
   <div class="container">
     <Sidebar
       ref="sidebar"
-      :user-name="$auth.state.user.login"
-      :avatar-url="$auth.state.user.avatar_url"
+      :user-name="userName"
+      :avatar-url="avatarUrl"
       @appendTimeline="append"
     />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
+      :id="index"
       :owner="tl.owner"
       :repo="tl.repo"
       :useDummyData="tl.useDummyData"
+      @closeTimeline="close"
     />
   </div>
 </template>
@@ -28,6 +30,8 @@ Vue.use(VModal)
 type DataType = {
   timeline: Object[]
   addingColumnErrorMsg: String
+  avatarUrl: String
+  userName: String
 }
 export default Vue.extend({
   data(): DataType {
@@ -40,7 +44,13 @@ export default Vue.extend({
         },
       ],
       addingColumnErrorMsg: '',
+      avatarUrl: '',
+      userName: '',
     }
+  },
+  created() {
+    this.avatarUrl = this.$auth.user.avatar_url
+    this.userName = this.$auth.user.login
   },
   methods: {
     append(owner: string, repo: string) {
@@ -48,6 +58,9 @@ export default Vue.extend({
         owner,
         repo,
       })
+    },
+    close(id: number) {
+      this.timeline.splice(id, 1)
     },
   },
 })

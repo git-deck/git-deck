@@ -1,10 +1,6 @@
 <template>
   <span style="cursor: pointer" class="labelButton" @click="clickLabel">
-    <Label
-      :color="color"
-      :message="sendmessage"
-      :disabled="!labelOpened"
-    ></Label>
+    <Label :color="color" :message="message" :disabled="!labelOpened"></Label>
   </span>
 </template>
 <script lang="ts">
@@ -13,7 +9,6 @@ import Label from '@/components/Label.vue'
 
 type DataType = {
   labelOpened: boolean
-  sendmessage: string
 }
 
 export default Vue.extend({
@@ -34,7 +29,6 @@ export default Vue.extend({
   data(): DataType {
     return {
       labelOpened: true,
-      sendmessage: this.message,
     }
   },
   methods: {

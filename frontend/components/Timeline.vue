@@ -15,7 +15,12 @@
       </button>
     </header>
     <PostModal :owner="owner" :repo="repo" />
-    <Setting v-if="settingOpened" :labels="labels" @loatTimeline="load" />
+    <Setting
+      v-if="settingOpened"
+      :labels="labels"
+      @loatTimeline="load"
+      @closeTimeline="close"
+    />
     <main>
       <div v-if="isLoading" class="loading">
         <img src="@/assets/img/loading.gif" />
@@ -49,6 +54,10 @@ type DataType = {
 export default Vue.extend({
   components: { Octicon },
   props: {
+    id: {
+      type: Number,
+      required: true,
+    },
     useDummyData: {
       type: Boolean,
       default: false,
@@ -83,6 +92,10 @@ export default Vue.extend({
     this.load()
   },
   methods: {
+    close() {
+      console.log('id:', this.id)
+      this.$emit('closeTimeline', this.id)
+    },
     load() {
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {
@@ -295,7 +308,7 @@ const CONTENTS_DUMMY_DATA: Content[] = [
       login: 'habara-k',
       url: 'https://github.com/habara-k',
     },
-    body: '## 問題点\r\n\r\ndbコンテナの`mysqld`が立ち上がる前に、flaskコンテナのアプリがdbに接続しに行っちゃう。\r\n\r\nそのため、時間を空けて別々に立ち上げないとバグる。\r\n\r\nhttps://github.com/knknk98/issue-twitter/pull/10#issue-678574393',
+    body: '<!-- ## 問題点\r\n\r\ndbコンテナの`mysqld`が立ち上がる前に、flaskコンテナのアプリがdbに接続しに行っちゃう。\r\n\r\nそのため、時間を空けて別々に立ち上げないとバグる。\r\n --> \r\nhttps://github.com/knknk98/issue-twitter/pull/10#issue-678574393',
     category: 'issue',
     comments: [
       {
