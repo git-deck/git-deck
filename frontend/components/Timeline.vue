@@ -1,5 +1,5 @@
 <template>
-  <div class="column">
+  <div class="column pane">
     <header>
       <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
       <span class="title">
