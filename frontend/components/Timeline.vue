@@ -13,7 +13,7 @@
         <span class="material-icons"> tune </span>
       </button>
     </header>
-    <PostModal />
+    <PostModal :owner="owner" :repo="repo" />
     <Setting v-if="settingOpened" :labels="labels" />
     <main>
       <ContentBox
