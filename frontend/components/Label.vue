@@ -1,15 +1,13 @@
 <template>
-  <span class="labelBlock">
-    <span
-      :style="{
-        border: getBooleanByColor(color) ? bordercss : '',
-        backgroundColor: disabled ? 'rgb(197 197 197)' : color,
-        color: disabled ? 'white' : getColorByBgColor(color),
-      }"
-      class="label"
-    >
-      {{ message }}
-    </span>
+  <span
+    :style="{
+      border: getBooleanByColor(color) ? bordercss : '',
+      backgroundColor: disabled ? 'rgb(197 197 197)' : color,
+      color: disabled ? 'white' : getColorByBgColor(color),
+    }"
+    class="label"
+  >
+    {{ message }}
   </span>
 </template>
 <style scoped>

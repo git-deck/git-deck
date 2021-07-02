@@ -12,31 +12,58 @@
           <span class="material-icons"> replay </span>
         </button>
       </div>
-      <div class="labels">
-        <LabelToButton
-          v-for="(label, index) in items"
-          :key="index"
-          :color="label.color"
-          :message="label.name"
-        ></LabelToButton>
+
+      <div class="categoryBlock">
+        <div class="mes">カテゴリ</div>
+        <div class="Lab">
+          <div
+            v-for="(label, index) in categoryitems"
+            :key="index"
+            class="labels"
+          >
+            <span
+              style="cursor: pointer"
+              class="labelButton"
+              v-on:click="clickLabel('category', index)"
+            >
+              <Label0
+                :color="label.color"
+                :message="label.name"
+                :disabled="label.labelOpened"
+              ></Label0>
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="labels">
-        <LabelToButton
-          v-for="(label, index) in labels"
-          :key="index"
-          :color="label.color"
-          :message="label.name"
-        ></LabelToButton>
+      <div clas="labelsBlock">
+        <div class="mes">ラベル</div>
+        <div class="Lab">
+          <div
+            v-for="(label, index) in labelsitems"
+            :key="index"
+            class="labels"
+          >
+            <span
+              style="cursor: pointer"
+              class="labelButton"
+              v-on:click="clickLabel('labels', index)"
+            >
+              <Label0
+                :color="label.color"
+                :message="label.name"
+                :disabled="label.labelOpened"
+              ></Label0>
+            </span>
+          </div>
+        </div>
       </div>
     </header>
     <div class="bottom">
       <div class="bottomContent">
-        <div class="right">
-          <button class="Close">
-            <span class="material-icons"> close </span>
-          </button>
-          <span class="message">このカラムを削除</span>
-        </div>
+        <button class="Close">
+          <span class="material-icons"> close </span>
+        </button>
+        <span class="message">このカラムを削除</span>
       </div>
     </div>
   </div>
@@ -45,10 +72,14 @@
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
 import { Label } from '@/models/types'
-import LabelToButton from '@/components/LabelToButton.vue'
+import Label0 from '@/components/Label.vue'
+type DataType = {
+  labelsitems: Array<Object>
+  categoryitems: Array<Object>
+}
 export default Vue.extend({
   components: {
-    LabelToButton,
+    Label0,
   },
   props: {
     labels: {
@@ -58,16 +89,23 @@ export default Vue.extend({
   },
   data() {
     return {
-      items: [
+      labelsitems: this.labels.map((element: Label) => ({
+        name: element.name,
+        color: element.color,
+        labelOpened: false,
+      })),
+      categoryitems: [
         {
           // numberが識別子
           color: '#ffffff',
           name: 'idea',
+          labelOpened: false,
         },
         {
           // numberが識別子
           color: '#ff0000',
           name: 'issue & pull request',
+          labelOpened: false,
         },
       ],
     }
@@ -75,6 +113,16 @@ export default Vue.extend({
   methods: {
     refresh() {
       this.$emit('loatTimeline')
+    },
+    clickLabel: function (Blockname: string, index: number) {
+      if (Blockname == 'category') {
+        this.categoryitems[index].labelOpened =
+          !this.categoryitems[index].labelOpened
+      }
+      if (Blockname == 'labels') {
+        this.labelsitems[index].labelOpened =
+          !this.labelsitems[index].labelOpened
+      }
     },
   },
 })

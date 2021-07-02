@@ -19,25 +19,23 @@ a {
   background-color: white;
   display: block;
 }
-.labelBlock {
-  margin: 0px 2px 0px 0px;
-  .label {
-    font-size: 6px;
-    padding: 0px 10px;
-    margin-right: 1.5px;
-    border-radius: 24px;
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: bold;
-    //max-widthを超えるような場合は省略
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    // ラベル内のテキストが選択されないようにする
-    user-select: none;
-  }
+.label {
+  font-size: 6px;
+  padding: 0px 10px;
+  margin-right: 2px;
+  border-radius: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+  //max-widthを超えるような場合は省略
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  // ラベル内のテキストが選択されないようにする
+  user-select: none;
 }
+
 
 .modal-content {
   padding: 12px 24px;

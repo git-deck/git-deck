@@ -93,11 +93,14 @@ export default Vue.extend({
           },
         }
       )
-      const labelsRequest = axios.get('/labels/' + this.owner + '/' + this.repo, {
-        headers: {
-          Authorization: this.$auth.getToken('github'),
-        },
-      })
+      const labelsRequest = axios.get(
+        '/labels/' + this.owner + '/' + this.repo,
+        {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        }
+      )
       const self = this
       axios
         .all([timelineRequest, labelsRequest])
