@@ -86,14 +86,14 @@ export default Vue.extend({
     },
     append() {
       const parsed = this.repositoryInput.match(
-        /([a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38})/gi
+        /^([^\/]+)\/([^\/]+)$/
       )
       console.log('parsed:', parsed)
-      if (parsed == null || parsed.length < 2) {
+      if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
       } else {
-        const owner = parsed[0]
-        const repo = parsed[1]
+        const owner = parsed[1]
+        const repo = parsed[2]
         const self = this
         axios
           .get('/repo_id/' + owner + '/' + repo, {
@@ -103,7 +103,7 @@ export default Vue.extend({
           })
           .then((response) => {
             console.log('response:', response)
-            this.$emit('appendTimeline', parsed[0], parsed[1])
+            this.$emit('appendTimeline', owner, repo)
             this.hideModal()
           })
           .catch((error) => {

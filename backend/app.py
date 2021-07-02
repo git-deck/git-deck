@@ -24,6 +24,9 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 init_db(app)
 
+COMMENTS_LIMIT = 10
+ASSIGNEES_LIMIT = 10
+
 
 @app.route("/")
 def hello():
@@ -151,7 +154,7 @@ def get_issues(owner, repo, labels):
 
     issues = github_client().execute(
         gql("""
-        query($owner:String!, $repo:String!, $filter:IssueFilters!) {
+        query($owner:String!, $repo:String!, $filter:IssueFilters!, $assignees_limit:Int!, $comments_limit:Int!) {
             repository(owner: $owner, name: $repo) {
                 issues(first:100, filterBy: $filter, orderBy: {field:UPDATED_AT, direction:DESC}) {
                     edges {
@@ -168,7 +171,7 @@ def get_issues(owner, repo, labels):
                                 url
                                 avatarUrl
                             }
-                            assignees(first:100) {
+                            assignees(first:$assignees_limit) {
                                 edges {
                                     node {
                                         login
@@ -185,7 +188,7 @@ def get_issues(owner, repo, labels):
                                     }
                                 }
                             }
-                            comments(first:100) {
+                            comments(last:$comments_limit) {
                                 edges {
                                     node {
                                         body
@@ -209,7 +212,9 @@ def get_issues(owner, repo, labels):
         variable_values={
             "owner": owner,
             "repo": repo,
-            "filter": filt
+            "filter": filt,
+            "assignees_limit": ASSIGNEES_LIMIT,
+            "comments_limit": COMMENTS_LIMIT,
         }
     )["repository"]["issues"]["edges"]
 
@@ -229,7 +234,7 @@ def get_pull_requests(owner, repo, labels):
     if labels is None:
         pull_requests = github_client().execute(
             gql("""
-            query($owner:String!, $repo:String!) {
+            query($owner:String!, $repo:String!, $assignees_limit:Int!, $comments_limit:Int!) {
                 repository(owner: $owner, name: $repo) {
                     pullRequests(first:100, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
@@ -246,7 +251,7 @@ def get_pull_requests(owner, repo, labels):
                                     url
                                     avatarUrl
                                 }
-                                assignees(first:100) {
+                                assignees(first:$assignees_limit) {
                                     edges {
                                         node {
                                             login
@@ -263,7 +268,7 @@ def get_pull_requests(owner, repo, labels):
                                         }
                                     }
                                 }
-                                comments(first:100) {
+                                comments(last:$comments_limit) {
                                     edges {
                                         node {
                                             body
@@ -287,13 +292,15 @@ def get_pull_requests(owner, repo, labels):
             variable_values={
                 "owner": owner,
                 "repo": repo,
+                "assignees_limit": ASSIGNEES_LIMIT,
+                "comments_limit": COMMENTS_LIMIT,
             }
         )["repository"]["pullRequests"]["edges"]
 
     else:
         pull_requests = github_client().execute(
             gql("""
-            query($owner:String!, $repo:String!, $labels:[String!]) {
+            query($owner:String!, $repo:String!, $labels:[String!], $assignees_limit:Int!, $comments_limit:Int!) {
                 repository(owner: $owner, name: $repo) {
                     pullRequests(first:100, labels: $labels, orderBy: {field:UPDATED_AT, direction:DESC}) {
                         edges {
@@ -310,7 +317,7 @@ def get_pull_requests(owner, repo, labels):
                                     url
                                     avatarUrl
                                 }
-                                assignees(first:100) {
+                                assignees(first:$assignees_limit) {
                                     edges {
                                         node {
                                             login
@@ -327,7 +334,7 @@ def get_pull_requests(owner, repo, labels):
                                         }
                                     }
                                 }
-                                comments(first:100) {
+                                comments(last:$comments_limit) {
                                     edges {
                                         node {
                                             body
@@ -351,7 +358,9 @@ def get_pull_requests(owner, repo, labels):
             variable_values={
                 "owner": owner,
                 "repo": repo,
-                "labels": labels
+                "labels": labels,
+                "assignees_limit": ASSIGNEES_LIMIT,
+                "comments_limit": COMMENTS_LIMIT,
             }
         )["repository"]["pullRequests"]["edges"]
 
