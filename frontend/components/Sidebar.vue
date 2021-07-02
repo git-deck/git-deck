@@ -1,12 +1,19 @@
 <template>
   <div class="sidebar">
     <div class="menu">
-      <button>
+      <button @click="clickMyAvatar">
         <Icon :avatar-url="avatarUrl" />
       </button>
       <button class="add-button" @click="showModal">
         <span class="material-icons"> add </span>
       </button>
+    </div>
+    <div v-if="isOpenedPulldownMenu" class="pulldown-menu">
+      <p class="header">
+        Signed in as
+        <span class="user-name">{{ userName }}</span>
+      </p>
+      <button>Log out</button>
     </div>
     <modal name="column-modal" :click-to-close="false" :draggable="true">
       <div class="modal-content">
@@ -41,10 +48,15 @@ import Vue from 'vue'
 type DataType = {
   repositoryInput: String
   errorMsg: String
+  isOpenedPulldownMenu: Boolean
 }
 
 export default Vue.extend({
   props: {
+    userName: {
+      type: String,
+      required: true,
+    },
     avatarUrl: {
       type: String,
       required: true,
@@ -54,6 +66,7 @@ export default Vue.extend({
     return {
       repositoryInput: '',
       errorMsg: '',
+      isOpenedPulldownMenu: false,
     }
   },
   methods: {
@@ -77,8 +90,11 @@ export default Vue.extend({
         this.setErrorMsg('入力形式が正しくありません')
       } else {
         this.$emit('appendTimeline', parsed[0], parsed[1])
-        //this.hideModal()
+        // this.hideModal()
       }
+    },
+    clickMyAvatar() {
+      this.isOpenedPulldownMenu = !this.isOpenedPulldownMenu
     },
   },
 })
