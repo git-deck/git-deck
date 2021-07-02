@@ -18,7 +18,8 @@ services:
       - 3000:3000
     environment:
       - HOST=0.0.0.0
-      - NUXT_ENV_ACCESS_TOKEN=${ACCESS_TOKEN}
+      - NUXT_ENV_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - NUXT_ENV_GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
 
   flask:
     container_name: issue-backend
@@ -41,7 +42,6 @@ services:
       - FLASK_APP=app
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
-      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
     command: flask run --host 0.0.0.0 --port 5000
     depends_on:
       db:

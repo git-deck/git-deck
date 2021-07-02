@@ -42,15 +42,11 @@ export default Vue.extend({
   },
   methods: {
     append(owner: string, repo: string) {
-      // API叩くサンプル
-      // .env にアクセストークンを入れておく最悪実装
-      // TODO: Loginができたらアクセストークン取得
-      console.log('process.env.accessToken:', process.env.accessToken)
       const self = this
       axios
         .get('/timeline/' + owner + '/' + repo, {
           headers: {
-            AccessToken: process.env.accessToken,
+            Authorization: this.$auth.getToken('github'),
           },
         })
         .then(function (response) {
