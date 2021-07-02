@@ -6,7 +6,10 @@
     }"
   >
     <div class="iconItem">
-      <Icon :avatar-url="author.avatarUrl" :class="type" />
+      <Icon
+        :avatar-url="author == null ? '' : author.avatarUrl"
+        :class="type"
+      />
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
@@ -43,6 +46,7 @@
         {{ assignees.length > 3 ? '...' : '' }}
       </div>
     </div>
+    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="markItem">
       <Octicon
         v-if="type === 'pullRequest' && state === 'OPEN'"
@@ -75,7 +79,6 @@
         class-name="comment-type-mark idea"
       />
     </div>
-    <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
       <div v-html="$md.render(body)"></div>
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">

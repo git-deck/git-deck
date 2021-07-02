@@ -5,11 +5,12 @@
   width: 320px;
   display: flex;
   flex-direction: column;
-  border-left: 6px solid;
+  border-right: 6px solid;
   border-color: $border;
+  background-color: white;
 
-  &:last-child {
-    border-right: 6px solid;
+  &:first-child {
+    border-left: 6px solid;
     border-color: $border;
   }
 
@@ -27,7 +28,6 @@
       width: 18px;
       padding-right: 6px;
       color: $git-blue;
-      //background-color: lightskyblue;
     }
 
     & > .title {
@@ -104,9 +104,9 @@
       border-color: $border;
       display: grid;
       grid-template-rows: min-content 1fr;
-      grid-template-columns: 35px 1fr min-content 28px;
+      grid-template-columns: 35px 1fr max-content min-content;
       grid-template-areas:
-        'areaIcon         areaTitle areaMark areaDate'
+        'areaIcon         areaTitle areaDate areaMark'
         'areaIcon         areaText  areaText areaText'
         'dottedThreadLine readmore  readmore readmore';
 
@@ -163,7 +163,6 @@
       }
       & > .markItem {
         grid-area: areaMark;
-        margin-right: 7px;
         .comment-type-mark {
           height: 20px;
           width: 20px;
@@ -202,9 +201,9 @@
       }
       & > .dateItem {
         grid-area: areaDate;
+        margin-right: 7px;
         color: gray;
         font-size: 12px;
-        display: inline-block;
         text-align: right;
       }
       & > .textItem {
@@ -233,6 +232,12 @@
       border-bottom: none;
       min-height: 60px;
     }
+
+    .loading{
+      img{
+        margin: 30px auto;
+      }
+    }
   }
 
   // 投稿欄
@@ -243,6 +248,13 @@
     }
     .repo {
       padding-bottom: 15px;
+      color: gray;
+      .address{
+        color: $git-blue;
+        background-color: #EBF5FF;
+        padding: 5px 10px;
+        border-radius: 7px;
+      }
     }
   }
 }

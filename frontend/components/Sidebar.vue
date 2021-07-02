@@ -35,7 +35,7 @@
             size="50%"
           />
           <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
-          <button class="addButton" @click="append">追加</button>
+          <button class="addButton" @click="append" :disabled="isSearchingRepository">追加</button>
         </div>
       </div>
     </modal>
@@ -52,6 +52,7 @@ type DataType = {
   repositoryInput: String
   errorMsg: String
   isOpenedPulldownMenu: Boolean
+  isSearchingRepository: Boolean
 }
 
 export default Vue.extend({
@@ -70,6 +71,7 @@ export default Vue.extend({
       repositoryInput: '',
       errorMsg: '',
       isOpenedPulldownMenu: false,
+      isSearchingRepository: false,
     }
   },
   methods: {
@@ -85,12 +87,14 @@ export default Vue.extend({
       this.errorMsg = errorMsg
     },
     append() {
+      this.isSearchingRepository = true
       const parsed = this.repositoryInput.match(
         /^([^\/]+)\/([^\/]+)$/
       )
       console.log('parsed:', parsed)
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
+        this.isSearchingRepository = false
       } else {
         const owner = parsed[1]
         const repo = parsed[2]
@@ -109,6 +113,9 @@ export default Vue.extend({
           .catch((error) => {
             console.log('error:', error)
             this.setErrorMsg('リポジトリが見つかりません')
+          })
+          .then(() => {
+            self.isSearchingRepository = false
           })
       }
     },

@@ -8,7 +8,7 @@
           </button>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
-        <button class="Refresh" @click="refresh">
+        <button class="Refresh" @click="$emit('loatTimeline')">
           <span class="material-icons"> replay </span>
         </button>
       </div>
@@ -60,10 +60,12 @@
     </header>
     <div class="bottom">
       <div class="bottomContent">
-        <button class="Close">
-          <span class="material-icons"> close </span>
-        </button>
-        <span class="message">このカラムを削除</span>
+        <div class="right">
+          <button class="Close" @click="$emit('closeTimeline')">
+            <span class="material-icons"> close </span>
+          </button>
+          <span class="message">このカラムを削除</span>
+        </div>
       </div>
     </div>
   </div>
@@ -111,9 +113,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    refresh() {
-      this.$emit('loatTimeline')
-    },
     clickLabel: function (Blockname: string, index: number) {
       if (Blockname == 'category') {
         this.categoryitems[index].labelOpened =

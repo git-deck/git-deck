@@ -4,7 +4,7 @@
       <div class="caption">
         <div class="title">
           <span>GitDeck</span>
-          <span><img class="cat-icon" :src="catIcon" alt="" /></span>
+          <span><img class="cat-icon" src="@/assets/img/cat.svg" /></span>
         </div>
         <div class="subtext">
           <p>
@@ -31,19 +31,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import CatIcon from '@/assets/img/cat.svg'
 
 const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
-  catIcon: String
 }
 export default Vue.extend({
   components: { Octicon },
   data(): DataType {
     return {
       Octicons,
-      catIcon: CatIcon,
     }
   },
   methods: {
