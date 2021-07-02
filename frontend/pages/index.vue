@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Sidebar ref="sidebar" @appendTimeline="append" />
+    <Sidebar
+      ref="sidebar"
+      :avatar-url="$auth.state.user.avatar_url"
+      @appendTimeline="append"
+    />
     <Timeline
       v-for="(tl, index) in timeline"
       :key="index"
@@ -9,6 +13,7 @@
       :owner-url="tl.ownerUrl"
       :repo-url="tl.repoUrl"
       :contents="tl.contents"
+      :labels="tl.labels"
     />
   </div>
 </template>
@@ -37,6 +42,7 @@ export default Vue.extend({
           ownerUrl: 'https://github.com/knknk98',
           repoUrl: 'https://github.com/knknk98/issue-twitter',
           contents: CONTENTS_DUMMY_DATA,
+          labels: LABELS_DUMMY_DATA,
         },
       ],
       addingColumnErrorMsg: '',
@@ -45,34 +51,84 @@ export default Vue.extend({
   methods: {
     append(owner: string, repo: string) {
       const self = this
+      const timelineRequest = axios.get('/timeline/' + owner + '/' + repo, {
+        headers: {
+          Authorization: self.$auth.getToken('github'),
+        },
+      })
+      const labelsRequest = axios.get('/labels/' + owner + '/' + repo, {
+        headers: {
+          Authorization: self.$auth.getToken('github'),
+        },
+      })
       axios
-        .get('/timeline/' + owner + '/' + repo, {
-          headers: {
-            Authorization: this.$auth.getToken('github'),
-          },
-        })
-        .then(function (response) {
-          console.log(response)
-          self.timeline.push({
-            owner,
-            repo,
-            ownerUrl: 'https://github.com/' + owner,
-            repoUrl: 'https://github.com/' + owner + '/' + repo,
-            contents: response.data,
+        .all([timelineRequest, labelsRequest])
+        .then(
+          axios.spread((...responses) => {
+            const timelineResponce = responses[0]
+            const labelsResponce = responses[1]
+            // use/access the results
+            self.timeline.push({
+              owner,
+              repo,
+              ownerUrl: 'https://github.com/' + owner,
+              repoUrl: 'https://github.com/' + owner + '/' + repo,
+              contents: timelineResponce.data,
+              labels: labelsResponce.data,
+            })
+            self.addingColumnErrorMsg = ''
+            self.$refs.sidebar.hideModal()
           })
-          self.addingColumnErrorMsg = ''
-          self.$refs.sidebar.hideModal()
-        })
-        .catch(function (error) {
-          console.log(error)
+        )
+        .catch((errors) => {
+          // react on errors.
+          console.error(errors)
           self.$refs.sidebar.setErrorMsg('リポジトリが見つかりませんでした')
-        })
-        .then(function () {
-          // always executed
         })
     },
   },
 })
+
+const LABELS_DUMMY_DATA = [
+  {
+    // numberが識別子
+    color: '#ff0000',
+    name: 'すべて',
+  },
+  {
+    // numberが識別子
+    color: '#ff0f00',
+    name: 'label',
+  },
+  {
+    color: '#00ffff',
+    name: 'bug',
+  },
+  {
+    color: '#0000ff',
+    name: 'bug',
+  },
+  {
+    color: '#00ff00',
+    name: 'bug',
+  },
+  {
+    color: '#00f0f0',
+    name: 'bug',
+  },
+  {
+    color: '#0000ff',
+    name: 'bug',
+  },
+  {
+    color: '#00ff00',
+    name: 'ggggggggggggggggggggggggggggggggggggggggggg',
+  },
+  {
+    color: '#00f0f0',
+    name: 'bug',
+  },
+]
 
 const CONTENTS_DUMMY_DATA: Content[] = [
   {
