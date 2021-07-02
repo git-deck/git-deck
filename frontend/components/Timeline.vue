@@ -2,10 +2,11 @@
   <div class="column">
     <header>
       <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
-      <span class="title"
-        ><a class="username" :href="ownerUrl">{{ owner }}</a
-        >/<a class="reponame" :href="repoUrl">{{ repo }}</a></span
-      >
+      <span class="title">
+        <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
+        /
+        <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
+      </span>
       <button class="chat" @click="showModal">
         <span class="material-icons"> chat_bubble_outline </span>
       </button>
