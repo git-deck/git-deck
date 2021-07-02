@@ -2,6 +2,7 @@
   <div class="container">
     <Sidebar
       ref="sidebar"
+      :user-name="$auth.state.user.login"
       :avatar-url="$auth.state.user.avatar_url"
       @appendTimeline="append"
     />

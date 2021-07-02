@@ -8,7 +8,6 @@
   & > .menu {
     position: relative;
     height: 100%;
-
     .material-icons {
       color: #AAB8C2;
       font-size: 40px;
@@ -41,5 +40,56 @@
 
   button {
     padding: 2px 10px;
+  }
+
+  .pulldown-menu{
+    position: absolute;
+    background-color: white;
+    top: 15px;
+    left: 70px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $border;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 30%;
+      left: -25px;
+      margin-top: -10px;
+      border: 10px solid transparent;
+      border-right: 15px solid white;
+      z-index: 2;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 30%;
+      left: -28px;
+      margin-top: -11px;
+      border: 11px solid transparent;
+      border-right: 16px solid $border;
+      z-index: 1;
+    }
+
+    .header{
+      border-bottom: 1.5px solid;
+      border-color: $border;
+      margin-bottom: 5px;
+    }
+    .user-name{
+      font-weight: bold;
+    }
+
+    button {
+      background-color: $git-black;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      padding: 5px 10px;
+    }
   }
 }
