@@ -6,6 +6,7 @@
       :avatar-url="avatarUrl"
       @appendTimeline="append"
     />
+    <PostModal ref="postmodal"/>
     <multipane class="vertical-panes" layout="vertical">
       <template v-for="(tl, index) in timeline">
         <Timeline
@@ -15,6 +16,7 @@
           :repo="tl.repo"
           :useDummyData="tl.useDummyData"
           @closeTimeline="close"
+          @openPostModal="openPostModal"
         />
         <multipane-resizer :key="index + 'resizer'"></multipane-resizer>
       </template>
@@ -81,6 +83,9 @@ export default Vue.extend({
     close(id: number) {
       this.timeline.splice(id, 1)
     },
+    openPostModal(owner: string, repo: string) {
+      this.$refs.postmodal.showModal(owner, repo)
+    }
   },
 })
 </script>
