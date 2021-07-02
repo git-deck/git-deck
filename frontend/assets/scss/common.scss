@@ -67,6 +67,7 @@ a {
       cursor: pointer;
     }
   }
+
   & > .main-contents {
     display: flex;
     flex-direction: column;
@@ -83,7 +84,7 @@ a {
       width: 100%;
     }
 
-    & > .addButton {
+    & > button {
       margin-top: auto;
       padding: 12px 32px;
       background: transparent;
@@ -91,7 +92,15 @@ a {
       border-radius: 4px;
       cursor: pointer;
       align-self: flex-end;
+    }
+
+    & > .addButton{
       background: $git-black;
+      color: white;
+    }
+
+    & > .postButton{
+      background-color: $idea-color;
       color: white;
     }
   }

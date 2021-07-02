@@ -1,5 +1,5 @@
 <template>
-  <modal name="editor-modal" :click-to-close="false" :draggable="true">
+  <modal :name="owner + repo" :click-to-close="false" :draggable="true">
     <div class="modal-content">
       <div class="header">
         <div class="topic">アイデアを投稿する</div>
@@ -8,13 +8,15 @@
         </button>
       </div>
       <div class="main-contents">
-        <div class="repo">to {{ owner }}/{{ repo }}</div>
+        <div class="repo">
+          to <span class="address">{{ owner }}/{{ repo }}</span>
+        </div>
         <textarea v-model="ideaBody"></textarea>
         <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
-        <button @click="append">投稿する</button>
+        <button class="postButton" @click="append">投稿する</button>
       </div>
-    </div></modal
-  >
+    </div>
+  </modal>
 </template>
 
 <script lang="ts">
@@ -46,11 +48,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    showModal() {
-      this.$modal.show('editor-modal')
-    },
     hideModal() {
-      this.$modal.hide('editor-modal')
+      this.$modal.hide(this.owner + this.repo)
       this.errorMsg = ''
     },
     append() {
