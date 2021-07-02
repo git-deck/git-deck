@@ -14,10 +14,10 @@
       </div>
       <div class="labels">
         <LabelToButton
-          v-for="(item, index) in items"
+          v-for="(label, index) in labels"
           :key="index"
-          :color="item.color"
-          :message="item.message"
+          :color="label.color"
+          :message="label.name"
         ></LabelToButton>
       </div>
     </header>
@@ -35,55 +35,62 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropOptions } from 'vue'
+import { Label } from '@/models/types'
 import LabelToButton from '@/components/LabelToButton.vue'
 export default Vue.extend({
   components: {
-    LabelToButton: LabelToButton,
+    LabelToButton,
   },
-  data() {
-    return {
-      items: [
-        {
-          // numberが識別子
-          color: '#ff0000',
-          message: 'すべて',
-        },
-        {
-          // numberが識別子
-          color: '#ff0f00',
-          message: 'label',
-        },
-        {
-          color: '#00ffff',
-          message: 'bug',
-        },
-        {
-          color: '#0000ff',
-          message: 'bug',
-        },
-        {
-          color: '#00ff00',
-          message: 'bug',
-        },
-        {
-          color: '#00f0f0',
-          message: 'bug',
-        },
-        {
-          color: '#0000ff',
-          message: 'bug',
-        },
-        {
-          color: '#00ff00',
-          message: 'ggggggggggggggggggggggggggggggggggggggggggg',
-        },
-        {
-          color: '#00f0f0',
-          message: 'bug',
-        },
-      ],
-    }
+  props: {
+    labels: {
+      type: Array,
+      required: true,
+    } as PropOptions<Label[]>,
   },
+  //data() {
+  //  return {
+  //    items: [
+  //      {
+  //        // numberが識別子
+  //        color: '#ff0000',
+  //        message: 'すべて',
+  //      },
+  //      {
+  //        // numberが識別子
+  //        color: '#ff0f00',
+  //        message: 'label',
+  //      },
+  //      {
+  //        color: '#00ffff',
+  //        message: 'bug',
+  //      },
+  //      {
+  //        color: '#0000ff',
+  //        message: 'bug',
+  //      },
+  //      {
+  //        color: '#00ff00',
+  //        message: 'bug',
+  //      },
+  //      {
+  //        color: '#00f0f0',
+  //        message: 'bug',
+  //      },
+  //      {
+  //        color: '#0000ff',
+  //        message: 'bug',
+  //      },
+  //      {
+  //        color: '#00ff00',
+  //        message: 'ggggggggggggggggggggggggggggggggggggggggggg',
+  //      },
+  //      {
+  //        color: '#00f0f0',
+  //        message: 'bug',
+  //      },
+  //    ],
+  //  }
+  //},
 })
 </script>
