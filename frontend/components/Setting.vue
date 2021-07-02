@@ -48,7 +48,7 @@ export default Vue.extend({
       required: true,
     } as PropOptions<Label[]>,
   },
-  //data() {
+  // data() {
   //  return {
   //    items: [
   //      {
@@ -91,6 +91,6 @@ export default Vue.extend({
   //      },
   //    ],
   //  }
-  //},
+  // },
 })
 </script>
