@@ -93,40 +93,40 @@ const LABELS_DUMMY_DATA = [
   {
     // numberが識別子
     color: '#ff0000',
-    message: 'すべて',
+    name: 'すべて',
   },
   {
     // numberが識別子
     color: '#ff0f00',
-    message: 'label',
+    name: 'label',
   },
   {
     color: '#00ffff',
-    message: 'bug',
+    name: 'bug',
   },
   {
     color: '#0000ff',
-    message: 'bug',
+    name: 'bug',
   },
   {
     color: '#00ff00',
-    message: 'bug',
+    name: 'bug',
   },
   {
     color: '#00f0f0',
-    message: 'bug',
+    name: 'bug',
   },
   {
     color: '#0000ff',
-    message: 'bug',
+    name: 'bug',
   },
   {
     color: '#00ff00',
-    message: 'ggggggggggggggggggggggggggggggggggggggggggg',
+    name: 'ggggggggggggggggggggggggggggggggggggggggggg',
   },
   {
     color: '#00f0f0',
-    message: 'bug',
+    name: 'bug',
   },
 ]
 
