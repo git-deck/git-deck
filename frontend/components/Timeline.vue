@@ -14,7 +14,7 @@
       </button>
     </header>
     <PostModal :owner="owner" :repo="repo" />
-    <Setting v-if="settingOpened" :labels="labels" />
+    <Setting v-if="settingOpened" :labels="labels" @loatTimeline="load" />
     <main>
       <ContentBox
         v-for="(content, index) in contents"
@@ -74,40 +74,43 @@ export default Vue.extend({
     },
   },
   created() {
-    console.log('useDummyData:', this.useDummyData)
-    if (this.useDummyData) {
-      this.contents = CONTENTS_DUMMY_DATA
-      this.labels = LABELS_DUMMY_DATA
-      return
-    }
-    const timelineRequest = axios.get(
-      '/timeline/' + this.owner + '/' + this.repo,
-      {
+    this.load()
+  },
+  methods: {
+    load() {
+      console.log('useDummyData:', this.useDummyData)
+      if (this.useDummyData) {
+        this.contents = CONTENTS_DUMMY_DATA
+        this.labels = LABELS_DUMMY_DATA
+        return
+      }
+      const timelineRequest = axios.get(
+        '/timeline/' + this.owner + '/' + this.repo,
+        {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        }
+      )
+      const labelsRequest = axios.get('/labels/' + this.owner + '/' + this.repo, {
         headers: {
           Authorization: this.$auth.getToken('github'),
         },
-      }
-    )
-    const labelsRequest = axios.get('/labels/' + this.owner + '/' + this.repo, {
-      headers: {
-        Authorization: this.$auth.getToken('github'),
-      },
-    })
-    const self = this
-    axios
-      .all([timelineRequest, labelsRequest])
-      .then(
-        axios.spread((...responses) => {
-          self.contents = responses[0].data
-          self.labels = responses[1].data
-        })
-      )
-      .catch((errors) => {
-        // react on errors.
-        console.error(errors)
       })
-  },
-  methods: {
+      const self = this
+      axios
+        .all([timelineRequest, labelsRequest])
+        .then(
+          axios.spread((...responses) => {
+            self.contents = responses[0].data
+            self.labels = responses[1].data
+          })
+        )
+        .catch((errors) => {
+          // react on errors.
+          console.error(errors)
+        })
+    },
     // ラベル絞り込みボタンの開閉
     clickSettings() {
       this.settingOpened = !this.settingOpened
