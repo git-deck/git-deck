@@ -134,6 +134,9 @@
         min-width: 0;
         word-break: break-all;
         margin: 0 7px;
+        a {
+          color: black;
+        }
         & > .titleLine {
           & > .title {
             font-weight: bold;
