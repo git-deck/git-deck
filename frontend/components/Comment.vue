@@ -11,7 +11,7 @@
     </div>
     <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
     <div class="titleItem">
-      <div class="titleLine">
+      <a :href="url" target="_blank" class="titleLine">
         <h1 class="title">
           {{ title }}
           <span
@@ -20,7 +20,7 @@
             >#{{ number }}</span
           >
         </h1>
-      </div>
+      </a>
       <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
         <Icon
           v-for="(assignee, index) in assignees.slice(0, 3)"
