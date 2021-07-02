@@ -14,6 +14,14 @@
       </div>
       <div class="labels">
         <LabelToButton
+          v-for="(label, index) in items"
+          :key="index"
+          :color="label.color"
+          :message="label.name"
+        ></LabelToButton>
+      </div>
+      <div class="labels">
+        <LabelToButton
           v-for="(label, index) in labels"
           :key="index"
           :color="label.color"
@@ -48,19 +56,22 @@ export default Vue.extend({
       required: true,
     } as PropOptions<Label[]>,
   },
-  // data() {
-  //  return {
-  //    items: [
-  //      {
-  //        // numberが識別子
-  //        color: '#ff0000',
-  //        message: 'すべて',
-  //      },
-  //      {
-  //        // numberが識別子
-  //        color: '#ff0f00',
-  //        message: 'label',
-  //      },
+  data() {
+    return {
+      items: [
+        {
+          // numberが識別子
+          color: '#ffffff',
+          name: 'idea',
+        },
+        {
+          // numberが識別子
+          color: '#ff0000',
+          name: 'issue & pull request',
+        },
+      ],
+    }
+  },
   //      {
   //        color: '#00ffff',
   //        message: 'bug',
