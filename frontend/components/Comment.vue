@@ -11,7 +11,19 @@
     </div>
     <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
     <div class="titleItem">
-      <div class="titleLine">
+      <div v-if="(type === 'issue') | (type === 'pullRequest')">
+        <a :href="url" target="_blank" class="titleLine">
+          <h1 class="title">
+            {{ title }}
+            <span
+              v-if="(type === 'issue') | (type === 'pullRequest')"
+              class="number"
+              >#{{ number }}</span
+            >
+          </h1>
+        </a>
+      </div>
+      <div v-else class="titleLine">
         <h1 class="title">
           {{ title }}
           <span
@@ -65,9 +77,7 @@
     </div>
     <div class="dateItem">{{ howLongAgo }}</div>
     <div class="textItem">
-      <div v-if="(type === 'reply') | (type === 'idea')" class="text">
-        <div v-html="$md.render(body)"></div>
-      </div>
+      <div v-html="$md.render(body)"></div>
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"

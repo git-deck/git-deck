@@ -2,9 +2,17 @@
   <div class="container">
     <div class="login-page">
       <div class="caption">
-        <div class="title">GitDeck</div>
+        <div class="title">
+          <span>GitDeck</span>
+          <span><img class="cat-icon" :src="catIcon" alt="" /></span>
+        </div>
         <div class="subtext">
-          いい感じの説明が入リますいい感じの説明が入リますいい感じの説明が入リますいい感じの説明が入リますいい感じの説明が入リますいい感じの説明が入リます
+          <p>
+            GitHubの通知は分散しすぎてわからない！そんなあなたに向けたサービスです
+          </p>
+          <p>
+            複数リポジトリの通知をタイムラインに表示したり、issueにも満たないアイデアも投稿できます
+          </p>
         </div>
       </div>
       <div class="login-button">
@@ -23,16 +31,19 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import CatIcon from '@/assets/img/cat.svg'
 
 const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
+  catIcon: String
 }
 export default Vue.extend({
   components: { Octicon },
   data(): DataType {
     return {
       Octicons,
+      catIcon: CatIcon,
     }
   },
   methods: {

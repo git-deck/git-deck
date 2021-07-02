@@ -8,7 +8,7 @@
           </button>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
-        <button class="Refresh">
+        <button class="Refresh" @click="refresh">
           <span class="material-icons"> replay </span>
         </button>
       </div>
@@ -72,36 +72,10 @@ export default Vue.extend({
       ],
     }
   },
-  //      {
-  //        color: '#00ffff',
-  //        message: 'bug',
-  //      },
-  //      {
-  //        color: '#0000ff',
-  //        message: 'bug',
-  //      },
-  //      {
-  //        color: '#00ff00',
-  //        message: 'bug',
-  //      },
-  //      {
-  //        color: '#00f0f0',
-  //        message: 'bug',
-  //      },
-  //      {
-  //        color: '#0000ff',
-  //        message: 'bug',
-  //      },
-  //      {
-  //        color: '#00ff00',
-  //        message: 'ggggggggggggggggggggggggggggggggggggggggggg',
-  //      },
-  //      {
-  //        color: '#00f0f0',
-  //        message: 'bug',
-  //      },
-  //    ],
-  //  }
-  // },
+  methods: {
+    refresh() {
+      this.$emit('loatTimeline')
+    },
+  },
 })
 </script>
