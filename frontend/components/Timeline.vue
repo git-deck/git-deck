@@ -22,6 +22,9 @@
       @closeTimeline="close"
     />
     <main>
+      <div v-if="isLoading" class="loading">
+        <img src="@/assets/img/loading.gif" />
+      </div>
       <ContentBox
         v-for="(content, index) in contents"
         :key="index"
@@ -45,6 +48,7 @@ type DataType = {
   settingOpened: boolean
   contents: Content[]
   labels: Label[]
+  isLoading: boolean
 }
 
 export default Vue.extend({
@@ -73,6 +77,7 @@ export default Vue.extend({
       settingOpened: false,
       contents: [],
       labels: [],
+      isLoading: false,
     }
   },
   computed: {
@@ -115,12 +120,14 @@ export default Vue.extend({
         }
       )
       const self = this
+      this.isLoading = true
       axios
         .all([timelineRequest, labelsRequest])
         .then(
           axios.spread((...responses) => {
             self.contents = responses[0].data
             self.labels = responses[1].data
+            this.isLoading = false
           })
         )
         .catch((errors) => {
