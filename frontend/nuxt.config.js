@@ -58,5 +58,22 @@ export default {
 
   env: {
     accessToken: process.env.NUXT_ENV_ACCESS_TOKEN || 'dummy_access_token',
+    client_id: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+  },
+
+  auth: {
+    strategies: {
+      github: {
+        client_id: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+        client_secret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
+        scope: 'repo',
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/callback',
+      home: '/',
+    },
   },
 }

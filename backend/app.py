@@ -16,11 +16,8 @@ import utils
 # 環境変数
 # GITHUB_CLIENT_ID: https://github.com/settings/applications/new にアクセスして作る
 # GITHUB_CLIENT_SECRET: 上に同じ
-# FLASK_SECRET_KEY: flaskのsessionを使うためのシークレットーキー. 適当に設定すればいい.
 
 app = Flask(__name__)
-if "FLASK_SECRET_KEY" in os.environ:
-    app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.config["JSON_AS_ASCII"] = False
 
 CORS(app)
@@ -34,55 +31,17 @@ def hello():
     return "hello"
 
 
-@app.route("/oauth")
-def oauth():
-    # あなたのGitHubアカウントをこのアプリに連携していいですか？の画面にリダイレクトする
-    # scope=repo: プライベートリポジトリも検索
-    url = "https://github.com/login/oauth/authorize?client_id={}&scope=repo".format(env["GITHUB_CLIENT_ID"])
-    return redirect(url)
-
-
-@app.route("/callback/github")
-def callback():
-    # https://github.com/settings/applications/new のAuthorization callback URLで
-    #   http://localhost:5000/callback/github を設定しておく
-    # ユーザが連携を許可してくれたときに呼び出される
-
-    # 入手したrequest.args["code"]を利用してユーザのアクセストークンを発行する
-    url = "https://github.com/login/oauth/access_token?code={}&client_id={}&client_secret={}".format(
-        request.args["code"],
-        os.environ["GITHUB_CLIENT_ID"],
-        os.environ["GITHUB_CLIENT_SECRET"],
-    )
-    r = requests.get(url)
-    access_token = parse_qs(r.text)["access_token"][0]
-
-    # アクセストークンをsessionに保存し, 後から使えるようにする
-    session["access_token"] = access_token
-    return redirect(url_for("user"))
-
-
-@app.route("/logout")
-def logout():
-    if "access_token" in session:
-        del session["access_token"]
-    return redirect(url_for("hello"))
-
-
 def github_client():
-    if "access_token" in session:
-        access_token = session["access_token"]
-    elif "AccessToken" in request.headers:
-        access_token = request.headers["AccessToken"]
+    authorization = request.headers["Authorization"]
 
-    print("access_token:", access_token)
+    print("authorization:", authorization)
     return Client(
         transport=RequestsHTTPTransport(
             url = "https://api.github.com/graphql",
             use_json = True,
             headers = {
                 "Content-type": "application/json",
-                "Authorization": "Bearer {}".format(access_token)
+                "Authorization": authorization,
             },
             verify = False,
             retries = 3,
