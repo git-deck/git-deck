@@ -11,9 +11,15 @@
         <div class="repo">
           to <span class="address">{{ owner }}/{{ repo }}</span>
         </div>
-        <textarea v-focus v-model="ideaBody" class="postTextBox"></textarea>
+        <textarea v-model="ideaBody" v-focus class="postTextBox"></textarea>
         <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
-        <button class="postButton" @click="append">投稿する</button>
+        <button class="postButton" @click="append">
+          投稿する
+          <Octicon
+            :icon="Octicons.lightBulb"
+            class-name="comment-type-mark idea"
+          />
+        </button>
       </div>
     </div>
   </modal>
@@ -21,11 +27,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Octicon, Octicons } from 'octicons-vue'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
 type DataType = {
+  Octicons: any
   ideaBody: String
   errorMsg: String
   owner: String
@@ -33,15 +41,17 @@ type DataType = {
 }
 Vue.directive('focus', {
   // ひも付いている要素が DOM に挿入される時...
-  inserted: function (el) {
+  inserted(el) {
     // 要素にフォーカスを当てる
     el.focus()
   },
 })
 
 export default Vue.extend({
+  components: { Octicon },
   data(): DataType {
     return {
+      Octicons,
       ideaBody: '',
       errorMsg: '',
       owner: '',

@@ -20,7 +20,13 @@
     <Setting
       v-show="settingOpened"
       ref="setting"
+<<<<<<< HEAD
       :label-items="labelItems"
+=======
+      :labelItems="labelItems"
+      :allLabel="allLabel"
+      :categoryLabels="categoryLabels"
+>>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
       @loadTimeline="search"
       @closeTimeline="close"
       @clickLabel="clickLabel"
@@ -58,10 +64,14 @@ type DataType = {
   contents: Content[]
   labelItems: LabelItem[]
   isLoading: boolean
+  // setting から持ってきた
+  categoryLabels: Array<LabelItem>
+  allLabel: Label
 }
 
 export default Vue.extend({
   components: { Octicon },
+
   props: {
     id: {
       type: Number,
@@ -80,6 +90,7 @@ export default Vue.extend({
       required: true,
     },
   },
+
   data(): DataType {
     return {
       Octicons,
@@ -87,8 +98,11 @@ export default Vue.extend({
       contents: [],
       labelItems: [],
       isLoading: false,
+      allLabel: ALL_LABEL,
+      categoryLabels: CATEGORY_LABELS,
     }
   },
+
   computed: {
     ownerUrl() {
       return 'https://github.com/' + this.owner
@@ -97,22 +111,35 @@ export default Vue.extend({
       return 'https://github.com/' + this.owner + '/' + this.repo
     },
   },
+
   created() {
     this.load()
   },
+
   methods: {
     close() {
       this.$emit('closeTimeline', this.id)
     },
     search() {
-      console.log('useDummyData:', this.useDummyData)
+      // ダミーデータは検索しない
+      if (this.useDummyData) {
+        this.contents = CONTENTS_DUMMY_DATA
+        this.labelItems = LABELS_DUMMY_DATA.map((label) => ({
+          label,
+          labelOpened: true,
+        }))
+        return
+      }
+
+      // Build URL
 
       let url = '/timeline/' + this.owner + '/' + this.repo + '?'
-      if (this.$refs.setting.allLabel) {
+      if (this.allLabel.labelOpened) {
+        // すべてラベルがついてなかったら
         const labels = []
-        for (const i in this.$refs.setting.labelItems) {
-          if (!this.$refs.setting.labelItems[i].labelOpened) {
-            labels.push(this.$refs.setting.labelItems[i].name)
+        for (const i in this.labelItems) {
+          if (!this.labelItems[i].labelOpened) {
+            labels.push(this.labelItems[i].label.name)
           }
         }
         if (labels.length > 0) {
@@ -121,19 +148,17 @@ export default Vue.extend({
       }
 
       const categories = []
-      for (const i in this.$refs.setting.categoryitems) {
-        if (!this.$refs.setting.categoryitems[i].labelOpened) {
-          let category = this.$refs.setting.categoryitems[i].name
-          if (category === 'issue & pull request') {
-            category = 'issue_and_pull_request'
-          }
-          categories.push(category)
+      for (const i in this.categoryLabels) {
+        if (!this.categoryLabels[i].labelOpened) {
+          categories.push(this.categoryLabels[i].label.name)
         }
       }
       if (categories.length > 0) {
         url += 'categories=' + categories.join()
       }
+      console.log(url)
 
+<<<<<<< HEAD
       // ダミーデータは検索しない
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
@@ -145,23 +170,14 @@ export default Vue.extend({
         }
         return
       }
+=======
+>>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
 
-      const timelineRequest = axios.get(url, {
-        headers: {
-          Authorization: this.$auth.getToken('github'),
-        },
-      })
-      const labelsRequest = axios.get(
-        '/labels/' + this.owner + '/' + this.repo,
-        {
-          headers: {
-            Authorization: this.$auth.getToken('github'),
-          },
-        }
-      )
+      // Send Request
       const self = this
       this.isLoading = true
       axios
+<<<<<<< HEAD
         .all([timelineRequest, labelsRequest])
         .then(
           axios.spread((...responses) => {
@@ -176,6 +192,17 @@ export default Vue.extend({
             this.isLoading = false
           })
         )
+=======
+        .get(url, {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        })
+        .then((response) => {
+          self.contents = response.data
+          this.isLoading = false
+        })
+>>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
         .catch((errors) => {
           // react on errors.
           console.error(errors)
@@ -187,14 +214,23 @@ export default Vue.extend({
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
+<<<<<<< HEAD
         for (const i in LABELS_DUMMY_DATA) {
           this.labelItems.push({
             label: LABELS_DUMMY_DATA[i],
             labelOpened: true,
           })
         }
+=======
+        this.labelItems = LABELS_DUMMY_DATA.map((label) => ({
+          label,
+          labelOpened: true,
+        }))
+>>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
         return
       }
+
+      // Send Request
       const timelineRequest = axios.get(
         '/timeline/' +
           this.owner +
@@ -222,13 +258,11 @@ export default Vue.extend({
         .then(
           axios.spread((...responses) => {
             self.contents = responses[0].data
-            const labelsData = responses[1].data
-            for (const i in labelsData) {
-              this.labelItems.push({
-                label: labelsData[i],
-                labelOpened: true,
-              })
-            }
+            self.labelItems = []
+            self.labelItems = responses[1].data.map((label) => ({
+              label,
+              labelOpened: true,
+            }))
             this.isLoading = false
           })
         )
@@ -247,34 +281,71 @@ export default Vue.extend({
 
     // ラベルのON OFF管理
     clickLabel(Blockname: string, index: number) {
-      const setting = this.$refs.setting
-      console.log('setting:', setting)
       // labelOpened:false->選択中
       if (Blockname === 'category') {
-        setting.categoryitems[index].labelOpened =
-          !setting.categoryitems[index].labelOpened
+        this.categoryLabels[index].labelOpened =
+          !this.categoryLabels[index].labelOpened
       }
       if (Blockname === 'labels') {
         if (index === -1) {
-          if (setting.allLabel.labelOpened) {
+          if (this.allLabel.labelOpened) {
             // すべて：選択中でないときにボタン押した
-            setting.labelItems.map((element) => (element.labelOpened = true))
-            setting.allLabel.labelOpened = false
+            this.labelItems.map((element) => (element.labelOpened = true))
+            this.allLabel.labelOpened = false
           } else {
-            setting.allLabel.labelOpened = !this.allLabel.labelOpened
+            this.allLabel.labelOpened = !this.allLabel.labelOpened
           }
-        } else if (!setting.allLabel.labelOpened) {
-          setting.allLabel.labelOpened = !setting.allLabel.labelOpened
-          setting.labelItems[index].labelOpened =
-            !setting.labelItems[index].labelOpened
+        } else if (!this.allLabel.labelOpened) {
+          this.allLabel.labelOpened = !this.allLabel.labelOpened
+          this.labelItems[index].labelOpened =
+            !this.labelItems[index].labelOpened
         } else {
-          setting.labelItems[index].labelOpened =
-            !setting.labelItems[index].labelOpened
+          this.labelItems[index].labelOpened =
+            !this.labelItems[index].labelOpened
         }
       }
     },
   },
 })
+
+const ALL_LABEL: LabelItem = {
+  label: {
+    name: 'すべて',
+    color: '#24292E',
+  },
+  labelOpened: false,
+}
+
+const CATEGORY_LABELS: LabelItem[] = [
+  {
+    label: {
+      color: '#FFB800',
+      name: 'idea',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#2EA44F',
+      name: 'open',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#bd2c00',
+      name: 'closed',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#6e5494',
+      name: 'merged',
+    },
+    labelOpened: false,
+  },
+]
 
 const LABELS_DUMMY_DATA: Label[] = [
   {
