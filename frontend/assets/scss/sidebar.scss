@@ -50,6 +50,7 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid $border;
+    z-index: 100000;
 
     &:before {
       content: "";
