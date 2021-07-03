@@ -8,6 +8,7 @@
   border-right: 6px solid;
   border-color: $border;
   background-color: white;
+  overflow-x: hidden;
 
   &:first-child {
     border-left: 6px solid;
@@ -250,6 +251,7 @@
         word-break: break-all;
         font-size: 12px;
         margin-bottom: 8px;
+        overflow-x: scroll;
       }
       & > .readmoreItem {
         margin-top: 4px;

@@ -82,6 +82,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    timeline: {
+      type: Array,
+      required: true,
+    },
   },
 
   data(): DataType {
@@ -132,9 +136,18 @@ export default Vue.extend({
         parsed = this.repositoryInput.match(/^([^/]+)\/([^/]+)$/)
       }
       console.log('parsed:', parsed)
+
+      console.log(this.timeline)
+
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
         this.isSearchingRepository = false
+      } else if (
+        this.timeline.find(
+          ({ owner, repo }) => owner === parsed[1] && repo === parsed[2]
+        )
+      ) {
+        this.setErrorMsg('既に登録済みのレポジトリです')
       } else {
         const owner = parsed[1]
         const repo = parsed[2]

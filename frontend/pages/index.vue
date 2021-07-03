@@ -4,6 +4,7 @@
       ref="sidebar"
       :user-name="userName"
       :avatar-url="avatarUrl"
+      :timeline="timeline"
       @appendTimeline="append"
     />
     <PostModal ref="postmodal" />
