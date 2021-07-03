@@ -8,7 +8,10 @@
         <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
       </span>
       <button class="chat" @click="showModal">
-        <span class="material-icons"> chat_bubble_outline </span>
+        <span class="material-icons"> add </span>
+      </button>
+      <button class="Refresh" @click="search">
+        <span class="material-icons"> replay </span>
       </button>
       <button class="tune" @click="clickSettings">
         <span class="material-icons"> tune </span>
@@ -177,7 +180,11 @@ export default Vue.extend({
         return
       }
       const timelineRequest = axios.get(
-        '/timeline/' + this.owner + '/' + this.repo + '?categories=idea,issue_and_pull_request',
+        '/timeline/' +
+          this.owner +
+          '/' +
+          this.repo +
+          '?categories=idea,issue_and_pull_request',
         {
           headers: {
             Authorization: this.$auth.getToken('github'),
