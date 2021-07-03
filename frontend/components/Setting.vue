@@ -16,23 +16,19 @@
       <div class="categoryBlock">
         <div class="mes">カテゴリ</div>
         <div class="Lab">
-          <div
+          <span
             v-for="(label, index) in categoryitems"
             :key="index"
             class="labels"
+            style="cursor: pointer"
+            @click="clickLabel('category', index)"
           >
-            <span
-              style="cursor: pointer"
-              class="labelButton"
-              @click="clickLabel('category', index)"
-            >
-              <Label0
-                :color="label.color"
-                :message="label.name"
-                :disabled="label.labelOpened"
-              ></Label0>
-            </span>
-          </div>
+            <Label0
+              :color="label.color"
+              :message="label.name"
+              :disabled="label.labelOpened"
+            ></Label0>
+          </span>
         </div>
       </div>
       <div clas="labelsBlock">
@@ -90,7 +86,7 @@ export default Vue.extend({
       labelsitems: this.labels.map((element: Label) => ({
         name: element.name,
         color: element.color,
-        labelOpened: false,
+        labelOpened: true,
       })),
       categoryitems: [
         {
@@ -110,13 +106,25 @@ export default Vue.extend({
   },
   methods: {
     clickLabel(Blockname: string, index: number) {
+      //labelOpened:false->選択中
       if (Blockname == 'category') {
         this.categoryitems[index].labelOpened =
           !this.categoryitems[index].labelOpened
       }
       if (Blockname == 'labels') {
-        this.labelsitems[index].labelOpened =
-          !this.labelsitems[index].labelOpened
+        if (index == 0) {
+          if (this.labelsitems[index].labelOpened) {
+            //すべて：選択中でないときにボタン押した
+            this.labelsitems.map((element) => (element.labelOpened = true)),
+              (this.labelsitems[index].labelOpened = false)
+          } else {
+            this.labelsitems[index].labelOpened =
+              !this.labelsitems[index].labelOpened
+          }
+        } else {
+          this.labelsitems[index].labelOpened =
+            !this.labelsitems[index].labelOpened
+        }
       }
     },
   },
