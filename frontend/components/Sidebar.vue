@@ -148,6 +148,7 @@ export default Vue.extend({
         )
       ) {
         this.setErrorMsg('既に登録済みのレポジトリです')
+        this.isSearchingRepository = false
       } else {
         const owner = parsed[1]
         const repo = parsed[2]
