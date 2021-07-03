@@ -84,8 +84,7 @@
         class-name="comment-type-mark idea"
       />
     </div>
-
-    <div class="textItem">
+    <div ref="textarea" class="textItem" :style="{ height: textHeight }">
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"
@@ -94,8 +93,15 @@
           :color="label.color"
         />
       </div>
-      <div v-html="$md.render(body)" class="textItemCon"></div>
+      <div class="textItemCon" v-html="$md.render(body)"></div>
     </div>
+    <button
+      v-if="height > MAX_COMMENT_HEIGT"
+      class="buttonItem"
+      @click="LongCommentClick"
+    >
+      {{ buttonMark }}
+    </button>
     <div v-if="readmore" class="readmoreItem">
       <a class="readmore" @click="$emit('toggleShowingAll')">
         返信をさらに表示
@@ -115,10 +121,17 @@ import Vue from 'vue'
 import { Octicon, Octicons } from 'octicons-vue'
 type DataType = {
   Octicons: any
+  height: Number
+  isLongCommentOpened: boolean
+  MAX_COMMENT_HEIGT: Number
 }
 export default Vue.extend({
   components: { Octicon },
   props: {
+    addCallbacks: {
+      type: Function,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -211,6 +224,9 @@ export default Vue.extend({
   data(): DataType {
     return {
       Octicons,
+      height: 0,
+      isLongCommentOpened: false,
+      MAX_COMMENT_HEIGT: 350,
     }
   },
   computed: {
@@ -220,6 +236,33 @@ export default Vue.extend({
         this.thread &&
         this.readmore
       )
+    },
+    textHeight(): string {
+      if (!this.isLongCommentOpened && this.height > this.MAX_COMMENT_HEIGT) {
+        return '100px'
+      } else {
+        return '100%'
+      }
+    },
+    buttonMark(): string {
+      if (this.isLongCommentOpened) {
+        return '▲'
+      } else {
+        return '▼'
+      }
+    },
+  },
+  mounted() {
+    this.$props.addCallbacks(() => {
+      const tmp = this.$refs.textarea.clientHeight
+      this.height = tmp
+    })
+    const tmp = this.$refs.textarea.clientHeight
+    this.height = tmp
+  },
+  methods: {
+    LongCommentClick() {
+      this.isLongCommentOpened = !this.isLongCommentOpened
     },
   },
 })

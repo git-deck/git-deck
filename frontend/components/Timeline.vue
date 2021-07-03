@@ -20,9 +20,9 @@
     <Setting
       v-show="settingOpened"
       ref="setting"
-      :labelItems="labelItems"
-      :allLabel="allLabel"
-      :categoryLabels="categoryLabels"
+      :label-items="labelItems"
+      :all-label="allLabel"
+      :category-labels="categoryLabels"
       @loadTimeline="search"
       @closeTimeline="close"
       @clickLabel="clickLabel"
@@ -35,6 +35,7 @@
         v-for="(content, index) in contents"
         :key="index"
         :content="content"
+        :add-callbacks="addCallbacks"
       ></ContentBox>
     </main>
   </div>
@@ -86,6 +87,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    addCallbacks: {
+      type: Function,
+      required: true,
+    },
   },
 
   data(): DataType {
@@ -99,7 +104,6 @@ export default Vue.extend({
       categoryLabels: JSON.parse(JSON.stringify(CATEGORY_LABELS)), // copy
     }
   },
-
   computed: {
     ownerUrl() {
       return 'https://github.com/' + this.owner
@@ -108,11 +112,9 @@ export default Vue.extend({
       return 'https://github.com/' + this.owner + '/' + this.repo
     },
   },
-
   created() {
     this.load()
   },
-
   methods: {
     close() {
       this.$emit('closeTimeline', this.id)
@@ -154,7 +156,6 @@ export default Vue.extend({
         url += 'categories=' + categories.join()
       }
       console.log(url)
-
 
       // Send Request
       const self = this
@@ -236,7 +237,6 @@ export default Vue.extend({
     showModal() {
       this.$emit('openPostModal', this.owner, this.repo)
     },
-
     // ラベルのON OFF管理
     clickLabel(Blockname: string, index: number) {
       // labelOpened:false->選択中

@@ -8,13 +8,18 @@
       @appendTimeline="append"
     />
     <PostModal ref="postmodal" />
-    <multipane class="vertical-panes" layout="vertical">
-      <template v-for="(tl, index) in timeline">
+    <multipane
+      class="vertical-panes"
+      layout="vertical"
+      @paneResizeStop="resized"
+    >
+      <template v-for="(tl, index) in timeline" ref="test">
         <Timeline
           :id="tl.id"
           :key="tl.id"
           :owner="tl.owner"
           :repo="tl.repo"
+          :add-callbacks="addCallbacks"
           :use-dummy-data="tl.useDummyData"
           @closeTimeline="close"
           @openPostModal="openPostModal"
@@ -30,9 +35,11 @@ import Vue from 'vue'
 import VModal from 'vue-js-modal'
 import axios from 'axios'
 import { Multipane, MultipaneResizer } from 'vue-multipane'
-import { getSavedRepository } from '@/utils/localStorage.ts'
+import {
+  getSavedRepository,
+  removeRepositoryToLocalStorage,
+} from '@/utils/localStorage.ts'
 import { addRepository } from '@/APIClient/repository.ts'
-import { removeRepositoryToLocalStorage } from '@/utils/localStorage.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -43,6 +50,7 @@ type DataType = {
   addingColumnErrorMsg: String
   avatarUrl: String
   userName: String
+  callbacks: Array<() => void>
 }
 export default Vue.extend({
   components: {
@@ -61,6 +69,7 @@ export default Vue.extend({
       addingColumnErrorMsg: '',
       avatarUrl: '',
       userName: '',
+      callbacks: [],
     }
   },
   created() {
@@ -89,6 +98,12 @@ export default Vue.extend({
     },
     openPostModal(owner: string, repo: string) {
       this.$refs.postmodal.showModal(owner, repo)
+    },
+    resized() {
+      this.callbacks.forEach((callback) => callback())
+    },
+    addCallbacks(callback) {
+      this.callbacks.push(callback)
     },
   },
 })
