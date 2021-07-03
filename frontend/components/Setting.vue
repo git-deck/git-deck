@@ -8,7 +8,7 @@
           </button>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
-        <button class="Refresh" @click="$emit('loatTimeline')">
+        <button class="Refresh" @click="$emit('loadTimeline')">
           <span class="material-icons"> replay </span>
         </button>
       </div>
@@ -34,6 +34,17 @@
       <div clas="labelsBlock">
         <div class="mes">ラベル</div>
         <div class="Lab">
+          <span
+            class="labels"
+            style="cursor: pointer"
+            @click="clickLabel('labels', -1)"
+          >
+            <Label0
+              :color="allLabel.color"
+              :message="allLabel.name"
+              :disabled="allLabel.labelOpened"
+            ></Label0>
+          </span>
           <span
             v-for="(label, index) in labelsitems"
             :key="index"
@@ -67,9 +78,15 @@
 import Vue, { PropOptions } from 'vue'
 import { Label } from '@/models/types'
 import Label0 from '@/components/Label.vue'
+type LabelItem = {
+  name: String
+  color: String
+  labelOpened: Boolean
+}
 type DataType = {
-  labelsitems: Array<Object>
-  categoryitems: Array<Object>
+  labelsitems: Array<LabelItem>
+  categoryitems: Array<LabelItem>
+  allLabel: Label
 }
 export default Vue.extend({
   components: {
@@ -81,8 +98,13 @@ export default Vue.extend({
       required: true,
     } as PropOptions<Label[]>,
   },
-  data() {
+  data(): DataType {
     return {
+      allLabel: {
+        name: 'すべて',
+        color: '#00ff00',
+        labelOpened: false,
+      },
       labelsitems: this.labels.map((element: Label) => ({
         name: element.name,
         color: element.color,
@@ -106,30 +128,27 @@ export default Vue.extend({
   },
   methods: {
     clickLabel(Blockname: string, index: number) {
-      //labelOpened:false->選択中
-      if (Blockname == 'category') {
+      // labelOpened:false->選択中
+      if (Blockname === 'category') {
         this.categoryitems[index].labelOpened =
           !this.categoryitems[index].labelOpened
       }
-      if (Blockname == 'labels') {
-        if (index == 0) {
-          if (this.labelsitems[index].labelOpened) {
-            //すべて：選択中でないときにボタン押した
-            this.labelsitems.map((element) => (element.labelOpened = true)),
-              (this.labelsitems[index].labelOpened = false)
+      if (Blockname === 'labels') {
+        if (index === -1) {
+          if (this.allLabel.labelOpened) {
+            // すべて：選択中でないときにボタン押した
+            this.labelsitems.map((element) => (element.labelOpened = true))
+            this.allLabel.labelOpened = false
           } else {
-            this.labelsitems[index].labelOpened =
-              !this.labelsitems[index].labelOpened
+            this.allLabel.labelOpened = !this.allLabel.labelOpened
           }
+        } else if (!this.allLabel.labelOpened) {
+          this.allLabel.labelOpened = !this.allLabel.labelOpened
+          this.labelsitems[index].labelOpened =
+            !this.labelsitems[index].labelOpened
         } else {
-          if (!this.labelsitems[0].labelOpened) {
-            this.labelsitems[0].labelOpened = !this.labelsitems[0].labelOpened
-            this.labelsitems[index].labelOpened =
-              !this.labelsitems[index].labelOpened
-          } else {
-            this.labelsitems[index].labelOpened =
-              !this.labelsitems[index].labelOpened
-          }
+          this.labelsitems[index].labelOpened =
+            !this.labelsitems[index].labelOpened
         }
       }
     },
