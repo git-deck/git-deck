@@ -20,7 +20,7 @@
     <Setting
       v-show="settingOpened"
       ref="setting"
-      :labelItems="labelItems"
+      :label-items="labelItems"
       @loadTimeline="search"
       @closeTimeline="close"
       @clickLabel="clickLabel"
@@ -137,7 +137,7 @@ export default Vue.extend({
       // ダミーデータは検索しない
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-        for (let i in LABELS_DUMMY_DATA) {
+        for (const i in LABELS_DUMMY_DATA) {
           this.labelItems.push({
             label: LABELS_DUMMY_DATA[i],
             labelOpened: true,
@@ -167,7 +167,7 @@ export default Vue.extend({
           axios.spread((...responses) => {
             self.contents = responses[0].data
             const labelsData = responses[1].data
-            for (let i in labelsData) {
+            for (const i in labelsData) {
               this.labelItems.push({
                 label: labelsData[i],
                 labelOpened: true,
@@ -187,7 +187,7 @@ export default Vue.extend({
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-        for (let i in LABELS_DUMMY_DATA) {
+        for (const i in LABELS_DUMMY_DATA) {
           this.labelItems.push({
             label: LABELS_DUMMY_DATA[i],
             labelOpened: true,
@@ -223,7 +223,7 @@ export default Vue.extend({
           axios.spread((...responses) => {
             self.contents = responses[0].data
             const labelsData = responses[1].data
-            for (let i in labelsData) {
+            for (const i in labelsData) {
               this.labelItems.push({
                 label: labelsData[i],
                 labelOpened: true,

@@ -113,7 +113,6 @@
     overflow-y: scroll;
 
     & .comment {
-      //& > .comment {
       padding-top: 12px;
       padding-left: 12px;
       padding-right: 12px;
@@ -230,6 +229,7 @@
         word-break: break-all;
         font-size: 12px;
         margin-bottom: 8px;
+        overflow-y: hidden;
       }
       & > .readmoreItem {
         margin-top: 4px;

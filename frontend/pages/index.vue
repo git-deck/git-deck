@@ -6,8 +6,12 @@
       :avatar-url="avatarUrl"
       @appendTimeline="append"
     />
-    <PostModal ref="postmodal"/>
-    <multipane class="vertical-panes" layout="vertical">
+    <PostModal ref="postmodal" />
+    <multipane
+      class="vertical-panes"
+      layout="vertical"
+      @paneResizeStop="resized"
+    >
       <template v-for="(tl, index) in timeline">
         <Timeline
           :id="tl.id"
@@ -39,6 +43,7 @@ type DataType = {
   addingColumnErrorMsg: String
   avatarUrl: String
   userName: String
+  flag: Boolean
 }
 export default Vue.extend({
   components: {
@@ -70,6 +75,7 @@ export default Vue.extend({
       addingColumnErrorMsg: '',
       avatarUrl: '',
       userName: '',
+      flag: true,
     }
   },
   created() {
@@ -90,6 +96,9 @@ export default Vue.extend({
     },
     openPostModal(owner: string, repo: string) {
       this.$refs.postmodal.showModal(owner, repo)
+    },
+    resized(pane, container, size) {
+      // ここでコメント高さ取得する関数を呼び出す
     },
   },
 })

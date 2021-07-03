@@ -76,7 +76,6 @@
 import Vue, { PropOptions } from 'vue'
 import { Content } from '@/models/types'
 
-
 export default Vue.extend({
   props: {
     content: {

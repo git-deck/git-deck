@@ -29,8 +29,8 @@
           >
           <input
             id="repository-input"
-            v-focus
             v-model="repositoryInput"
+            v-focus
             placeholder="owner/repository"
             class="inputField"
             size="50%"
@@ -38,8 +38,8 @@
           <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
           <button
             class="addButton"
-            @click="append"
             :disabled="isSearchingRepository"
+            @click="append"
           >
             追加
           </button>
@@ -63,7 +63,7 @@ type DataType = {
 }
 Vue.directive('focus', {
   // ひも付いている要素が DOM に挿入される時...
-  inserted: function (el) {
+  inserted(el) {
     // 要素にフォーカスを当てる
     el.focus()
   },

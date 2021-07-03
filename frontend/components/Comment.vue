@@ -1,6 +1,8 @@
 <template>
   <div
+    ref="textarea"
     class="comment"
+    :style="{ height: textHeight }"
     :class="{
       thread: thread,
     }"
@@ -222,6 +224,14 @@ export default Vue.extend({
         this.thread &&
         this.readmore
       )
+    },
+    textHeight(): string {
+      return 'auto'
+    },
+  },
+  methods: {
+    getCommentHeight() {
+      const height = this.$refs.textarea.clientHeight
     },
   },
 })
