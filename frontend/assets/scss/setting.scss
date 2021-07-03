@@ -31,7 +31,27 @@
                 }
             }
         }
-        .labelsBlock,.categoryBlock{
+        & > .labelsBlock{
+            display: block;
+            .Lab{
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                align-items: center;
+                .labels{
+                    display: block;
+                    font-size: 0;
+                }
+            }
+        }
+        & > .categoryBlock{
             display: block;
             .Lab{
                 display: -webkit-box;
