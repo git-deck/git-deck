@@ -95,8 +95,8 @@ export default Vue.extend({
       contents: [],
       labelItems: [],
       isLoading: false,
-      allLabel: ALL_LABEL,
-      categoryLabels: CATEGORY_LABELS,
+      allLabel: JSON.parse(JSON.stringify(ALL_LABEL)), // copy
+      categoryLabels: JSON.parse(JSON.stringify(CATEGORY_LABELS)), // copy
     }
   },
 
