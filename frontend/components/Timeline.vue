@@ -14,7 +14,6 @@
         <span class="material-icons"> tune </span>
       </button>
     </header>
-    <PostModal :owner="owner" :repo="repo" />
     <Setting
       v-if="settingOpened"
       :labels="labels"
@@ -140,7 +139,7 @@ export default Vue.extend({
       this.settingOpened = !this.settingOpened
     },
     showModal() {
-      this.$modal.show(this.owner + this.repo)
+      this.$emit('openPostModal', this.owner, this.repo)
     },
   },
 })

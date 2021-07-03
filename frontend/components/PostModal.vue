@@ -1,5 +1,5 @@
 <template>
-  <modal :name="owner + repo" :click-to-close="false" :draggable="true">
+  <modal name="post-modal" :click-to-close="false" :draggable="true">
     <div class="modal-content">
       <div class="header">
         <div class="topic">アイデアを投稿する</div>
@@ -28,29 +28,28 @@ axios.defaults.baseURL = 'http://localhost:5000'
 type DataType = {
   ideaBody: String
   errorMsg: String
+  owner: String
+  repo: String
 }
 
 export default Vue.extend({
-  props: {
-    owner: {
-      type: String,
-      required: true,
-    },
-    repo: {
-      type: String,
-      required: true,
-    },
-  },
   data(): DataType {
     return {
       ideaBody: '',
       errorMsg: '',
+      owner: '',
+      repo: '',
     }
   },
   methods: {
     hideModal() {
-      this.$modal.hide(this.owner + this.repo)
+      this.$modal.hide('post-modal')
       this.errorMsg = ''
+    },
+    showModal(owner: string, repo: string) {
+      this.owner = owner
+      this.repo = repo
+      this.$modal.show('post-modal')
     },
     append() {
       const self = this

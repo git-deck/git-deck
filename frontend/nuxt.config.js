@@ -57,10 +57,7 @@ export default {
     },
   },
 
-  env: {
-    accessToken: process.env.NUXT_ENV_ACCESS_TOKEN || 'dummy_access_token',
-    client_id: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-  },
+  env: {},
 
   auth: {
     strategies: {
