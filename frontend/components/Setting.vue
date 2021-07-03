@@ -1,20 +1,6 @@
 <template>
   <div class="label_column">
     <header>
-      <div class="top">
-        <div class="filterbutton">
-          <div class="filtertooltip">
-            <button class="filter_list">
-              <span class="material-icons"> filter_list </span>
-            </button>
-            <div class="description">
-              ラベル絞り込みを実行します。以下のカテゴリ・ラベルが選択されます。
-            </div>
-          </div>
-          <span class="filter_message">ラベルで絞り込む</span>
-        </div>
-      </div>
-
       <div class="categoryBlock">
         <div id="categoryBlockmes" style="font-size: 12px; color: gray">
           カテゴリ
@@ -69,14 +55,9 @@
     </header>
     <div class="bottom">
       <div class="bottomContent">
-        <div class="bottomright">
-          <div class="closetooltip">
-            <a class="closemessage" @click="$emit('closeTimeline')">
-              このカラムを削除
-            </a>
-            <div class="description">カラムを削除します</div>
-          </div>
-        </div>
+        <a class="closemessage" @click="$emit('closeTimeline')">
+          このカラムを削除
+        </a>
       </div>
     </div>
   </div>

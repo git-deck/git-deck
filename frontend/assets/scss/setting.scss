@@ -5,42 +5,7 @@
         border-color: $border;
         padding: 5px 15px;  
         background-color: #ffffff;
-        .top{
-            width:100%;
-            display:flex;
-            background-color:transparent;
-            .filterbutton{
-                display: flex;
-                .filtertooltip{
-                    display: inline-block;
-                    position: relative;
-                    .filter_list {
-                        border: none;
-                        width: 25px;
-                        height: 25px;
-                        background: transparent;
-                        color: gray;
-                        padding:0px;
-                        margin:0px 0px 4px 0px;
-                        cursor: pointer;
-                        .material-icons {
-                            font-size: 25px;
-                        }
-                    }
-                }
-                .filtertooltip:hover .description{
-                    display: inline-block;
-                    top: 30px;
-                    left: 0px;
-                }
-                .filter_message{
-                    font-size:10px;
-                    margin:auto 0;
-                    padding: 0px 2px;
-                    color:gray;
-                }
-            }
-        }
+        
         & > .labelsBlock{
             display: block;
             .Lab{
@@ -85,30 +50,16 @@
     &> .bottom{
         border-bottom: 1px solid;
         border-color: $border;
-        padding: 2px 5px;
+        padding: 4px 5px;
+        display: flex;
         .bottomContent{
-            display: flex;
-            height: 21px;
-            .bottomright{
-                margin: 0 0 0 auto;
-                padding: 0px 0px 4px 0px; 
-                display: block;
-                .closetooltip{
-                    display: inline-block;
-                    position: relative;
-                    cursor: pointer;
-                    .closemessage{
-                        font-size: 10px;
-                        color : #ff6347;
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
-                }
-                .closetooltip:hover .description{
-                    display: inline-block;
-                    top: 30px;
-                    left: 0px;
+            margin: 0 0 0 auto;
+            .closemessage{
+                cursor: pointer;
+                font-size: 10px;
+                color : #ff6347;
+                &:hover {
+                    text-decoration: underline;
                 }
             }
         }
