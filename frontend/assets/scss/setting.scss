@@ -5,35 +5,13 @@
         border-color: $border;
         padding: 5px 15px;  
         background-color: #ffffff;
-        .top{
-            width:100%;
-            display:flex;
-            background-color:transparent;
-            .filterbutton{
-                display: flex;
-                .filter_list {
-                    border: none;
-                    width: 25px;
-                    height: 25px;
-                    background: transparent;
-                    color: gray;
-                    padding:0px;
-                    margin:0px 0px 4px 0px;
-                    cursor: pointer;
-                    .material-icons {
-                        font-size: 25px;
-                    }
-                }
-                .filter_message{
-                    font-size:10px;
-                    margin:auto 0;
-                    padding: 0px 2px;
-                    color:gray;
-                }
-            }
-        }
+        
         & > .labelsBlock{
-            display: block;
+            padding: 2px 0px 0px 0px;
+            .labelsBlockmes{
+                font-size: 12px;
+                color: gray;
+            }
             .Lab{
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -47,13 +25,15 @@
                 flex-wrap: wrap;
                 align-items: center;
                 .labels{
-                    display: block;
                     font-size: 0;
                 }
             }
         }
         & > .categoryBlock{
-            display: block;
+            .categoryBlockmes{
+                font-size: 12px;
+                color: gray;
+            }
             .Lab{
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -67,7 +47,6 @@
                 flex-wrap: wrap;
                 align-items: center;
                 .labels{
-                    display: block;
                     font-size: 0;
                 }
             }
@@ -76,53 +55,16 @@
     &> .bottom{
         border-bottom: 1px solid;
         border-color: $border;
-        padding: 2px 5px;
+        padding: 4px 5px;
+        display: flex;
         .bottomContent{
-            display: flex;
-            height: 21px;
-            .bottomright{
-                margin: 0 0 0 auto;
-                padding: 0px 0px 4px 0px; 
-                display: block;
-                .closetooltip{
-                    display: inline-block;
-                    position: relative;
-                    cursor: pointer;
-                    padding: 0;
-                    .closemessage{
-                        font-size: 10px;
-                        color : #ff6347;
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
-                                    
-                    .description {
-                        display: none;
-                        position: absolute;
-                        padding: 10px;
-                        font-size: 12px;
-                        line-height: 1.6em;
-                        color: #fff;
-                        border-radius: 5px;
-                        background: #000;
-                        width: 100px;
-                    }
-                    .description:before {
-                        content: "";
-                        position: absolute;
-                        top: -24px;
-                        right: 60%;
-                        border: 15px solid transparent;
-                        border-top: 15px solid #000;
-                        margin-left: -15px;
-                        transform: rotateZ(180deg);
-                    }
-                }
-                .closetooltip:hover .description{
-                    display: inline-block;
-                    top: 30px;
-                    left: 0px;
+            margin: 0 0 0 auto;
+            .closemessage{
+                cursor: pointer;
+                font-size: 10px;
+                color : #ff6347;
+                &:hover {
+                    text-decoration: underline;
                 }
             }
         }

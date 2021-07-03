@@ -25,7 +25,7 @@
         </div>
         <div class="main-contents">
           <label for="repository-input" class="repositoryInputLabel"
-            >追加したいリポジトリ名を入力してください</label
+            >追加したいリポジトリ名またはURLを入力してください</label
           >
           <input
             id="repository-input"
@@ -34,6 +34,8 @@
             placeholder="owner/repository"
             class="inputField"
             size="50%"
+            @paste="onPaste"
+            @paste.prevent
           />
           <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
           <button
@@ -52,6 +54,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
+import { addRepository } from '@/APIClient/repository.ts'
+import { saveRepositoryToLocalStorage } from '@/utils/localStorage.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -78,6 +82,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    timeline: {
+      type: Array,
+      required: true,
+    },
   },
 
   data(): DataType {
@@ -100,35 +108,66 @@ export default Vue.extend({
     setErrorMsg(errorMsg: string) {
       this.errorMsg = errorMsg
     },
-    append() {
+    updateValue(e) {
+      this.repositoryInput = e.target.value
+    },
+    onPaste(e) {
+      const input = e.clipboardData.getData('text')
+      if (input != null && typeof input === 'string') {
+        const res = input.match(
+          /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
+        )
+        if (res?.groups?.repo != null && res?.groups?.owner != null) {
+          this.repositoryInput += `${res.groups.owner}/${res.groups.repo}`
+        } else {
+          this.repositoryInput += input
+        }
+      }
+    },
+    async append() {
       this.isSearchingRepository = true
-      const parsed = this.repositoryInput.match(/^([^\/]+)\/([^\/]+)$/)
+      const res = this.repositoryInput.match(
+        /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
+      )
+      let parsed = []
+      if (res?.groups?.repo != null && res?.groups?.owner != null) {
+        parsed = ['', res.groups.owner, res.groups.repo]
+      } else {
+        parsed = this.repositoryInput.match(/^([^/]+)\/([^/]+)$/)
+      }
       console.log('parsed:', parsed)
+
+      console.log(this.timeline)
+
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
+        this.isSearchingRepository = false
+      } else if (
+        this.timeline.find(
+          ({ owner, repo }) => owner === parsed[1] && repo === parsed[2]
+        )
+      ) {
+        this.setErrorMsg('既に登録済みのレポジトリです')
         this.isSearchingRepository = false
       } else {
         const owner = parsed[1]
         const repo = parsed[2]
         const self = this
-        axios
-          .get('/repo_id/' + owner + '/' + repo, {
-            headers: {
-              Authorization: self.$auth.getToken('github'),
-            },
-          })
-          .then((response) => {
-            console.log('response:', response)
-            this.$emit('appendTimeline', owner, repo)
-            this.hideModal()
-          })
-          .catch((error) => {
-            console.log('error:', error)
-            this.setErrorMsg('リポジトリが見つかりません')
-          })
-          .then(() => {
-            self.isSearchingRepository = false
-          })
+        try {
+          const res = await addRepository(
+            self.$auth.getToken('github'),
+            `${owner}/${repo}`
+          )
+          console.log('response:', res)
+          this.$emit('appendTimeline', owner, repo)
+          saveRepositoryToLocalStorage(`${owner}/${repo}`)
+          this.hideModal()
+        } catch (e) {
+          console.log('error:', e)
+          this.setErrorMsg('リポジトリが見つかりません')
+        } finally {
+          self.isSearchingRepository = false
+        }
       }
     },
     clickMyAvatar() {

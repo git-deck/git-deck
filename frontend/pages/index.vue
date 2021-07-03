@@ -4,6 +4,7 @@
       ref="sidebar"
       :user-name="userName"
       :avatar-url="avatarUrl"
+      :timeline="timeline"
       @appendTimeline="append"
     />
     <PostModal ref="postmodal" />
@@ -34,6 +35,11 @@ import Vue from 'vue'
 import VModal from 'vue-js-modal'
 import axios from 'axios'
 import { Multipane, MultipaneResizer } from 'vue-multipane'
+import {
+  getSavedRepository,
+  removeRepositoryToLocalStorage,
+} from '@/utils/localStorage.ts'
+import { addRepository } from '@/APIClient/repository.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -55,21 +61,8 @@ export default Vue.extend({
     return {
       timeline: [
         {
-          owner: 'knknk98',
-          repo: 'issue-twitter',
-          useDummyData: true,
-          id: Math.floor(Math.random() * 1000000000),
-        },
-        {
-          owner: 'knknk98',
-          repo: 'issue-twitter',
-          useDummyData: true,
-          id: Math.floor(Math.random() * 1000000000),
-        },
-        {
-          owner: 'knknk98',
-          repo: 'issue-twitter',
-          useDummyData: true,
+          owner: 'habara-k',
+          repo: 'gitdeck-tutorial',
           id: Math.floor(Math.random() * 1000000000),
         },
       ],
@@ -82,6 +75,12 @@ export default Vue.extend({
   created() {
     this.avatarUrl = this.$auth.user.avatar_url
     this.userName = this.$auth.user.login
+    // localStorageからレポジトリを取得
+    getSavedRepository().map((repositoryName) =>
+      addRepository(this.$auth.getToken('github'), repositoryName).then(() => {
+        this.append(...repositoryName.split('/'))
+      })
+    )
   },
   methods: {
     append(owner: string, repo: string) {
@@ -93,6 +92,8 @@ export default Vue.extend({
     },
     close(id: number) {
       const index = this.timeline.findIndex((x) => x.id === id)
+      const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
+      removeRepositoryToLocalStorage(reponame)
       this.timeline.splice(index, 1)
     },
     openPostModal(owner: string, repo: string) {

@@ -2,6 +2,7 @@
   <div
     class="comment"
     :class="{
+      reply: type === 'reply',
       thread: thread,
     }"
   >
@@ -12,7 +13,11 @@
       />
       <div v-if="thread" class="thread-line"></div>
     </div>
-    <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
+    <div
+      v-if="readmore || fold"
+      class="threadLine"
+      :class="{ dotted: readmore }"
+    ></div>
     <div class="titleItem">
       <div v-if="(type === 'issue') | (type === 'pullRequest')">
         <a :href="url" target="_blank" class="titleLine">
@@ -44,14 +49,6 @@
           class="assigner"
         />
         {{ assignees.length > 3 ? '...' : '' }}
-      </div>
-      <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
-        <Label
-          v-for="(label, index) in labels"
-          :key="index"
-          :message="label.name"
-          :color="label.color"
-        />
       </div>
     </div>
     <div class="dateItem">{{ howLongAgo }}</div>
@@ -89,14 +86,15 @@
     </div>
     <div ref="textarea" class="textItem" :style="{ height: textHeight }">
       <div v-html="$md.render(body)"></div>
-      <!-- <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
+      <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"
           :key="index"
           :message="label.name"
           :color="label.color"
         />
-      </div> -->
+      </div>
+      <div class="textItemCon" v-html="$md.render(body)"></div>
     </div>
     <button
       v-if="height > MAX_COMMENT_HEIGT"
@@ -229,7 +227,7 @@ export default Vue.extend({
       Octicons,
       height: 0,
       isLongCommentOpened: false,
-      MAX_COMMENT_HEIGT: 100,
+      MAX_COMMENT_HEIGT: 350,
     }
   },
   computed: {

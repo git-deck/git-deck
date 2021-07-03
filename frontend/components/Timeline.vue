@@ -45,10 +45,11 @@
 import Vue from 'vue'
 import { Content, Label } from '@/models/types'
 import axios from 'axios'
+// @ts-ignore
+import { Octicon, Octicons } from 'octicons-vue'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
-const { Octicon, Octicons } = require('octicons-vue')
 
 type LabelItem = {
   label: Label
@@ -99,8 +100,8 @@ export default Vue.extend({
       contents: [],
       labelItems: [],
       isLoading: false,
-      allLabel: ALL_LABEL,
-      categoryLabels: CATEGORY_LABELS,
+      allLabel: JSON.parse(JSON.stringify(ALL_LABEL)), // copy
+      categoryLabels: JSON.parse(JSON.stringify(CATEGORY_LABELS)), // copy
     }
   },
   computed: {
@@ -166,6 +167,7 @@ export default Vue.extend({
           },
         })
         .then((response) => {
+          console.log('response.data:', response.data)
           self.contents = response.data
           this.isLoading = false
         })
@@ -193,7 +195,7 @@ export default Vue.extend({
           this.owner +
           '/' +
           this.repo +
-          '?categories=idea,issue_and_pull_request',
+          '?categories=idea,open,closed,merged',
         {
           headers: {
             Authorization: this.$auth.getToken('github'),

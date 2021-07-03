@@ -82,6 +82,7 @@ import Vue, { PropOptions } from 'vue'
 import { Content } from '@/models/types'
 
 export default Vue.extend({
+  name: 'ContentBox',
   props: {
     content: {
       type: Object,

@@ -48,6 +48,7 @@ Vue.directive('focus', {
 })
 
 export default Vue.extend({
+  name: 'PostModal',
   components: { Octicon },
   data(): DataType {
     return {

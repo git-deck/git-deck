@@ -1,19 +1,8 @@
 <template>
   <div class="label_column">
     <header>
-      <div class="top">
-        <div class="filterbutton">
-          <button class="filter_list">
-            <span class="material-icons"> filter_list </span>
-          </button>
-          <span class="filter_message">ラベルで絞り込む</span>
-        </div>
-      </div>
-
       <div class="categoryBlock">
-        <div id="categoryBlockmes" style="font-size: 12px; color: gray">
-          カテゴリ
-        </div>
+        <div class="categoryBlockmes">カテゴリ</div>
         <div class="Lab">
           <span
             v-for="(label, index) in categoryLabels"
@@ -30,10 +19,8 @@
           </span>
         </div>
       </div>
-      <div clas="labelsBlock">
-        <div id="labelsBlockmes" style="font-size: 12px; color: gray">
-          ラベル
-        </div>
+      <div class="labelsBlock">
+        <div class="labelsBlockmes">ラベル</div>
         <div class="Lab">
           <span
             class="labels"
@@ -64,14 +51,9 @@
     </header>
     <div class="bottom">
       <div class="bottomContent">
-        <div class="bottomright">
-          <div class="closetooltip">
-            <a class="closemessage" @click="$emit('closeTimeline')">
-              このカラムを削除
-            </a>
-            <div class="description">カラムを削除します</div>
-          </div>
-        </div>
+        <a class="closemessage" @click="$emit('closeTimeline')">
+          このカラムを削除
+        </a>
       </div>
     </div>
   </div>
