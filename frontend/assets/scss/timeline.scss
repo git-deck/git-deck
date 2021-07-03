@@ -239,22 +239,22 @@
       }
     }
   }
+}
 
-  // 投稿欄
-  .modal-content {
-    textarea {
-      width: 100%;
-      margin-bottom: 3px;
-    }
-    .repo {
-      padding-bottom: 15px;
-      color: gray;
-      .address{
-        color: $git-blue;
-        background-color: #EBF5FF;
-        padding: 5px 10px;
-        border-radius: 7px;
-      }
+.modal-content{
+  .postTextBox {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+  .repo {
+    padding-bottom: 15px;
+    color: gray;
+    .address{
+      color: $git-blue;
+      background-color: #EBF5FF;
+      padding: 5px 10px;
+      border-radius: 7px;
     }
   }
 }
