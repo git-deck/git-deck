@@ -11,7 +11,7 @@
         <div class="repo">
           to <span class="address">{{ owner }}/{{ repo }}</span>
         </div>
-        <textarea v-model="ideaBody"></textarea>
+        <textarea v-model="ideaBody" class="postTextBox"></textarea>
         <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
         <button class="postButton" @click="append">投稿する</button>
       </div>
