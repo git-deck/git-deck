@@ -34,8 +34,13 @@ a {
   text-overflow: ellipsis;
   // ラベル内のテキストが選択されないようにする
   user-select: none;
-}
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 0px 8px;
 
+  &.disabled {
+    box-shadow: none;
+  }
+}
 
 .modal-content {
   padding: 12px 24px;
@@ -92,16 +97,16 @@ a {
       align-self: flex-end;
     }
 
-    & > .addButton{
+    & > .addButton {
       background: $git-black;
       color: white;
     }
-    & > .addButton:disabled{
+    & > .addButton:disabled {
       background: #ccc;
       color: white;
     }
 
-    & > .postButton{
+    & > .postButton {
       background-color: $idea-color;
       color: white;
     }
