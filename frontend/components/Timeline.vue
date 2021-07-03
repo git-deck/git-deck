@@ -146,11 +146,7 @@ export default Vue.extend({
       const categories = []
       for (const i in this.categoryLabels) {
         if (!this.categoryLabels[i].labelOpened) {
-          let category = this.categoryLabels[i].label.name
-          if (category === 'issue & pull request') {
-            category = 'issue_and_pull_request'
-          }
-          categories.push(category)
+          categories.push(this.categoryLabels[i].label.name)
         }
       }
       if (categories.length > 0) {
@@ -274,7 +270,7 @@ const ALL_LABEL: LabelItem = {
     color: '#24292E',
   },
   labelOpened: false,
-},
+}
 
 const CATEGORY_LABELS: LabelItem[] = [
   {
@@ -287,7 +283,21 @@ const CATEGORY_LABELS: LabelItem[] = [
   {
     label: {
       color: '#2EA44F',
-      name: 'issue & pull request',
+      name: 'open',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#bd2c00',
+      name: 'closed',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#6e5494',
+      name: 'merged',
     },
     labelOpened: false,
   },
