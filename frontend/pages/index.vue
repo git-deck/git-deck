@@ -83,7 +83,8 @@ export default Vue.extend({
     },
     close(id: number) {
       const index = this.timeline.findIndex((x) => x.id === id)
-      removeRepositoryToLocalStorage(`${this.owner}/${this.repo}`)
+      const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
+      removeRepositoryToLocalStorage(reponame)
       this.timeline.splice(index, 1)
     },
     openPostModal(owner: string, repo: string) {
