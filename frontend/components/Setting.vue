@@ -14,7 +14,9 @@
       </div>
 
       <div class="categoryBlock">
-        <div class="mes">カテゴリ</div>
+        <div id="categoryBlockmes" style="font-size: 12px; color: gray">
+          カテゴリ
+        </div>
         <div class="Lab">
           <span
             v-for="(label, index) in categoryitems"
@@ -32,7 +34,9 @@
         </div>
       </div>
       <div clas="labelsBlock">
-        <div class="mes">ラベル</div>
+        <div id="labelsBlockmes" style="font-size: 12px; color: gray">
+          ラベル
+        </div>
         <div class="Lab">
           <span
             class="labels"
