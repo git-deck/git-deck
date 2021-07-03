@@ -122,8 +122,14 @@ export default Vue.extend({
               !this.labelsitems[index].labelOpened
           }
         } else {
-          this.labelsitems[index].labelOpened =
-            !this.labelsitems[index].labelOpened
+          if (!this.labelsitems[0].labelOpened) {
+            this.labelsitems[0].labelOpened = !this.labelsitems[0].labelOpened
+            this.labelsitems[index].labelOpened =
+              !this.labelsitems[index].labelOpened
+          } else {
+            this.labelsitems[index].labelOpened =
+              !this.labelsitems[index].labelOpened
+          }
         }
       }
     },
