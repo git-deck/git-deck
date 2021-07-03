@@ -82,46 +82,23 @@ type LabelItem = {
   label: Label
   labelOpened: Boolean
 }
-type DataType = {
-  categoryitems: Array<LabelItem>
-  allLabel: Label
-}
 export default Vue.extend({
   components: {
     Label0,
   },
   props: {
+    categoryitems: {
+      type: Array,
+      required: true,
+    } as PropOptions<LabelItem[]>,
+    allLabel: {
+      type: Object,
+      required: true,
+    } as PropOptions<LabelItem>,
     labelItems: {
       type: Array,
       required: true,
     } as PropOptions<LabelItem[]>,
-  },
-  data(): DataType {
-    return {
-      allLabel: {
-        label: {
-          name: 'すべて',
-          color: '#24292E',
-        },
-        labelOpened: false,
-      },
-      categoryitems: [
-        {
-          label: {
-            color: '#FFB800',
-            name: 'idea',
-          },
-          labelOpened: false,
-        },
-        {
-          label: {
-            color: '#2EA44F',
-            name: 'issue & pull request',
-          },
-          labelOpened: false,
-        },
-      ],
-    }
   },
 })
 </script>
