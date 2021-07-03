@@ -52,6 +52,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
+import { addRepository } from '@/APIClient/repository.ts'
+import { saveRepositoryToLocalStorage } from '@/utils/localStorage.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -100,7 +102,7 @@ export default Vue.extend({
     setErrorMsg(errorMsg: string) {
       this.errorMsg = errorMsg
     },
-    append() {
+    async append() {
       this.isSearchingRepository = true
       const parsed = this.repositoryInput.match(/^([^\/]+)\/([^\/]+)$/)
       console.log('parsed:', parsed)
@@ -111,24 +113,21 @@ export default Vue.extend({
         const owner = parsed[1]
         const repo = parsed[2]
         const self = this
-        axios
-          .get('/repo_id/' + owner + '/' + repo, {
-            headers: {
-              Authorization: self.$auth.getToken('github'),
-            },
-          })
-          .then((response) => {
-            console.log('response:', response)
-            this.$emit('appendTimeline', owner, repo)
-            this.hideModal()
-          })
-          .catch((error) => {
-            console.log('error:', error)
-            this.setErrorMsg('リポジトリが見つかりません')
-          })
-          .then(() => {
-            self.isSearchingRepository = false
-          })
+        try {
+          const res = await addRepository(
+            self.$auth.getToken('github'),
+            this.repositoryInput
+          )
+          console.log('response:', res)
+          this.$emit('appendTimeline', owner, repo)
+          saveRepositoryToLocalStorage(`${owner}/${repo}`)
+          this.hideModal()
+        } catch (e) {
+          console.log('error:', e)
+          this.setErrorMsg('リポジトリが見つかりません')
+        } finally {
+          self.isSearchingRepository = false
+        }
       }
     },
     clickMyAvatar() {
