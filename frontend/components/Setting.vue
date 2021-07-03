@@ -24,7 +24,7 @@
             <span
               style="cursor: pointer"
               class="labelButton"
-              v-on:click="clickLabel('category', index)"
+              @click="clickLabel('category', index)"
             >
               <Label0
                 :color="label.color"
@@ -38,23 +38,19 @@
       <div clas="labelsBlock">
         <div class="mes">ラベル</div>
         <div class="Lab">
-          <div
+          <span
             v-for="(label, index) in labelsitems"
             :key="index"
             class="labels"
+            style="cursor: pointer"
+            @click="clickLabel('labels', index)"
           >
-            <span
-              style="cursor: pointer"
-              class="labelButton"
-              v-on:click="clickLabel('labels', index)"
-            >
-              <Label0
-                :color="label.color"
-                :message="label.name"
-                :disabled="label.labelOpened"
-              ></Label0>
-            </span>
-          </div>
+            <Label0
+              :color="label.color"
+              :message="label.name"
+              :disabled="label.labelOpened"
+            ></Label0>
+          </span>
         </div>
       </div>
     </header>
@@ -113,7 +109,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    clickLabel: function (Blockname: string, index: number) {
+    clickLabel(Blockname: string, index: number) {
       if (Blockname == 'category') {
         this.categoryitems[index].labelOpened =
           !this.categoryitems[index].labelOpened
