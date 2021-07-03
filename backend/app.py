@@ -116,18 +116,20 @@ def labels(owner, repo):
 
 # 指定したリポジトリのタイムライン取得
 #  GET /timeline/<owner>/<repo>
-#  GET /timeline/<owner>/<repo>?labels=bug,documentation
+#  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=issue,pull_request
 # クエリパラメータ:
-#  labels: labelでOR検索. 現状ideaに対応するlabelがないので, ideaは弾かれない.
+#  labels: OR検索
+#  categories: OR検索
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
     labels = request.args["labels"].split(",") if "labels" in request.args else None
+    categories = request.args["categories"].split(",") if "categories" in request.args else []
 
-    issues = get_issues(owner, repo, labels)
-    pull_requests = get_pull_requests(owner, repo, labels)
-    ideas = get_ideas(owner, repo)
-
-    timeline = issues + pull_requests + ideas
+    timeline = get_ideas(owner, repo)
+    if "issue" in categories:
+        timeline = timeline + get_issues(owner, repo, labels)
+    if "pull_request" in categories:
+        timeline = timeline + get_pull_requests(owner, repo, labels)
 
     # updated_at が新しい順に並べる
     timeline = list(reversed(sorted(timeline, key=lambda elem: elem["updatedAt"])))
