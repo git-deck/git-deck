@@ -85,7 +85,6 @@
       />
     </div>
     <div ref="textarea" class="textItem" :style="{ height: textHeight }">
-      <div v-html="$md.render(body)"></div>
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"
