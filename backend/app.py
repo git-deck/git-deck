@@ -11,6 +11,7 @@ import os
 from database import init_db, db
 from model import Idea
 import utils
+from query import *
 
 
 # 環境変数
@@ -23,9 +24,6 @@ app.config["JSON_AS_ASCII"] = False
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 init_db(app)
-
-COMMENTS_LIMIT = 100
-ASSIGNEES_LIMIT = 100
 
 
 @app.route("/")
@@ -119,15 +117,16 @@ def labels(owner, repo):
 #  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=issue_and_pull_request,idea
 # クエリパラメータ:
 #  labels: OR検索
-#  categories: OR検索
+#  categories: OR検索 idea, open, closed, merged
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
     labels = request.args["labels"].split(",") if "labels" in request.args else None
     categories = request.args["categories"].split(",") if "categories" in request.args else []
 
-    timeline = []
-    if "issue_and_pull_request" in categories:
-        timeline = timeline + get_issues(owner, repo, labels) + get_pull_requests(owner, repo, labels)
+    issue_states = list(map(lambda c: c.upper(), filter(lambda c: c in ["open", "closed"], categories)))
+    pull_request_states = list(map(lambda c: c.upper(), filter(lambda c: c in ["open", "closed", "merged"], categories)))
+
+    timeline = get_issues(owner, repo, labels, issue_states) + get_pull_requests(owner, repo, labels, pull_request_states)
     if "idea" in categories:
         timeline = timeline + get_ideas(owner, repo)
 
@@ -149,78 +148,14 @@ def set_how_long_ago(elem):
     return elem
 
 
-def get_issues(owner, repo, labels):
+def get_issues(owner, repo, labels, states):
     filt = {}
     if labels is not None:
         filt["labels"] = labels
 
-    issues = github_client().execute(
-        gql("""
-        query($owner:String!, $repo:String!, $filter:IssueFilters!, $assignees_limit:Int!, $comments_limit:Int!) {
-            repository(owner: $owner, name: $repo) {
-                issues(first:100, filterBy: $filter, orderBy: {field:UPDATED_AT, direction:DESC}) {
-                    edges {
-                        node {
-                            number
-                            title
-                            state
-                            url
-                            createdAt
-                            updatedAt
-                            body
-                            author {
-                                login
-                                url
-                                avatarUrl
-                            }
-                            assignees(first:$assignees_limit) {
-                                edges {
-                                    node {
-                                        login
-                                        url
-                                        avatarUrl
-                                    }
-                                }
-                            }
-                            labels(first:100) {
-                                edges {
-                                    node {
-                                        name
-                                        color
-                                    }
-                                }
-                            }
-                            comments(last:$comments_limit) {
-                                edges {
-                                    node {
-                                        body
-                                        createdAt
-                                        updatedAt
-                                        url
-                                        author {
-                                            login
-                                            url
-                                            avatarUrl
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        """),
-        variable_values={
-            "owner": owner,
-            "repo": repo,
-            "filter": filt,
-            "assignees_limit": ASSIGNEES_LIMIT,
-            "comments_limit": COMMENTS_LIMIT,
-        }
-    )["repository"]["issues"]["edges"]
-
+    issues = execute_issue_query(github_client(), owner, repo, labels, states)
     issues = [issue["node"] for issue in issues]
+
     for issue in issues:
         issue["comments"] = remove_edge_and_nodes(issue["comments"])
         issue["assignees"] = remove_edge_and_nodes(issue["assignees"])
@@ -232,141 +167,10 @@ def get_issues(owner, repo, labels):
     return issues
 
 
-def get_pull_requests(owner, repo, labels):
-    if labels is None:
-        pull_requests = github_client().execute(
-            gql("""
-            query($owner:String!, $repo:String!, $assignees_limit:Int!, $comments_limit:Int!) {
-                repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100, orderBy: {field:UPDATED_AT, direction:DESC}) {
-                        edges {
-                            node {
-                                number
-                                title
-                                state
-                                url
-                                createdAt
-                                updatedAt
-                                body
-                                author {
-                                    login
-                                    url
-                                    avatarUrl
-                                }
-                                assignees(first:$assignees_limit) {
-                                    edges {
-                                        node {
-                                            login
-                                            url
-                                            avatarUrl
-                                        }
-                                    }
-                                }
-                                labels(first:100) {
-                                    edges {
-                                        node {
-                                            name
-                                            color
-                                        }
-                                    }
-                                }
-                                comments(last:$comments_limit) {
-                                    edges {
-                                        node {
-                                            body
-                                            createdAt
-                                            updatedAt
-                                            url
-                                            author {
-                                                login
-                                                url
-                                                avatarUrl
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            """),
-            variable_values={
-                "owner": owner,
-                "repo": repo,
-                "assignees_limit": ASSIGNEES_LIMIT,
-                "comments_limit": COMMENTS_LIMIT,
-            }
-        )["repository"]["pullRequests"]["edges"]
-
-    else:
-        pull_requests = github_client().execute(
-            gql("""
-            query($owner:String!, $repo:String!, $labels:[String!], $assignees_limit:Int!, $comments_limit:Int!) {
-                repository(owner: $owner, name: $repo) {
-                    pullRequests(first:100, labels: $labels, orderBy: {field:UPDATED_AT, direction:DESC}) {
-                        edges {
-                            node {
-                                number
-                                title
-                                state
-                                url
-                                createdAt
-                                updatedAt
-                                body
-                                author {
-                                    login
-                                    url
-                                    avatarUrl
-                                }
-                                assignees(first:$assignees_limit) {
-                                    edges {
-                                        node {
-                                            login
-                                            url
-                                            avatarUrl
-                                        }
-                                    }
-                                }
-                                labels(first:100) {
-                                    edges {
-                                        node {
-                                            name
-                                            color
-                                        }
-                                    }
-                                }
-                                comments(last:$comments_limit) {
-                                    edges {
-                                        node {
-                                            body
-                                            createdAt
-                                            updatedAt
-                                            url
-                                            author {
-                                                login
-                                                url
-                                                avatarUrl
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            """),
-            variable_values={
-                "owner": owner,
-                "repo": repo,
-                "labels": labels,
-                "assignees_limit": ASSIGNEES_LIMIT,
-                "comments_limit": COMMENTS_LIMIT,
-            }
-        )["repository"]["pullRequests"]["edges"]
-
+def get_pull_requests(owner, repo, labels, states):
+    pull_requests = execute_pull_request_query(github_client(), owner, repo, labels, states)
     pull_requests = [pull_request["node"] for pull_request in pull_requests]
+
     for pull_request in pull_requests:
         pull_request["comments"] = remove_edge_and_nodes(pull_request["comments"])
         pull_request["assignees"] = remove_edge_and_nodes(pull_request["assignees"])
