@@ -24,8 +24,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 init_db(app)
 
-COMMENTS_LIMIT = 10
-ASSIGNEES_LIMIT = 10
+COMMENTS_LIMIT = 100
+ASSIGNEES_LIMIT = 100
 
 
 @app.route("/")
