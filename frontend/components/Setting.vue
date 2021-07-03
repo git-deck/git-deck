@@ -64,10 +64,9 @@
     <div class="bottom">
       <div class="bottomContent">
         <div class="right">
-          <button class="Close" @click="$emit('closeTimeline')">
-            <span class="material-icons"> close </span>
-          </button>
-          <span class="message">このカラムを削除</span>
+          <a class="message" @click="$emit('closeTimeline')">
+            このカラムを削除
+          </a>
         </div>
       </div>
     </div>
@@ -102,7 +101,7 @@ export default Vue.extend({
     return {
       allLabel: {
         name: 'すべて',
-        color: '#00ff00',
+        color: '#24292E',
         labelOpened: false,
       },
       labelsitems: this.labels.map((element: Label) => ({
@@ -113,13 +112,13 @@ export default Vue.extend({
       categoryitems: [
         {
           // numberが識別子
-          color: '#ffffff',
+          color: '#FFB800',
           name: 'idea',
           labelOpened: false,
         },
         {
           // numberが識別子
-          color: '#ff0000',
+          color: '#2EA44F',
           name: 'issue & pull request',
           labelOpened: false,
         },
