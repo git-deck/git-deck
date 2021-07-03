@@ -8,6 +8,7 @@
   border-right: 6px solid;
   border-color: $border;
   background-color: white;
+  overflow-x: hidden;
 
   &:first-child {
     border-left: 6px solid;
@@ -74,7 +75,7 @@
       }
     }
 
-    .Refresh{
+    .Refresh {
       margin-right: 3px;
       padding: 0;
       border: none;
@@ -84,7 +85,7 @@
       color: $git-black;
       cursor: pointer;
       .material-icons {
-          font-size: 20px;
+        font-size: 20px;
       }
       &:hover {
         background: rgb(240, 240, 240);
@@ -130,7 +131,20 @@
         'areaIcon         areaText  areaText areaText'
         'dottedThreadLine readmore  readmore readmore';
 
+      &.reply > .iconItem::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-70%); // 目測で調整
+        height: 12px;
+        width: 3px;
+        background: $border;
+        margin-top: -12px;
+      }
+
       & > .iconItem {
+        position: relative;
         grid-area: areaIcon;
         display: flex;
         flex-direction: column;
@@ -143,12 +157,17 @@
           justify-content: center;
         }
       }
-      & > .dottedThreadLine {
+
+      & > .threadLine {
         grid-area: dottedThreadLine;
+        border-right: 3px solid $border;
+        &.dotted {
+          border-right: 3px dotted $border;
+        }
         margin: 0 auto;
-        border-right: 3px dotted $border;
         transition: all 0.3s;
       }
+
       & > .titleItem {
         grid-area: areaTitle;
         min-width: 0;
@@ -232,6 +251,7 @@
         word-break: break-all;
         font-size: 12px;
         margin-bottom: 8px;
+        overflow-x: scroll;
         .labels{
           display: -webkit-box;
           display: -ms-flexbox;
@@ -271,15 +291,15 @@
       min-height: 60px;
     }
 
-    .loading{
-      img{
+    .loading {
+      img {
         margin: 30px auto;
       }
     }
   }
 }
 
-.modal-content{
+.modal-content {
   .postTextBox {
     width: 100%;
     height: 100%;
@@ -288,9 +308,9 @@
   .repo {
     padding-bottom: 15px;
     color: gray;
-    .address{
+    .address {
       color: $git-blue;
-      background-color: #EBF5FF;
+      background-color: #ebf5ff;
       padding: 5px 10px;
       border-radius: 7px;
     }

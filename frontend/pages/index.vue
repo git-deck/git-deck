@@ -4,9 +4,10 @@
       ref="sidebar"
       :user-name="userName"
       :avatar-url="avatarUrl"
+      :timeline="timeline"
       @appendTimeline="append"
     />
-    <PostModal ref="postmodal"/>
+    <PostModal ref="postmodal" />
     <multipane class="vertical-panes" layout="vertical">
       <template v-for="(tl, index) in timeline">
         <Timeline
@@ -29,6 +30,8 @@ import Vue from 'vue'
 import VModal from 'vue-js-modal'
 import axios from 'axios'
 import { Multipane, MultipaneResizer } from 'vue-multipane'
+import { getSavedRepository } from '@/utils/localStorage.ts'
+import { addRepository } from '@/APIClient/repository.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -75,6 +78,12 @@ export default Vue.extend({
   created() {
     this.avatarUrl = this.$auth.user.avatar_url
     this.userName = this.$auth.user.login
+    // localStorageからレポジトリを取得
+    getSavedRepository().map((repositoryName) =>
+      addRepository(this.$auth.getToken('github'), repositoryName).then(() => {
+        this.append(...repositoryName.split('/'))
+      })
+    )
   },
   methods: {
     append(owner: string, repo: string) {

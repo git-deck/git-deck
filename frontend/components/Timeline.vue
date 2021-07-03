@@ -44,10 +44,11 @@
 import Vue from 'vue'
 import { Content, Label } from '@/models/types'
 import axios from 'axios'
+// @ts-ignore
+import { Octicon, Octicons } from 'octicons-vue'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
-const { Octicon, Octicons } = require('octicons-vue')
 
 type LabelItem = {
   label: Label

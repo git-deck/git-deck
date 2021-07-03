@@ -2,6 +2,7 @@
   <div
     class="comment"
     :class="{
+      reply: type === 'reply',
       thread: thread,
     }"
   >
@@ -12,7 +13,11 @@
       />
       <div v-if="thread" class="thread-line"></div>
     </div>
-    <div v-if="showReadMoreIcon" class="dottedThreadLine"></div>
+    <div
+      v-if="readmore || fold"
+      class="threadLine"
+      :class="{ dotted: readmore }"
+    ></div>
     <div class="titleItem">
       <div v-if="(type === 'issue') | (type === 'pullRequest')">
         <a :href="url" target="_blank" class="titleLine">
