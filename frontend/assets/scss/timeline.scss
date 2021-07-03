@@ -192,7 +192,7 @@
           display: flex;
           align-items: flex-end;
           color: gray;
-          margin: 4px 0;
+          margin: 4px 0px 4px 0px;
           .assigner {
             height: 20px;
             width: 20px;
@@ -247,11 +247,28 @@
       }
       & > .textItem {
         grid-area: areaText;
-        margin: 4px 7px 4px 7px;
+        margin: 0px 7px 4px 7px;
         word-break: break-all;
         font-size: 12px;
         margin-bottom: 8px;
         overflow-x: scroll;
+        .labels{
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          align-items: center;
+
+        }
+        .textItemCon{
+          margin-top: 4px;
+        }
       }
       & > .readmoreItem {
         margin-top: 4px;

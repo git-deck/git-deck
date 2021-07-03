@@ -22,13 +22,13 @@ a {
 .label {
   font-size: 6px;
   padding: 0px 10px;
-  margin-right: 2px;
+  margin: 2px 3px 2px 0px;
   border-radius: 24px;
   display: inline-block;
   vertical-align: middle;
   font-weight: bold;
   //max-widthを超えるような場合は省略
-  max-width: 200px;
+  max-width: 170px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
