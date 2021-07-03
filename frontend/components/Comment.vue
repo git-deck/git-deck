@@ -159,6 +159,10 @@ export default Vue.extend({
         }
       },
     },
+    url: {
+      type: String,
+      default: 'https://github.com/',
+    },
     readmore: {
       type: Boolean,
       default: false,

@@ -24,6 +24,7 @@
           :type="content.category"
           :state="content.state"
           :fold="content.comments.length > 2"
+          :url="content.url"
           @toggleShowingAll="toggleShowingAll"
         />
         <Comment
@@ -50,6 +51,7 @@
           :type="content.category"
           :state="content.state"
           :readmore="content.comments.length > 2"
+          :url="content.url"
           @toggleShowingAll="toggleShowingAll"
         />
         <Comment
