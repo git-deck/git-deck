@@ -7,7 +7,11 @@
         background-color: #ffffff;
         
         & > .labelsBlock{
-            display: block;
+            padding: 2px 0px 0px 0px;
+            .labelsBlockmes{
+                font-size: 12px;
+                color: gray;
+            }
             .Lab{
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -21,13 +25,15 @@
                 flex-wrap: wrap;
                 align-items: center;
                 .labels{
-                    display: block;
                     font-size: 0;
                 }
             }
         }
         & > .categoryBlock{
-            display: block;
+            .categoryBlockmes{
+                font-size: 12px;
+                color: gray;
+            }
             .Lab{
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -41,7 +47,6 @@
                 flex-wrap: wrap;
                 align-items: center;
                 .labels{
-                    display: block;
                     font-size: 0;
                 }
             }
