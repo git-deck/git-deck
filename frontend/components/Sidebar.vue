@@ -25,21 +25,23 @@
         </div>
         <div class="main-contents">
           <label for="repository-input" class="repositoryInputLabel"
-            >追加したいリポジトリ名を入力してください</label
+            >追加したいリポジトリ名またはURLを入力してください</label
           >
           <input
             id="repository-input"
-            v-focus
             v-model="repositoryInput"
+            v-focus
             placeholder="owner/repository"
             class="inputField"
             size="50%"
+            @paste="onPaste"
+            @paste.prevent
           />
           <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
           <button
             class="addButton"
-            @click="append"
             :disabled="isSearchingRepository"
+            @click="append"
           >
             追加
           </button>
@@ -65,7 +67,7 @@ type DataType = {
 }
 Vue.directive('focus', {
   // ひも付いている要素が DOM に挿入される時...
-  inserted: function (el) {
+  inserted(el) {
     // 要素にフォーカスを当てる
     el.focus()
   },
@@ -102,9 +104,33 @@ export default Vue.extend({
     setErrorMsg(errorMsg: string) {
       this.errorMsg = errorMsg
     },
+    updateValue(e) {
+      this.repositoryInput = e.target.value
+    },
+    onPaste(e) {
+      const input = e.clipboardData.getData('text')
+      if (input != null && typeof input === 'string') {
+        const res = input.match(
+          /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
+        )
+        if (res?.groups?.repo != null && res?.groups?.owner != null) {
+          this.repositoryInput += `${res.groups.owner}/${res.groups.repo}`
+        } else {
+          this.repositoryInput += input
+        }
+      }
+    },
     async append() {
       this.isSearchingRepository = true
-      const parsed = this.repositoryInput.match(/^([^\/]+)\/([^\/]+)$/)
+      const res = this.repositoryInput.match(
+        /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
+      )
+      let parsed = []
+      if (res?.groups?.repo != null && res?.groups?.owner != null) {
+        parsed = ['', res.groups.owner, res.groups.repo]
+      } else {
+        parsed = this.repositoryInput.match(/^([^/]+)\/([^/]+)$/)
+      }
       console.log('parsed:', parsed)
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
@@ -116,7 +142,7 @@ export default Vue.extend({
         try {
           const res = await addRepository(
             self.$auth.getToken('github'),
-            this.repositoryInput
+            `${owner}/${repo}`
           )
           console.log('response:', res)
           this.$emit('appendTimeline', owner, repo)
