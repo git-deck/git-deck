@@ -91,7 +91,6 @@ export default Vue.extend({
   methods: {
     showModal() {
       this.$modal.show('column-modal')
-      this.$refs.repositoryInputRef
     },
     hideModal() {
       this.$modal.hide('column-modal')

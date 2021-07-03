@@ -11,7 +11,7 @@
         <div class="repo">
           to <span class="address">{{ owner }}/{{ repo }}</span>
         </div>
-        <textarea v-model="ideaBody" class="postTextBox"></textarea>
+        <textarea v-focus v-model="ideaBody" class="postTextBox"></textarea>
         <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
         <button class="postButton" @click="append">投稿する</button>
       </div>
@@ -31,6 +31,13 @@ type DataType = {
   owner: String
   repo: String
 }
+Vue.directive('focus', {
+  // ひも付いている要素が DOM に挿入される時...
+  inserted: function (el) {
+    // 要素にフォーカスを当てる
+    el.focus()
+  },
+})
 
 export default Vue.extend({
   data(): DataType {
