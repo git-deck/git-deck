@@ -45,14 +45,6 @@
         />
         {{ assignees.length > 3 ? '...' : '' }}
       </div>
-      <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
-        <Label
-          v-for="(label, index) in labels"
-          :key="index"
-          :message="label.name"
-          :color="label.color"
-        />
-      </div>
     </div>
     <div class="dateItem">{{ howLongAgo }}</div>
     <div class="markItem">
@@ -87,16 +79,17 @@
         class-name="comment-type-mark idea"
       />
     </div>
+
     <div class="textItem">
-      <div v-html="$md.render(body)"></div>
-      <!-- <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
+      <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
         <Label
           v-for="(label, index) in labels"
           :key="index"
           :message="label.name"
           :color="label.color"
         />
-      </div> -->
+      </div>
+      <div v-html="$md.render(body)" class="textItemCon"></div>
     </div>
     <div v-if="readmore" class="readmoreItem">
       <a class="readmore" @click="$emit('toggleShowingAll')">
