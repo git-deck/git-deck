@@ -29,13 +29,20 @@
           >
           <input
             id="repository-input"
+            v-focus
             v-model="repositoryInput"
             placeholder="owner/repository"
             class="inputField"
             size="50%"
           />
           <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
-          <button class="addButton" @click="append" :disabled="isSearchingRepository">追加</button>
+          <button
+            class="addButton"
+            @click="append"
+            :disabled="isSearchingRepository"
+          >
+            追加
+          </button>
         </div>
       </div>
     </modal>
@@ -54,7 +61,13 @@ type DataType = {
   isOpenedPulldownMenu: Boolean
   isSearchingRepository: Boolean
 }
-
+Vue.directive('focus', {
+  // ひも付いている要素が DOM に挿入される時...
+  inserted: function (el) {
+    // 要素にフォーカスを当てる
+    el.focus()
+  },
+})
 export default Vue.extend({
   props: {
     userName: {
@@ -66,6 +79,7 @@ export default Vue.extend({
       required: true,
     },
   },
+
   data(): DataType {
     return {
       repositoryInput: '',
@@ -77,6 +91,7 @@ export default Vue.extend({
   methods: {
     showModal() {
       this.$modal.show('column-modal')
+      this.$refs.repositoryInputRef
     },
     hideModal() {
       this.$modal.hide('column-modal')
@@ -88,9 +103,7 @@ export default Vue.extend({
     },
     append() {
       this.isSearchingRepository = true
-      const parsed = this.repositoryInput.match(
-        /^([^\/]+)\/([^\/]+)$/
-      )
+      const parsed = this.repositoryInput.match(/^([^\/]+)\/([^\/]+)$/)
       console.log('parsed:', parsed)
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
