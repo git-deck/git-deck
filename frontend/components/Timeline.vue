@@ -16,13 +16,17 @@
       <button class="tune" @click="clickSettings">
         <span class="material-icons"> tune </span>
       </button>
+      <button class="Refresh" @click="search">
+        <span class="material-icons"> replay </span>
+      </button>
     </header>
     <Setting
-      v-if="settingOpened"
+      v-show="settingOpened"
       ref="setting"
-      :labels="labels"
+      :labelItems="labelItems"
       @loadTimeline="search"
       @closeTimeline="close"
+      @clickLabel="clickLabel"
     />
     <main>
       <div v-if="isLoading" class="loading">
@@ -46,11 +50,16 @@ axios.defaults.baseURL = 'http://localhost:5000'
 
 const { Octicon, Octicons } = require('octicons-vue')
 
+type LabelItem = {
+  label: Label
+  labelOpened: Boolean
+}
+
 type DataType = {
   Octicons: any
   settingOpened: boolean
   contents: Content[]
-  labels: Label[]
+  labelItems: LabelItem[]
   isLoading: boolean
 }
 
@@ -79,7 +88,7 @@ export default Vue.extend({
       Octicons,
       settingOpened: false,
       contents: [],
-      labels: [],
+      labelItems: [],
       isLoading: false,
     }
   },
@@ -96,20 +105,17 @@ export default Vue.extend({
   },
   methods: {
     close() {
-      console.log('id:', this.id)
       this.$emit('closeTimeline', this.id)
     },
     search() {
       console.log('useDummyData:', this.useDummyData)
-      console.log(this.$refs.setting.labelsitems)
-      console.log(this.$refs.setting.categoryitems)
 
       let url = '/timeline/' + this.owner + '/' + this.repo + '?'
       if (this.$refs.setting.allLabel) {
         const labels = []
-        for (const i in this.$refs.setting.labelsitems) {
-          if (!this.$refs.setting.labelsitems[i].labelOpened) {
-            labels.push(this.$refs.setting.labelsitems[i].name)
+        for (const i in this.$refs.setting.labelItems) {
+          if (!this.$refs.setting.labelItems[i].labelOpened) {
+            labels.push(this.$refs.setting.labelItems[i].name)
           }
         }
         if (labels.length > 0) {
@@ -131,12 +137,15 @@ export default Vue.extend({
         url += 'categories=' + categories.join()
       }
 
-      console.log('url:', url)
-
       // ダミーデータは検索しない
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-        this.labels = LABELS_DUMMY_DATA
+        for (let i in LABELS_DUMMY_DATA) {
+          this.labelItems.push({
+            label: LABELS_DUMMY_DATA[i],
+            labelOpened: true,
+          })
+        }
         return
       }
 
@@ -160,7 +169,13 @@ export default Vue.extend({
         .then(
           axios.spread((...responses) => {
             self.contents = responses[0].data
-            self.labels = responses[1].data
+            const labelsData = responses[1].data
+            for (let i in labelsData) {
+              this.labelItems.push({
+                label: labelsData[i],
+                labelOpened: true,
+              })
+            }
             this.isLoading = false
           })
         )
@@ -173,10 +188,14 @@ export default Vue.extend({
     // ロード時はフィルタなし
     load() {
       console.log('useDummyData:', this.useDummyData)
-      console.log(this.$refs.setting)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-        this.labels = LABELS_DUMMY_DATA
+        for (let i in LABELS_DUMMY_DATA) {
+          this.labelItems.push({
+            label: LABELS_DUMMY_DATA[i],
+            labelOpened: true,
+          })
+        }
         return
       }
       const timelineRequest = axios.get(
@@ -206,7 +225,13 @@ export default Vue.extend({
         .then(
           axios.spread((...responses) => {
             self.contents = responses[0].data
-            self.labels = responses[1].data
+            const labelsData = responses[1].data
+            for (let i in labelsData) {
+              this.labelItems.push({
+                label: labelsData[i],
+                labelOpened: true,
+              })
+            }
             this.isLoading = false
           })
         )
@@ -221,6 +246,35 @@ export default Vue.extend({
     },
     showModal() {
       this.$emit('openPostModal', this.owner, this.repo)
+    },
+
+    // ラベルのON OFF管理
+    clickLabel(Blockname: string, index: number) {
+      const setting = this.$refs.setting
+      console.log('setting:', setting)
+      // labelOpened:false->選択中
+      if (Blockname === 'category') {
+        setting.categoryitems[index].labelOpened =
+          !setting.categoryitems[index].labelOpened
+      }
+      if (Blockname === 'labels') {
+        if (index === -1) {
+          if (setting.allLabel.labelOpened) {
+            // すべて：選択中でないときにボタン押した
+            setting.labelItems.map((element) => (element.labelOpened = true))
+            setting.allLabel.labelOpened = false
+          } else {
+            setting.allLabel.labelOpened = !this.allLabel.labelOpened
+          }
+        } else if (!setting.allLabel.labelOpened) {
+          setting.allLabel.labelOpened = !setting.allLabel.labelOpened
+          setting.labelItems[index].labelOpened =
+            !setting.labelItems[index].labelOpened
+        } else {
+          setting.labelItems[index].labelOpened =
+            !setting.labelItems[index].labelOpened
+        }
+      }
     },
   },
 })

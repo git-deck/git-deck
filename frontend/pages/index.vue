@@ -90,7 +90,7 @@ export default Vue.extend({
     },
     openPostModal(owner: string, repo: string) {
       this.$refs.postmodal.showModal(owner, repo)
-    }
+    },
   },
 })
 </script>

@@ -18,11 +18,11 @@
             :key="index"
             class="labels"
             style="cursor: pointer"
-            @click="clickLabel('category', index)"
+            @click="$emit('clickLabel', 'category', index)"
           >
             <Label0
-              :color="label.color"
-              :message="label.name"
+              :color="label.label.color"
+              :message="label.label.name"
               :disabled="label.labelOpened"
             ></Label0>
           </span>
@@ -34,24 +34,24 @@
           <span
             class="labels"
             style="cursor: pointer"
-            @click="clickLabel('labels', -1)"
+            @click="$emit('clickLabel', 'labels', -1)"
           >
             <Label0
-              :color="allLabel.color"
-              :message="allLabel.name"
+              :color="allLabel.label.color"
+              :message="allLabel.label.name"
               :disabled="allLabel.labelOpened"
             ></Label0>
           </span>
           <span
-            v-for="(label, index) in labelsitems"
+            v-for="(label, index) in labelItems"
             :key="index"
             class="labels"
             style="cursor: pointer"
-            @click="clickLabel('labels', index)"
+            @click="$emit('clickLabel', 'labels', index)"
           >
             <Label0
-              :color="label.color"
-              :message="label.name"
+              :color="label.label.color"
+              :message="label.label.name"
               :disabled="label.labelOpened"
             ></Label0>
           </span>
@@ -75,12 +75,10 @@ import Vue, { PropOptions } from 'vue'
 import { Label } from '@/models/types'
 import Label0 from '@/components/Label.vue'
 type LabelItem = {
-  name: String
-  color: String
+  label: Label
   labelOpened: Boolean
 }
 type DataType = {
-  labelsitems: Array<LabelItem>
   categoryitems: Array<LabelItem>
   allLabel: Label
 }
@@ -89,65 +87,37 @@ export default Vue.extend({
     Label0,
   },
   props: {
-    labels: {
+    labelItems: {
       type: Array,
       required: true,
-    } as PropOptions<Label[]>,
+    } as PropOptions<LabelItem[]>,
   },
   data(): DataType {
     return {
       allLabel: {
-        name: 'すべて',
-        color: '#24292E',
+        label: {
+          name: 'すべて',
+          color: '#24292E',
+        },
         labelOpened: false,
       },
-      labelsitems: this.labels.map((element: Label) => ({
-        name: element.name,
-        color: element.color,
-        labelOpened: true,
-      })),
       categoryitems: [
         {
-          // numberが識別子
-          color: '#FFB800',
-          name: 'idea',
+          label: {
+            color: '#FFB800',
+            name: 'idea',
+          },
           labelOpened: false,
         },
         {
-          // numberが識別子
-          color: '#2EA44F',
-          name: 'issue & pull request',
+          label: {
+            color: '#2EA44F',
+            name: 'issue & pull request',
+          },
           labelOpened: false,
         },
       ],
     }
-  },
-  methods: {
-    clickLabel(Blockname: string, index: number) {
-      // labelOpened:false->選択中
-      if (Blockname === 'category') {
-        this.categoryitems[index].labelOpened =
-          !this.categoryitems[index].labelOpened
-      }
-      if (Blockname === 'labels') {
-        if (index === -1) {
-          if (this.allLabel.labelOpened) {
-            // すべて：選択中でないときにボタン押した
-            this.labelsitems.map((element) => (element.labelOpened = true))
-            this.allLabel.labelOpened = false
-          } else {
-            this.allLabel.labelOpened = !this.allLabel.labelOpened
-          }
-        } else if (!this.allLabel.labelOpened) {
-          this.allLabel.labelOpened = !this.allLabel.labelOpened
-          this.labelsitems[index].labelOpened =
-            !this.labelsitems[index].labelOpened
-        } else {
-          this.labelsitems[index].labelOpened =
-            !this.labelsitems[index].labelOpened
-        }
-      }
-    },
   },
 })
 </script>
