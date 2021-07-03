@@ -90,8 +90,15 @@
         />
       </div>
     </div>
-    <div v-if="showReadMoreIcon" class="readmoreItem">
-      <a :href="url" target="_blank" class="readmore"> 返信をさらに表示 </a>
+    <div v-if="readmore" class="readmoreItem">
+      <a class="readmore" @click="$emit('toggleShowingAll')">
+        返信をさらに表示
+      </a>
+    </div>
+    <div v-if="fold" class="readmoreItem">
+      <a class="readmore" @click="$emit('toggleShowingAll')">
+        返信を折り畳む
+      </a>
     </div>
   </div>
 </template>
@@ -144,11 +151,11 @@ export default Vue.extend({
         }
       },
     },
-    url: {
-      type: String,
-      default: 'https://github.com/',
-    },
     readmore: {
+      type: Boolean,
+      default: false,
+    },
+    fold: {
       type: Boolean,
       default: false,
     },
