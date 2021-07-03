@@ -18,7 +18,7 @@
       v-if="settingOpened"
       ref="setting"
       :labels="labels"
-      @loadTimeline="load"
+      @loadTimeline="search"
       @closeTimeline="close"
     />
     <main>
@@ -96,15 +96,88 @@ export default Vue.extend({
       console.log('id:', this.id)
       this.$emit('closeTimeline', this.id)
     },
+    search() {
+      console.log('useDummyData:', this.useDummyData)
+      console.log(this.$refs.setting.labelsitems)
+      console.log(this.$refs.setting.categoryitems)
+
+      let url = '/timeline/' + this.owner + '/' + this.repo + '?'
+      if (this.$refs.setting.allLabel) {
+        const labels = []
+        for (const i in this.$refs.setting.labelsitems) {
+          if (!this.$refs.setting.labelsitems[i].labelOpened) {
+            labels.push(this.$refs.setting.labelsitems[i].name)
+          }
+        }
+        if (labels.length > 0) {
+          url += 'labels=' + labels.join() + '&'
+        }
+      }
+
+      const categories = []
+      for (const i in this.$refs.setting.categoryitems) {
+        if (!this.$refs.setting.categoryitems[i].labelOpened) {
+          let category = this.$refs.setting.categoryitems[i].name
+          if (category === 'issue & pull request') {
+            category = 'issue_and_pull_request'
+          }
+          categories.push(category)
+        }
+      }
+      if (categories.length > 0) {
+        url += 'categories=' + categories.join()
+      }
+
+      console.log('url:', url)
+
+      // ダミーデータは検索しない
+      if (this.useDummyData) {
+        this.contents = CONTENTS_DUMMY_DATA
+        this.labels = LABELS_DUMMY_DATA
+        return
+      }
+
+      const timelineRequest = axios.get(url, {
+        headers: {
+          Authorization: this.$auth.getToken('github'),
+        },
+      })
+      const labelsRequest = axios.get(
+        '/labels/' + this.owner + '/' + this.repo,
+        {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        }
+      )
+      const self = this
+      this.isLoading = true
+      axios
+        .all([timelineRequest, labelsRequest])
+        .then(
+          axios.spread((...responses) => {
+            self.contents = responses[0].data
+            self.labels = responses[1].data
+            this.isLoading = false
+          })
+        )
+        .catch((errors) => {
+          // react on errors.
+          console.error(errors)
+        })
+    },
+
+    // ロード時はフィルタなし
     load() {
       console.log('useDummyData:', this.useDummyData)
+      console.log(this.$refs.setting)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
         this.labels = LABELS_DUMMY_DATA
         return
       }
       const timelineRequest = axios.get(
-        '/timeline/' + this.owner + '/' + this.repo,
+        '/timeline/' + this.owner + '/' + this.repo + '?categories=idea,issue_and_pull_request',
         {
           headers: {
             Authorization: this.$auth.getToken('github'),
@@ -147,12 +220,6 @@ export default Vue.extend({
 
 const LABELS_DUMMY_DATA: Label[] = [
   {
-    // numberが識別子
-    color: '#ff0000',
-    name: 'すべて',
-  },
-  {
-    // numberが識別子
     color: '#ff0f00',
     name: 'label',
   },

@@ -78,10 +78,15 @@
 import Vue, { PropOptions } from 'vue'
 import { Label } from '@/models/types'
 import Label0 from '@/components/Label.vue'
+type LabelItem = {
+  name: String
+  color: String
+  labelOpened: Boolean
+}
 type DataType = {
-  labelsitems: Array<Object>
-  categoryitems: Array<Object>
-  allLabel: Object
+  labelsitems: Array<LabelItem>
+  categoryitems: Array<LabelItem>
+  allLabel: Label
 }
 export default Vue.extend({
   components: {
