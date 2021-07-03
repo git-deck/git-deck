@@ -64,10 +64,13 @@
     </header>
     <div class="bottom">
       <div class="bottomContent">
-        <div class="right">
-          <a class="message" @click="$emit('closeTimeline')">
-            このカラムを削除
-          </a>
+        <div class="bottomright">
+          <div class="closetooltip">
+            <a class="closemessage" @click="$emit('closeTimeline')">
+              このカラムを削除
+            </a>
+            <div class="description">カラムを削除します</div>
+          </div>
         </div>
       </div>
     </div>

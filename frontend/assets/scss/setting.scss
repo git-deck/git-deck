@@ -76,22 +76,54 @@
     &> .bottom{
         border-bottom: 1px solid;
         border-color: $border;
-        padding: 5px 5px;
+        padding: 2px 5px;
         .bottomContent{
             display: flex;
-            height: 15px;
-            .right{
-                display: flex;
-                margin: 0 0 0 auto; 
-                .message{
-                    margin:auto 0;
-                    font-size: 10px;
-                    color : #ff6347;
+            height: 21px;
+            .bottomright{
+                margin: 0 0 0 auto;
+                padding: 0px 0px 4px 0px; 
+                display: block;
+                .closetooltip{
+                    display: inline-block;
+                    position: relative;
                     cursor: pointer;
-                    &:hover {
-                        text-decoration: underline;
+                    padding: 0;
+                    .closemessage{
+                        font-size: 10px;
+                        color : #ff6347;
+                        &:hover {
+                            text-decoration: underline;
+                        }
                     }
-                }   
+                                    
+                    .description {
+                        display: none;
+                        position: absolute;
+                        padding: 10px;
+                        font-size: 12px;
+                        line-height: 1.6em;
+                        color: #fff;
+                        border-radius: 5px;
+                        background: #000;
+                        width: 100px;
+                    }
+                    .description:before {
+                        content: "";
+                        position: absolute;
+                        top: -24px;
+                        right: 60%;
+                        border: 15px solid transparent;
+                        border-top: 15px solid #000;
+                        margin-left: -15px;
+                        transform: rotateZ(180deg);
+                    }
+                }
+                .closetooltip:hover .description{
+                    display: inline-block;
+                    top: 30px;
+                    left: 0px;
+                }
             }
         }
     }
