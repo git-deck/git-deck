@@ -8,9 +8,6 @@
           </button>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
-        <button class="Refresh" @click="$emit('loadTimeline')">
-          <span class="material-icons"> replay </span>
-        </button>
       </div>
 
       <div class="categoryBlock">
