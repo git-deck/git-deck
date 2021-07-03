@@ -16,8 +16,9 @@
     </header>
     <Setting
       v-if="settingOpened"
+      ref="setting"
       :labels="labels"
-      @loatTimeline="load"
+      @loadTimeline="load"
       @closeTimeline="close"
     />
     <main>
