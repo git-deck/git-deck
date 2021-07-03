@@ -127,7 +127,7 @@
       grid-template-areas:
         'areaIcon         areaTitle areaDate areaMark'
         'areaIcon         areaText  areaText areaText'
-        'dottedThreadLine readmore  readmore readmore';
+        'dottedThreadLine readmore  readmore areaButton';
 
       & > .iconItem {
         grid-area: areaIcon;
@@ -245,6 +245,17 @@
           &:hover {
             text-decoration: underline;
           }
+        }
+      }
+
+      & > .buttonItem {
+        grid-area: areaButton;
+        border: none;
+        cursor: pointer;
+        color: $git-black;
+        background-color: transparent;
+        &:hover{
+          color: $git-green;
         }
       }
     }
