@@ -3,9 +3,14 @@
     <header>
       <div class="top">
         <div class="filterbutton">
-          <button class="filter_list">
-            <span class="material-icons"> filter_list </span>
-          </button>
+          <div class="filtertooltip">
+            <button class="filter_list">
+              <span class="material-icons"> filter_list </span>
+            </button>
+            <div class="description">
+              ラベル絞り込みを実行します。以下のカテゴリ・ラベルが選択されます。
+            </div>
+          </div>
           <span class="filter_message">ラベルで絞り込む</span>
         </div>
       </div>
