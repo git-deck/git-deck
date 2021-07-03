@@ -20,13 +20,9 @@
     <Setting
       v-show="settingOpened"
       ref="setting"
-<<<<<<< HEAD
       :label-items="labelItems"
-=======
-      :labelItems="labelItems"
-      :allLabel="allLabel"
-      :categoryLabels="categoryLabels"
->>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
+      :all-label="allLabel"
+      :category-labels="categoryLabels"
       @loadTimeline="search"
       @closeTimeline="close"
       @clickLabel="clickLabel"
@@ -39,6 +35,7 @@
         v-for="(content, index) in contents"
         :key="index"
         :content="content"
+        :add-callbacks="addCallbacks"
       ></ContentBox>
     </main>
   </div>
@@ -89,6 +86,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    addCallbacks: {
+      type: Function,
+      required: true,
+    },
   },
 
   data(): DataType {
@@ -102,7 +103,6 @@ export default Vue.extend({
       categoryLabels: CATEGORY_LABELS,
     }
   },
-
   computed: {
     ownerUrl() {
       return 'https://github.com/' + this.owner
@@ -111,11 +111,9 @@ export default Vue.extend({
       return 'https://github.com/' + this.owner + '/' + this.repo
     },
   },
-
   created() {
     this.load()
   },
-
   methods: {
     close() {
       this.$emit('closeTimeline', this.id)
@@ -158,41 +156,10 @@ export default Vue.extend({
       }
       console.log(url)
 
-<<<<<<< HEAD
-      // ダミーデータは検索しない
-      if (this.useDummyData) {
-        this.contents = CONTENTS_DUMMY_DATA
-        for (const i in LABELS_DUMMY_DATA) {
-          this.labelItems.push({
-            label: LABELS_DUMMY_DATA[i],
-            labelOpened: true,
-          })
-        }
-        return
-      }
-=======
->>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
-
       // Send Request
       const self = this
       this.isLoading = true
       axios
-<<<<<<< HEAD
-        .all([timelineRequest, labelsRequest])
-        .then(
-          axios.spread((...responses) => {
-            self.contents = responses[0].data
-            const labelsData = responses[1].data
-            for (const i in labelsData) {
-              this.labelItems.push({
-                label: labelsData[i],
-                labelOpened: true,
-              })
-            }
-            this.isLoading = false
-          })
-        )
-=======
         .get(url, {
           headers: {
             Authorization: this.$auth.getToken('github'),
@@ -202,7 +169,6 @@ export default Vue.extend({
           self.contents = response.data
           this.isLoading = false
         })
->>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
         .catch((errors) => {
           // react on errors.
           console.error(errors)
@@ -214,19 +180,10 @@ export default Vue.extend({
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-<<<<<<< HEAD
-        for (const i in LABELS_DUMMY_DATA) {
-          this.labelItems.push({
-            label: LABELS_DUMMY_DATA[i],
-            labelOpened: true,
-          })
-        }
-=======
         this.labelItems = LABELS_DUMMY_DATA.map((label) => ({
           label,
           labelOpened: true,
         }))
->>>>>>> 18d9d52babddf8bb271fe381a421080cc5a4e57e
         return
       }
 
@@ -278,7 +235,6 @@ export default Vue.extend({
     showModal() {
       this.$emit('openPostModal', this.owner, this.repo)
     },
-
     // ラベルのON OFF管理
     clickLabel(Blockname: string, index: number) {
       // labelOpened:false->選択中

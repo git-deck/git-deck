@@ -2,11 +2,12 @@
   <div
     ref="textarea"
     class="comment"
-    :style="{ height: textHeight }"
+    :style="{ maxHeight: textHeight }"
     :class="{
       thread: thread,
     }"
   >
+    {{ height }}
     <div class="iconItem">
       <Icon
         :avatar-url="author == null ? '' : author.avatarUrl"
@@ -119,10 +120,16 @@ import Vue from 'vue'
 import { Octicon, Octicons } from 'octicons-vue'
 type DataType = {
   Octicons: any
+  height: Number
+  isLongComment: Boolean
 }
 export default Vue.extend({
   components: { Octicon },
   props: {
+    addCallbacks: {
+      type: Function,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -215,6 +222,8 @@ export default Vue.extend({
   data(): DataType {
     return {
       Octicons,
+      height: 0,
+      isLongComment: false,
     }
   },
   computed: {
@@ -226,13 +235,17 @@ export default Vue.extend({
       )
     },
     textHeight(): string {
+      if (this.height > 200) {
+        return '200px'
+      }
       return 'auto'
     },
   },
-  methods: {
-    getCommentHeight() {
-      const height = this.$refs.textarea.clientHeight
-    },
+  mounted() {
+    this.$props.addCallbacks(() => {
+      const tmp = this.$refs.textarea.clientHeight
+      this.height = tmp
+    })
   },
 })
 </script>

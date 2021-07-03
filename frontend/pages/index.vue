@@ -12,12 +12,13 @@
       layout="vertical"
       @paneResizeStop="resized"
     >
-      <template v-for="(tl, index) in timeline">
+      <template v-for="(tl, index) in timeline" ref="test">
         <Timeline
           :id="tl.id"
           :key="tl.id"
           :owner="tl.owner"
           :repo="tl.repo"
+          :add-callbacks="addCallbacks"
           :use-dummy-data="tl.useDummyData"
           @closeTimeline="close"
           @openPostModal="openPostModal"
@@ -43,7 +44,7 @@ type DataType = {
   addingColumnErrorMsg: String
   avatarUrl: String
   userName: String
-  flag: Boolean
+  callbacks: Array<() => void>
 }
 export default Vue.extend({
   components: {
@@ -75,7 +76,7 @@ export default Vue.extend({
       addingColumnErrorMsg: '',
       avatarUrl: '',
       userName: '',
-      flag: true,
+      callbacks: [],
     }
   },
   created() {
@@ -97,8 +98,11 @@ export default Vue.extend({
     openPostModal(owner: string, repo: string) {
       this.$refs.postmodal.showModal(owner, repo)
     },
-    resized(pane, container, size) {
-      // ここでコメント高さ取得する関数を呼び出す
+    resized() {
+      this.callbacks.forEach((callback) => callback())
+    },
+    addCallbacks(callback) {
+      this.callbacks.push(callback)
     },
   },
 })

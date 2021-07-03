@@ -8,6 +8,7 @@
         :how-long-ago="content.howLongAgo"
         :type="'idea'"
         :state="content.state"
+        :add-callbacks="addCallbacks"
       />
     </div>
     <div v-else>
@@ -25,6 +26,7 @@
           :state="content.state"
           :fold="content.comments.length > 2"
           :url="content.url"
+          :add-callbacks="addCallbacks"
           @toggleShowingAll="toggleShowingAll"
         />
         <Comment
@@ -35,6 +37,7 @@
           :author="comment.author"
           :how-long-ago="comment.howLongAgo"
           :type="'reply'"
+          :add-callbacks="addCallbacks"
           :thread="index + 1 < content.comments.length"
         />
       </div>
@@ -52,6 +55,7 @@
           :state="content.state"
           :readmore="content.comments.length > 2"
           :url="content.url"
+          :add-callbacks="addCallbacks"
           @toggleShowingAll="toggleShowingAll"
         />
         <Comment
@@ -65,6 +69,7 @@
           :author="comment.author"
           :how-long-ago="comment.howLongAgo"
           :type="'reply'"
+          :add-callbacks="addCallbacks"
           :thread="index + 1 < Math.min(content.comments.length, 2)"
         />
       </div>
@@ -82,6 +87,10 @@ export default Vue.extend({
       type: Object,
       required: true,
     } as PropOptions<Content>,
+    addCallbacks: {
+      type: Function,
+      required: true,
+    },
   },
   data() {
     return {
