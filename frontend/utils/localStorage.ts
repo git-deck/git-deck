@@ -1,4 +1,21 @@
 const ADDED_REPOSITORY = 'ADDED_REPOSITORY'
+
+export const removeRepositoryToLocalStorage = (repositoryName: string) => {
+  const repositories = JSON.parse(
+    localStorage.getItem(ADDED_REPOSITORY) ?? '[]'
+  )
+  if (Array.isArray(repositories)) {
+    localStorage.setItem(
+      ADDED_REPOSITORY,
+      JSON.stringify([
+        ...repositories.filter(
+          (value) => typeof value === 'string' && value !== repositoryName
+        ),
+      ])
+    )
+  }
+}
+
 export const saveRepositoryToLocalStorage = (repositoryName: string) => {
   const repositories = JSON.parse(
     localStorage.getItem(ADDED_REPOSITORY) ?? '[]'

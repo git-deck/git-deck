@@ -166,6 +166,7 @@ export default Vue.extend({
           },
         })
         .then((response) => {
+          console.log('response.data:', response.data)
           self.contents = response.data
           this.isLoading = false
         })
@@ -193,7 +194,7 @@ export default Vue.extend({
           this.owner +
           '/' +
           this.repo +
-          '?categories=idea,issue_and_pull_request',
+          '?categories=idea,open,closed,merged',
         {
           headers: {
             Authorization: this.$auth.getToken('github'),
