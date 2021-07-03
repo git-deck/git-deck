@@ -45,6 +45,7 @@
       margin-right: 3px;
       padding: 0;
       border-radius: 2px;
+      cursor: pointer;
       &:hover {
         background: rgb(240, 240, 240);
         color: $git-green;
@@ -81,6 +82,7 @@
       height: 20px;
       background: transparent;
       color: $git-black;
+      cursor: pointer;
       .material-icons {
           font-size: 20px;
       }
@@ -239,6 +241,7 @@
           font-size: 12px;
           color: $git-blue;
           text-align: center;
+          cursor: pointer;
           &:hover {
             text-decoration: underline;
           }
