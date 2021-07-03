@@ -16,9 +16,6 @@
       <button class="tune" @click="clickSettings">
         <span class="material-icons"> tune </span>
       </button>
-      <button class="Refresh" @click="search">
-        <span class="material-icons"> replay </span>
-      </button>
     </header>
     <Setting
       v-show="settingOpened"
