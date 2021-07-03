@@ -16,7 +16,7 @@
         </div>
         <div class="Lab">
           <span
-            v-for="(label, index) in categoryitems"
+            v-for="(label, index) in categoryLabels"
             :key="index"
             class="labels"
             style="cursor: pointer"
@@ -87,7 +87,7 @@ export default Vue.extend({
     Label0,
   },
   props: {
-    categoryitems: {
+    categoryLabels: {
       type: Array,
       required: true,
     } as PropOptions<LabelItem[]>,

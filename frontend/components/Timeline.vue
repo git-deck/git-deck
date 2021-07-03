@@ -22,7 +22,7 @@
       ref="setting"
       :labelItems="labelItems"
       :allLabel="allLabel"
-      :categoryitems="categoryitems"
+      :categoryLabels="categoryLabels"
       @loadTimeline="search"
       @closeTimeline="close"
       @clickLabel="clickLabel"
@@ -61,12 +61,13 @@ type DataType = {
   labelItems: LabelItem[]
   isLoading: boolean
   // setting から持ってきた
-  categoryitems: Array<LabelItem>
+  categoryLabels: Array<LabelItem>
   allLabel: Label
 }
 
 export default Vue.extend({
   components: { Octicon },
+
   props: {
     id: {
       type: Number,
@@ -85,6 +86,7 @@ export default Vue.extend({
       required: true,
     },
   },
+
   data(): DataType {
     return {
       Octicons,
@@ -92,31 +94,11 @@ export default Vue.extend({
       contents: [],
       labelItems: [],
       isLoading: false,
-      allLabel: {
-        label: {
-          name: 'すべて',
-          color: '#24292E',
-        },
-        labelOpened: false,
-      },
-      categoryitems: [
-        {
-          label: {
-            color: '#FFB800',
-            name: 'idea',
-          },
-          labelOpened: false,
-        },
-        {
-          label: {
-            color: '#2EA44F',
-            name: 'issue & pull request',
-          },
-          labelOpened: false,
-        },
-      ],
+      allLabel: ALL_LABEL,
+      categoryLabels: CATEGORY_LABELS,
     }
   },
+
   computed: {
     ownerUrl() {
       return 'https://github.com/' + this.owner
@@ -125,18 +107,29 @@ export default Vue.extend({
       return 'https://github.com/' + this.owner + '/' + this.repo
     },
   },
+
   created() {
     this.load()
   },
+
   methods: {
     close() {
       this.$emit('closeTimeline', this.id)
     },
     search() {
-      console.log('useDummyData:', this.useDummyData)
+      // ダミーデータは検索しない
+      if (this.useDummyData) {
+        this.contents = CONTENTS_DUMMY_DATA
+        this.labelItems = LABELS_DUMMY_DATA.map((label) => ({
+          label,
+          labelOpened: true,
+        }))
+        return
+      }
+
+      // Build URL
 
       let url = '/timeline/' + this.owner + '/' + this.repo + '?'
-      console.log('this.allLabel.labelOpened:', this.allLabel.labelOpened)
       if (this.allLabel.labelOpened) {
         // すべてラベルがついてなかったら
         const labels = []
@@ -151,65 +144,34 @@ export default Vue.extend({
       }
 
       const categories = []
-      for (const i in this.categoryitems) {
-        console.log('this.categoryitems[i].labelOpened:', this.categoryitems[i].labelOpened)
-        if (!this.categoryitems[i].labelOpened) {
-          let category = this.categoryitems[i].label.name
+      for (const i in this.categoryLabels) {
+        if (!this.categoryLabels[i].labelOpened) {
+          let category = this.categoryLabels[i].label.name
           if (category === 'issue & pull request') {
             category = 'issue_and_pull_request'
           }
           categories.push(category)
         }
       }
-      console.log('categoryies:', categories)
       if (categories.length > 0) {
         url += 'categories=' + categories.join()
       }
       console.log(url)
 
-      // ダミーデータは検索しない
-      if (this.useDummyData) {
-        this.contents = CONTENTS_DUMMY_DATA
-        for (let i in LABELS_DUMMY_DATA) {
-          this.labelItems.push({
-            label: LABELS_DUMMY_DATA[i],
-            labelOpened: true,
-          })
-        }
-        return
-      }
 
-      const timelineRequest = axios.get(url, {
-        headers: {
-          Authorization: this.$auth.getToken('github'),
-        },
-      })
-      const labelsRequest = axios.get(
-        '/labels/' + this.owner + '/' + this.repo,
-        {
-          headers: {
-            Authorization: this.$auth.getToken('github'),
-          },
-        }
-      )
+      // Send Request
       const self = this
       this.isLoading = true
       axios
-        .all([timelineRequest, labelsRequest])
-        .then(
-          axios.spread((...responses) => {
-            self.contents = responses[0].data
-            self.labelItems = []
-            const labelsData = responses[1].data
-            for (let i in labelsData) {
-              this.labelItems.push({
-                label: labelsData[i],
-                labelOpened: true,
-              })
-            }
-            this.isLoading = false
-          })
-        )
+        .get(url, {
+          headers: {
+            Authorization: this.$auth.getToken('github'),
+          },
+        })
+        .then((response) => {
+          self.contents = response.data
+          this.isLoading = false
+        })
         .catch((errors) => {
           // react on errors.
           console.error(errors)
@@ -221,14 +183,14 @@ export default Vue.extend({
       console.log('useDummyData:', this.useDummyData)
       if (this.useDummyData) {
         this.contents = CONTENTS_DUMMY_DATA
-        for (let i in LABELS_DUMMY_DATA) {
-          this.labelItems.push({
-            label: LABELS_DUMMY_DATA[i],
-            labelOpened: true,
-          })
-        }
+        this.labelItems = LABELS_DUMMY_DATA.map((label) => ({
+          label,
+          labelOpened: true,
+        }))
         return
       }
+
+      // Send Request
       const timelineRequest = axios.get(
         '/timeline/' +
           this.owner +
@@ -257,13 +219,10 @@ export default Vue.extend({
           axios.spread((...responses) => {
             self.contents = responses[0].data
             self.labelItems = []
-            const labelsData = responses[1].data
-            for (let i in labelsData) {
-              this.labelItems.push({
-                label: labelsData[i],
-                labelOpened: true,
-              })
-            }
+            self.labelItems = responses[1].data.map((label) => ({
+              label,
+              labelOpened: true,
+            }))
             this.isLoading = false
           })
         )
@@ -284,8 +243,8 @@ export default Vue.extend({
     clickLabel(Blockname: string, index: number) {
       // labelOpened:false->選択中
       if (Blockname === 'category') {
-        this.categoryitems[index].labelOpened =
-          !this.categoryitems[index].labelOpened
+        this.categoryLabels[index].labelOpened =
+          !this.categoryLabels[index].labelOpened
       }
       if (Blockname === 'labels') {
         if (index === -1) {
@@ -308,6 +267,31 @@ export default Vue.extend({
     },
   },
 })
+
+const ALL_LABEL: LabelItem = {
+  label: {
+    name: 'すべて',
+    color: '#24292E',
+  },
+  labelOpened: false,
+},
+
+const CATEGORY_LABELS: LabelItem[] = [
+  {
+    label: {
+      color: '#FFB800',
+      name: 'idea',
+    },
+    labelOpened: false,
+  },
+  {
+    label: {
+      color: '#2EA44F',
+      name: 'issue & pull request',
+    },
+    labelOpened: false,
+  },
+]
 
 const LABELS_DUMMY_DATA: Label[] = [
   {
