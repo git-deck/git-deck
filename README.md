@@ -92,16 +92,9 @@ Nobuaki-M</a> : フロントエンド(UI)<br>
 前提：Dockerがインストールされている / GitHubアカウントを持っている
 
 1. このリポジトリをclone
-1.  ```.env.sample```を参考にディレクトリ直下に```.env```を作成（初回時のみ）
-1. ディレクトリ直下で```docker-compose up``` 
-1. データベースを設定（初回時のみ）
-```
-docker exec -it issue-backend /bin/bash
-flask db init
-flask db migrate
-flask db upgrade
-```
-5. localhost:3000にアクセス
+1. 初回：[こちら](https://github.com/knknk98/issue-twitter/tree/main/backend#readme)を参考にバックエンドの設定を行う
+1. ディレクトリ直下で```docker-compose up```
+1. localhost:3000にアクセス
 
 ## Special Thanks🎉
 開発に協力していくれた情ピカさん、岡部さん、KoukiNAGATAさん
