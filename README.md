@@ -89,6 +89,6 @@ DBのDockerfileがm1 mac仕様になっていますのでご自身の環境に�
 1. localhost:3000にアクセス
 
 ## Special Thanks🎉
-開発に協力していくれた情ピカさん、岡部さん、KoukiNAGATAさん
+開発に協力してくれた情ピカさん、岡部さん、KoukiNAGATAさん
 
 開発のきっかけであるハッカソンを開催していただいたサポーターズさん
