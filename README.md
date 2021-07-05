@@ -1,7 +1,7 @@
 ![ヘッダー画像](/resourse/readme-header.png)
 ## GitHubの通知は分散しすぎてわからない！
-GitDeckはそんなあなたに向けたサービスです。<br>
-複数リポジトリの情報を一画面でチェックすることができたり、issueにも満たないアイデアを投稿することもできます
+GitDeckはそんなあなたに向けたサービスです<br>
+複数リポジトリの情報を一画面でチェックできたり、issueにも満たないアイデアを投稿することができます
 
 ![ここにyoutube動画を入れる](https://img.youtube.com/vi/cxl56rXXEiM/0.jpg)
 
@@ -84,7 +84,7 @@ Nobuaki-M</a> : フロントエンド(UI)<br>
 
 1. このリポジトリをclone
 1. 初回：[こちら](https://github.com/knknk98/issue-twitter/tree/main/backend#readme)を参考にバックエンドの設定を行う<br>
-DBのDockerfileがm1 mac仕様になっていますので使用者の環境によって適宜変えてください
+DBのDockerfileがm1 mac仕様になっていますのでご自身の環境によって適宜変えてください
 1. ディレクトリ直下で```docker-compose up```
 1. localhost:3000にアクセス
 
