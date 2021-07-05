@@ -3,7 +3,7 @@
 GitDeckはそんなあなたに向けたサービスです<br>
 複数リポジトリの情報を一画面でチェックできたり、issueにも満たないアイデアを投稿することができます
 
-![ここにyoutube動画を入れる](https://img.youtube.com/vi/cxl56rXXEiM/0.jpg)
+[デモ動画](https://user-images.githubusercontent.com/34413567/124460483-63a7b680-ddca-11eb-88b9-5b6755f1f10a.mov)
 
 ## 技育CAMPハッカソン最優秀賞👑
 2021年7月3日〜4日に開催された[サポーターズ 技育CAMP ハッカソンvol.5「開発を効率化するアプリケーションを作ろう！」](https://talent.supporterz.jp/events/b89ddfc0-d4d0-4a9a-8092-14376eb89e85/)にて学生4人で制作し、[最優秀賞](https://twitter.com/geek_pjt/status/1411617994032046085?s=20)を受賞しました🎉🎉🎉
