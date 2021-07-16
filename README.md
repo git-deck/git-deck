@@ -66,7 +66,7 @@ GitDeckはそんなあなたに向けたサービスです<br>
       <a href="https://github.com/knknk98">@knknk98</a> : フロントエンド(UI)<br>
       <a href="https://github.com/zwwaa-ku">@
 Nobuaki-M</a> : フロントエンド(UI)<br>
-      <a href="https://github.com/knknk98">@yuta-ike</a>：メンター、アイデア出し、一部フロントエンドの実装<br>
+      <a href="https://github.com/yuta-ike">@yuta-ike</a>：メンター、アイデア出し、一部フロントエンドの実装<br>
     </td>
   </tr>
   <tr>
