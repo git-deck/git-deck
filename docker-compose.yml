@@ -43,22 +43,4 @@ services:
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
     command: flask run --host 0.0.0.0 --port 5000
-    depends_on:
-      db:
-        condition: service_healthy
 
-  db:
-    container_name: issue-db
-    # Dockerfileの場所
-    build:
-      context: ./
-      dockerfile: ./db/Dockerfile
-    # cachedで高速化
-    volumes:
-      - "./db/data:/var/lib/mysql:cached" # データの永続化
-    environment:
-      - MYSQL_ROOT_PASSWORD=pass
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-ppass"]
-      timeout: 20s
-      retries: 10

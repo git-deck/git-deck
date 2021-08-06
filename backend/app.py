@@ -8,8 +8,8 @@ import datetime
 import json
 import os
 
-from database import init_db, db
-from model import Idea
+#from database import init_db, db
+#from model import Idea
 import utils
 from query import *
 
@@ -23,7 +23,7 @@ app.config["JSON_AS_ASCII"] = False
 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-init_db(app)
+#init_db(app)
 
 
 @app.route("/")
@@ -61,8 +61,8 @@ def github_client():
 def user():
     resp = github_client().execute(
         gql("""
-        query { 
-            viewer { 
+        query {
+            viewer {
                 login
             }
         }
@@ -75,13 +75,13 @@ def user():
 # e.g.
 # [
 #   {
-#     "color": "#d73a4a", 
+#     "color": "#d73a4a",
 #     "name": "bug"
-#   }, 
+#   },
 #   {
-#     "color": "#0075ca", 
+#     "color": "#0075ca",
 #     "name": "documentation"
-#   }, 
+#   },
 #   ...
 # ]
 @app.route("/labels/<owner>/<repo>")
@@ -103,10 +103,10 @@ def labels(owner, repo):
         """),
         variable_values={
             "owner": owner,
-            "repo": repo 
+            "repo": repo
         }
     )["repository"]["labels"]
-    
+
     labels = remove_edge_and_nodes(labels)
     labels = add_hash_to_labels(labels)
     return jsonify(labels)
@@ -114,10 +114,10 @@ def labels(owner, repo):
 
 # 指定したリポジトリのタイムライン取得
 #  GET /timeline/<owner>/<repo>
-#  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=issue_and_pull_request,idea
+#  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=issue_and_pull_request
 # クエリパラメータ:
 #  labels: OR検索
-#  categories: OR検索 idea, open, closed, merged
+#  categories: OR検索 open, closed, merged
 @app.route("/timeline/<owner>/<repo>")
 def timeline(owner, repo):
     labels = request.args["labels"].split(",") if "labels" in request.args else None
@@ -127,8 +127,6 @@ def timeline(owner, repo):
     pull_request_states = list(map(lambda c: c.upper(), filter(lambda c: c in ["open", "closed", "merged"], categories)))
 
     timeline = get_issues(owner, repo, labels, issue_states) + get_pull_requests(owner, repo, labels, pull_request_states)
-    if "idea" in categories:
-        timeline = timeline + get_ideas(owner, repo)
 
     # updated_at が新しい順に並べる
     timeline = list(reversed(sorted(timeline, key=lambda elem: elem["updatedAt"])))
@@ -193,36 +191,36 @@ def get_repo_id(owner, repo):
         """),
         variable_values={
             "owner": owner,
-            "repo": repo 
+            "repo": repo
         }
     )["repository"]["id"]
 
 
-def get_ideas(owner, repo):
-    ideas = Idea.query.filter(Idea.repo_id == get_repo_id(owner, repo)).all()
-    return [{
-            "body": idea.body,
-            "author": {
-                "login": idea.author_login,
-                "url": "https://github.com/{}".format(idea.author_login),
-                "avatarUrl": "https://github.com/{}.png".format(idea.author_login),
-            },
-            "createdAt": idea.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "updatedAt": idea.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "category": "idea",
-        } for idea in ideas]
+#def get_ideas(owner, repo):
+#    ideas = Idea.query.filter(Idea.repo_id == get_repo_id(owner, repo)).all()
+#    return [{
+#            "body": idea.body,
+#            "author": {
+#                "login": idea.author_login,
+#                "url": "https://github.com/{}".format(idea.author_login),
+#                "avatarUrl": "https://github.com/{}.png".format(idea.author_login),
+#            },
+#            "createdAt": idea.created_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+#            "updatedAt": idea.updated_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+#            "category": "idea",
+#        } for idea in ideas]
 
 
-@app.route("/ideas", methods=["POST"])
-def post_idea():
-    idea = Idea(
-        get_repo_id(request.json["owner"], request.json["repo"]),
-        request.json["body"],
-        request.json["author_login"]
-    )
-    db.session.add(idea)
-    db.session.commit()
-    return 'Idea is created successfully'
+#@app.route("/ideas", methods=["POST"])
+#def post_idea():
+#    idea = Idea(
+#        get_repo_id(request.json["owner"], request.json["repo"]),
+#        request.json["body"],
+#        request.json["author_login"]
+#    )
+#    db.session.add(idea)
+#    db.session.commit()
+#    return 'Idea is created successfully'
 
 
 def add_hash_to_labels(labels):
@@ -234,3 +232,4 @@ def add_hash_to_labels(labels):
 
 def remove_edge_and_nodes(obj):
     return [el["node"] for el in obj["edges"]]
+
