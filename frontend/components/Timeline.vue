@@ -47,6 +47,7 @@ import { Content, Label } from '@/models/types'
 import axios from 'axios'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
+import { request, GraphQLClient } from 'graphql-request'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -177,6 +178,41 @@ export default Vue.extend({
         })
     },
 
+    getLabels() {
+      const self = this
+      const client = new GraphQLClient('https://api.github.com/graphql', {
+        headers: {'Authorization': this.$auth.getToken('github')} })
+      const labelQuery = `
+        query($owner:String!, $repo:String!) {
+          repository(owner: $owner, name: $repo) {
+            labels(first:100) {
+              edges {
+                node {
+                  name
+                  color
+                }
+              }
+            }
+          }
+        }
+      `
+      const variables = { owner: this.owner, repo: this.repo }
+      client
+        .request(labelQuery, variables)
+        .then((data) => {
+          self.labelItems = data.repository.labels.edges.map((label) => ({
+              label: {
+                color: `#${label.node.color}`,
+                name: label.node.name,
+              },
+              labelOpened: true,
+            }))
+        })
+        .catch((errors) => {
+          console.error(errors)
+        })
+    },
+
     // ロード時はフィルタなし
     load() {
       console.log('useDummyData:', this.useDummyData)
@@ -190,6 +226,7 @@ export default Vue.extend({
       }
 
       // Send Request
+
       const timelineRequest = axios.get(
         '/timeline/' +
           this.owner +
@@ -202,34 +239,25 @@ export default Vue.extend({
           },
         }
       )
-      const labelsRequest = axios.get(
-        '/labels/' + this.owner + '/' + this.repo,
-        {
-          headers: {
-            Authorization: this.$auth.getToken('github'),
-          },
-        }
-      )
+
       const self = this
       this.isLoading = true
+
+      this.getLabels()
+
       axios
-        .all([timelineRequest, labelsRequest])
+        .all([timelineRequest])
         .then(
           axios.spread((...responses) => {
             self.contents = responses[0].data
-            self.labelItems = []
-            self.labelItems = responses[1].data.map((label) => ({
-              label,
-              labelOpened: true,
-            }))
             this.isLoading = false
           })
         )
         .catch((errors) => {
-          // react on errors.
           console.error(errors)
         })
     },
+
     // ラベル絞り込みボタンの開閉
     clickSettings() {
       this.settingOpened = !this.settingOpened
@@ -275,13 +303,6 @@ const ALL_LABEL: LabelItem = {
 }
 
 const CATEGORY_LABELS: LabelItem[] = [
-  {
-    label: {
-      color: '#FFB800',
-      name: 'idea',
-    },
-    labelOpened: false,
-  },
   {
     label: {
       color: '#2EA44F',

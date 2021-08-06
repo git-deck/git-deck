@@ -39,6 +39,7 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/markdownit',
   ],
+
   markdownit: {
     injected: true,
     html: true,
