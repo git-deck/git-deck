@@ -7,9 +7,6 @@
         /
         <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
       </span>
-      <button class="chat" @click="showModal">
-        <span class="material-icons"> add </span>
-      </button>
       <button class="Refresh" @click="load">
         <span class="material-icons"> replay </span>
       </button>
@@ -197,9 +194,6 @@ export default Vue.extend({
     // ラベル絞り込みボタンの開閉
     clickSettings() {
       this.settingOpened = !this.settingOpened
-    },
-    showModal() {
-      this.$emit('openPostModal', this.owner, this.repo)
     },
     // ラベルのON OFF管理
     clickLabel(Blockname: string, index: number) {

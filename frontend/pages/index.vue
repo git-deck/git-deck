@@ -7,7 +7,6 @@
       :timeline="timeline"
       @appendTimeline="append"
     />
-    <PostModal ref="postmodal" />
     <multipane
       class="vertical-panes"
       layout="vertical"
@@ -21,7 +20,6 @@
           :repo="tl.repo"
           :add-callbacks="addCallbacks"
           @closeTimeline="close"
-          @openPostModal="openPostModal"
         />
         <multipane-resizer :key="index + 'resizer'"></multipane-resizer>
       </template>
@@ -94,9 +92,6 @@ export default Vue.extend({
       const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
       removeRepositoryToLocalStorage(reponame)
       this.timeline.splice(index, 1)
-    },
-    openPostModal(owner: string, repo: string) {
-      this.$refs.postmodal.showModal(owner, repo)
     },
     resized() {
       this.callbacks.forEach((callback) => callback())
