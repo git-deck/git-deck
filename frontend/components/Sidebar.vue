@@ -54,7 +54,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios'
-import { addRepository } from '@/APIClient/repository.ts'
+import { checkRepository } from '@/APIClient/repository.ts'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
@@ -154,16 +154,15 @@ export default Vue.extend({
         const repo = parsed[2]
         const self = this
         try {
-          const res = await addRepository(
+          const res = await checkRepository(
             self.$auth.getToken('github'),
             `${owner}/${repo}`
           )
-          console.log('response:', res)
           this.$emit('appendTimeline', owner, repo)
           saveRepositoryToLocalStorage(`${owner}/${repo}`)
           this.hideModal()
-        } catch (e) {
-          console.log('error:', e)
+        } catch (error) {
+          console.error(error)
           this.setErrorMsg('リポジトリが見つかりません')
         } finally {
           self.isSearchingRepository = false

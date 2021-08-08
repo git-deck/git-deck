@@ -81,10 +81,6 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
-    useDummyData: {
-      type: Boolean,
-      default: false,
-    },
     owner: {
       type: String,
       required: true,

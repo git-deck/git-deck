@@ -20,7 +20,6 @@
           :owner="tl.owner"
           :repo="tl.repo"
           :add-callbacks="addCallbacks"
-          :use-dummy-data="tl.useDummyData"
           @closeTimeline="close"
           @openPostModal="openPostModal"
         />
@@ -39,7 +38,7 @@ import {
   getSavedRepository,
   removeRepositoryToLocalStorage,
 } from '@/utils/localStorage.ts'
-import { addRepository } from '@/APIClient/repository.ts'
+import { checkRepository } from '@/APIClient/repository.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -77,7 +76,7 @@ export default Vue.extend({
     this.userName = this.$auth.user.login
     // localStorageからレポジトリを取得
     getSavedRepository().map((repositoryName) =>
-      addRepository(this.$auth.getToken('github'), repositoryName).then(() => {
+      checkRepository(this.$auth.getToken('github'), repositoryName).then(() => {
         this.append(...repositoryName.split('/'))
       })
     )
