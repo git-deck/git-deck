@@ -45,8 +45,6 @@ export default Vue.extend({
   },
   methods: {
     loginWithGitHub() {
-      console.log('this:', this)
-      console.log('this.$auth:', this.$auth)
       this.$auth.loginWith('github')
     },
   },

@@ -1,10 +1,30 @@
-import axios from 'axios'
+import { request, GraphQLClient } from 'graphql-request'
+import * as gql from 'gql-query-builder'
 
-export const addRepository = async (token: string, repositoryName: string) => {
+export const checkRepository = async (token: string, repositoryName: string) => {
   const [owner, repo] = repositoryName.split('/')
-  return await axios.get('/repo_id/' + owner + '/' + repo, {
-    headers: {
-      Authorization: token,
-    },
-  })
+
+  const query = gql.query({
+        operation: 'repository',
+        variables: {
+          owner: {
+            value: owner,
+            required: true
+          },
+          name: {
+            value: repo,
+            required: true
+          },
+        },
+        fields: [
+          'id'
+        ]
+      })
+
+  const client = new GraphQLClient('https://api.github.com/graphql', {
+    headers: {'Authorization': token} })
+
+  return await client
+    .request(query.query, query.variables)
+    .then((data) => (data))
 }

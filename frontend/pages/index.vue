@@ -7,7 +7,6 @@
       :timeline="timeline"
       @appendTimeline="append"
     />
-    <PostModal ref="postmodal" />
     <multipane
       class="vertical-panes"
       layout="vertical"
@@ -20,9 +19,7 @@
           :owner="tl.owner"
           :repo="tl.repo"
           :add-callbacks="addCallbacks"
-          :use-dummy-data="tl.useDummyData"
           @closeTimeline="close"
-          @openPostModal="openPostModal"
         />
         <multipane-resizer :key="index + 'resizer'"></multipane-resizer>
       </template>
@@ -39,7 +36,7 @@ import {
   getSavedRepository,
   removeRepositoryToLocalStorage,
 } from '@/utils/localStorage.ts'
-import { addRepository } from '@/APIClient/repository.ts'
+import { checkRepository } from '@/APIClient/repository.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -77,7 +74,7 @@ export default Vue.extend({
     this.userName = this.$auth.user.login
     // localStorageからレポジトリを取得
     getSavedRepository().map((repositoryName) =>
-      addRepository(this.$auth.getToken('github'), repositoryName).then(() => {
+      checkRepository(this.$auth.getToken('github'), repositoryName).then(() => {
         this.append(...repositoryName.split('/'))
       })
     )
@@ -95,9 +92,6 @@ export default Vue.extend({
       const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
       removeRepositoryToLocalStorage(reponame)
       this.timeline.splice(index, 1)
-    },
-    openPostModal(owner: string, repo: string) {
-      this.$refs.postmodal.showModal(owner, repo)
     },
     resized() {
       this.callbacks.forEach((callback) => callback())
