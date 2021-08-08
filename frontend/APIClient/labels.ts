@@ -43,7 +43,7 @@ export const getLabels = async (token: string, owner: string, repo: string) => {
   return await client
     .request(query.query, query.variables)
     .then((data) => {
-      const labels = data.repository.labels.edges.map((label) => ({
+      const labels = data.repository.labels.edges.map((label:any) => ({
           label: {
             color: `#${label.node.color}`,
             name: label.node.name,

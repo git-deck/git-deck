@@ -145,15 +145,15 @@ export const getIssues = async (token: string, owner: string, repo: string, stat
   return await client
     .request(query.query, query.variables)
     .then((data) => {
-      data = data.repository.issues.edges.map((issue) => {
+      data = data.repository.issues.edges.map((issue:any) => {
           issue = issue.node
-          issue.comments = issue.comments.edges.map((comment) => {
+          issue.comments = issue.comments.edges.map((comment:any) => {
             comment = comment.node
             comment.howLongAgo = howLongAgo(new Date(comment.updatedAt))
             return comment
           })
-          issue.assignees = issue.assignees.edges.map((assignee) => (assignee.node))
-          issue.labels = issue.labels.edges.map((label) => ({
+          issue.assignees = issue.assignees.edges.map((assignee:any) => (assignee.node))
+          issue.labels = issue.labels.edges.map((label:any) => ({
               color: `#${label.node.color}`,
               name: label.node.name,
           }))

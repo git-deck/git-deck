@@ -2,13 +2,13 @@ import { request, GraphQLClient } from 'graphql-request'
 import * as gql from 'gql-query-builder'
 import { howLongAgo } from '@/utils/howLongAgo.js'
 
-export const getPullRequests = async (token: string, owner: string, repo: string, states: Object, labels: Array) => {
+export const getPullRequests = async (token: string, owner: string, repo: string, states: Object, labels: Array<string>) => {
   const pull_requests_limit = 100
   const assignees_limit = 100
   const labels_limit = 100
   const comments_limit = 100
 
-  let pullRequestVariables = {
+  let pullRequestVariables:any = {
     first: {
       value: pull_requests_limit
     },
@@ -149,15 +149,15 @@ export const getPullRequests = async (token: string, owner: string, repo: string
   return await client
     .request(query.query, query.variables)
     .then((data) => {
-      data = data.repository.pullRequests.edges.map((pr) => {
+      data = data.repository.pullRequests.edges.map((pr:any) => {
           pr = pr.node
-          pr.comments = pr.comments.edges.map((comment) => {
+          pr.comments = pr.comments.edges.map((comment:any) => {
             comment = comment.node
             comment.howLongAgo = howLongAgo(new Date(comment.updatedAt))
             return comment
           })
-          pr.assignees = pr.assignees.edges.map((assignee) => (assignee.node))
-          pr.labels = pr.labels.edges.map((label) => ({
+          pr.assignees = pr.assignees.edges.map((assignee:any) => (assignee.node))
+          pr.labels = pr.labels.edges.map((label:any) => ({
               color: `#${label.node.color}`,
               name: label.node.name,
           }))
