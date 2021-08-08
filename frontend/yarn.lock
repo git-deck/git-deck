@@ -4928,6 +4928,11 @@ globule@^1.0.0:
     lodash "~4.17.10"
     minimatch "~3.0.2"
 
+gql-query-builder@^3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/gql-query-builder/-/gql-query-builder-3.5.5.tgz#fd35547c6e99d33d72a1df50478e3efbc600af4f"
+  integrity sha512-ovc2KaLE/e5Wx9+ViWCZhjbGkPw0qxY973NIvw03kDY8PohQTaI3nnG/yH//RjB/Gz5X4QDwp7Nkg1ZqFnSySQ==
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.3, graceful-fs@^4.2.4:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"

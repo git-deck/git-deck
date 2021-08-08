@@ -114,7 +114,7 @@ def labels(owner, repo):
 
 # 指定したリポジトリのタイムライン取得
 #  GET /timeline/<owner>/<repo>
-#  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=issue_and_pull_request
+#  GET /timeline/<owner>/<repo>?labels=bug,documentation?categories=open,merged
 # クエリパラメータ:
 #  labels: OR検索
 #  categories: OR検索 open, closed, merged
