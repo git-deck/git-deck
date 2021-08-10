@@ -1,4 +1,208 @@
 // タイムライン
+
+// ライトモード
+.light-mode{
+  .column {
+    background-color: white;
+    border-color: $border;
+    &:first-child {
+      border-color: $border;
+    }
+    & > header {
+      border-color: $border;
+      .repoicon {
+        color: $git-blue;
+      }
+      .tune {
+        color: $git-black;
+        &:hover {
+          background: rgb(240, 240, 240);
+          color: $git-green;
+        }
+      }
+      .refresh {
+        color: $git-black;
+        &:hover {
+          background: rgb(240, 240, 240);
+          color: $git-green;
+        }
+      }
+      .title {
+        color: $git-blue;
+      }
+    }
+    
+    & > main {
+      & .comment {
+        border-color: $border;
+        &.reply > .iconItem::before {
+          background: $border;
+        }
+        & > .iconItem {  
+          & > .thread-line {
+            background-color: $border;
+          }
+        }
+        & > .threadLine {
+          border-right: 3px solid $border;
+          &.dotted {
+            border-right: 3px dotted $border;
+          }
+        }
+        & > .titleItem {
+          a {
+            color: black;
+          }
+          .titleLine {
+            & > .title {
+              & > .number {
+                color: gray;
+              }
+            }
+          }
+          & > .assign {
+            color: gray;
+          }
+        }
+        & > .markItem {
+          .comment-type-mark {
+            color: white;
+          }
+          .pull-request-open {
+            background-color: $git-green;
+          }
+          .pull-request-closed {
+            background-color: $git-red;
+          }
+          .pull-request-merged {
+            background-color: $git-purple;
+          }
+          .issue-open {
+            background-color: $git-green;
+          }
+          .issue-closed {
+            background-color: $git-red;
+          }
+        }
+        & > .dateItem {
+          color: gray;
+        }
+        & > .readmoreItem {  
+          & > .readmore {
+            color: $git-blue;
+          }
+        }  
+        & > .buttonItem {
+          color: $git-black;
+          &:hover{
+            color: $git-green;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ダークモード
+.dark-mode{
+  .column{
+    background-color: #0E1117;
+    border-color: $border-dark;
+    &:first-child {
+      border-color: $border-dark;
+    }
+    & > header {
+      border-color: $border-dark;
+      .repoicon {
+        color: $git-dark-blue;
+      }
+      .tune {
+        color: #C8D1D9;
+        &:hover {
+          background: #090D11;
+          color: $git-green;
+        }
+      }
+      .refresh {
+        color: #C8D1D9;
+        &:hover {
+          background: #090D11;
+          color: $git-green;
+        }
+      }
+      .title {
+        color: $git-dark-blue;
+      }
+    }
+    & > main {
+      & .comment {
+        border-color: $border-dark;
+        &.reply > .iconItem::before {
+          background: $border-dark;
+        }
+        & > .iconItem {  
+          & > .thread-line {
+            background-color: $border-dark;
+          }
+        }
+        & > .threadLine {
+          border-right: 3px solid $border-dark;
+          &.dotted {
+            border-right: 3px dotted $border-dark;
+          }
+        }
+        & > .titleItem {
+          a {
+            color: $dark-text;
+          }
+          .titleLine {
+            & > .title {
+              & > .number {
+                color: $dark-gray;
+              }
+            }
+          }
+          & > .assign {
+            color: $dark-gray;
+          }
+        }
+        & > .markItem {
+          .pull-request-open {
+            color: $git-green;
+          }
+          .pull-request-closed {
+            color: $git-red;
+          }
+          .pull-request-merged {
+            color: $git-purple;
+          }
+          .issue-open {
+            color: $git-green;
+          }
+          .issue-closed {
+            color: $git-red;
+          }
+        }
+        & > .dateItem {
+          color: $dark-gray;
+        }
+        & > .readmoreItem {  
+          & > .readmore {
+            color: $git-dark-blue;
+          }
+        }  
+        & > .buttonItem {
+          color: #C8D1D9;
+          &:hover{
+            color: $git-green;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 共通
 .column {
   flex: 0 0 auto;
   height: 100vh;
@@ -6,19 +210,15 @@
   display: flex;
   flex-direction: column;
   border-right: 6px solid;
-  border-color: $border;
-  background-color: white;
   overflow-x: hidden;
 
   &:first-child {
     border-left: 6px solid;
-    border-color: $border;
   }
 
   // ヘッダー
   & > header {
     border-bottom: 1px solid;
-    border-color: $border;
     min-height: 30px;
     max-height: 80px;
     display: flex;
@@ -28,7 +228,6 @@
       height: 18px;
       width: 18px;
       padding-right: 6px;
-      color: $git-blue;
     }
 
     & > .title {
@@ -37,59 +236,32 @@
         text-decoration: underline;
       }
     }
-    .chat {
-      border: none;
-      width: 20px;
-      height: 20px;
-      background: transparent;
-      color: $git-black;
-      margin-right: 3px;
-      padding: 0;
-      border-radius: 2px;
-      cursor: pointer;
-      &:hover {
-        background: rgb(240, 240, 240);
-        color: $git-green;
-      }
-      .material-icons {
-        font-size: 20px;
-      }
-    }
-
     .tune {
       border: none;
       width: 20px;
       height: 20px;
       background: transparent;
-      color: $git-black;
       cursor: pointer;
       padding: 0;
       margin-right: -8px;
       border-radius: 2px;
       &:hover {
         background: rgb(240, 240, 240);
-        color: $git-green;
       }
       .material-icons {
         font-size: 20px;
       }
     }
 
-    .Refresh {
+    .refresh {
       margin-right: 3px;
       padding: 0;
       border: none;
       width: 20px;
       height: 20px;
-      background: transparent;
-      color: $git-black;
       cursor: pointer;
       .material-icons {
         font-size: 20px;
-      }
-      &:hover {
-        background: rgb(240, 240, 240);
-        color: $git-green;
       }
     }
 
@@ -101,7 +273,6 @@
       -webkit-line-clamp: 2;
       overflow: hidden;
       word-break: break-all;
-      color: $git-blue;
       line-height: tight;
       & > .reponame {
         font-weight: bold;
@@ -121,7 +292,6 @@
       padding-right: 12px;
       padding-bottom: 12px;
       border-bottom: 1px solid;
-      border-color: $border;
       display: grid;
       grid-template-rows: min-content 1fr;
       grid-template-columns: 35px 1fr max-content min-content;
@@ -138,7 +308,6 @@
         transform: translateX(-70%); // 目測で調整
         height: 12px;
         width: 3px;
-        background: $border;
         margin-top: -12px;
       }
 
@@ -152,7 +321,6 @@
         & > .thread-line {
           flex: 1;
           width: 3px;
-          background-color: $border;
           justify-content: center;
         }
       }
@@ -172,9 +340,6 @@
         min-width: 0;
         word-break: break-all;
         margin: 0 7px;
-        a {
-          color: black;
-        }
         .titleLine {
           & > .title {
             font-weight: bold;
@@ -182,7 +347,6 @@
             margin-bottom: 4px;
             & > .number {
               font-weight: normal;
-              color: gray;
             }
           }
         }
@@ -190,7 +354,6 @@
         & > .assign {
           display: flex;
           align-items: flex-end;
-          color: gray;
           margin: 4px 0px 4px 0px;
           .assigner {
             height: 20px;
@@ -204,43 +367,29 @@
         .comment-type-mark {
           height: 20px;
           width: 20px;
-          color: white;
           display: table-cell;
           border-radius: 50%;
         }
         .pull-request-open {
           padding: 3px;
-          background-color: $git-green;
         }
         .pull-request-closed {
           padding: 3px;
-          background-color: $git-red;
         }
         .pull-request-merged {
           padding: 3px;
           padding-left: 5px;
-          background-color: $git-purple;
         }
         .issue-open {
           padding: 2px;
-          background-color: $git-green;
         }
         .issue-closed {
           padding: 2px;
-          background-color: $git-red;
-        }
-        .idea {
-          padding-top: 4px;
-          padding-bottom: 4px;
-          padding-right: 4px;
-          padding-left: 4px;
-          background-color: $idea-color;
         }
       }
       & > .dateItem {
         grid-area: areaDate;
         margin-right: 7px;
-        color: gray;
         font-size: 12px;
         text-align: right;
       }
@@ -276,7 +425,6 @@
 
         & > .readmore {
           font-size: 12px;
-          color: $git-blue;
           text-align: center;
           cursor: pointer;
           &:hover {
@@ -289,11 +437,7 @@
         grid-area: areaButton;
         border: none;
         cursor: pointer;
-        color: $git-black;
         background-color: transparent;
-        &:hover{
-          color: $git-green;
-        }
       }
     }
     & .thread {
@@ -307,26 +451,5 @@
         margin: 30px auto;
       }
     }
-  }
-}
-
-.modal-content {
-  .postTextBox {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 10px;
-  }
-  .repo {
-    padding-bottom: 15px;
-    color: gray;
-    .address {
-      color: $git-blue;
-      background-color: #ebf5ff;
-      padding: 5px 10px;
-      border-radius: 7px;
-    }
-  }
-  .comment-type-mark {
-    padding-bottom: 3px;
   }
 }

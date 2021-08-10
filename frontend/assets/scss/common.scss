@@ -1,15 +1,33 @@
+// ライトモード
+.light-mode .container{
+  color: $git-black;
+}
+.light-mode a {
+  color: $git-blue;
+}
+
+// ダークモード
+.dark-mode .container{
+  color: $dark-text;
+}
+.dark-mode a {
+  color: $git-dark-blue;
+}
+
 // 共通で使うもの
 .container {
   display: flex;
   height: 100vh;
   width: 100vw;
-  color: $git-black;
   font-size: 14px;
 }
 
 a {
-  color: $git-blue;
   text-decoration: none;
+}
+
+button{
+  background-color: transparent;
 }
 
 .user-icon {
