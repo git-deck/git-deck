@@ -1,0 +1,23 @@
+.light-mode .sidebar {
+  .pulldown-menu {
+    background-color: white;
+    border: 1px solid $border;
+
+    &:before {
+      border-right: 15px solid white;
+    }
+
+    &:after {
+      border-right: 16px solid $border;
+    }
+
+    .header {
+      border-color: $border;
+    }
+
+    button {
+      background-color: $git-black;
+      color: white;
+    }
+  }
+}

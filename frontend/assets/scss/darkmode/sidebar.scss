@@ -1,0 +1,31 @@
+.dark-mode .sidebar {
+  .pulldown-menu {
+    background-color: #0E1117;
+    border: 1px solid $border-dark;
+
+    &:before {
+      border-right: 15px solid #0E1117;
+    }
+
+    &:after {
+      border-right: 16px solid $border-dark;
+    }
+
+    .header {
+      border-color: $border-dark;
+    }
+
+    button {
+      background-color: #21262C;
+      color: $dark-text;
+      border: 1px solid $border-dark;
+      &:hover{
+        background-color: #31363B;
+        border-color: $dark-gray;
+        color: white;
+      }
+    }
+  }
+}
+
+

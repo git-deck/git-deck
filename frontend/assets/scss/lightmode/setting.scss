@@ -1,6 +1,7 @@
 .light-mode .label_column{
     
-    & > header {        
+    & > header {   
+        border-color: $border;     
         & > .labelsBlock{
             .labelsBlockmes{
                 color: gray;
