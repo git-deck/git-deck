@@ -52,7 +52,6 @@ button{
   & > .header {
     display: inline-flex;
     border-bottom: 1px solid;
-    border-color: $border;
     align-items: baseline;
     width: 100%;
 
@@ -63,7 +62,6 @@ button{
 
     .material-icons {
       font-size: 24px;
-      color: gray;
     }
     button {
       padding: 0px;
@@ -97,20 +95,6 @@ button{
       border-radius: 4px;
       cursor: pointer;
       align-self: flex-end;
-    }
-
-    & > .addButton {
-      background: $git-black;
-      color: white;
-    }
-    & > .addButton:disabled {
-      background: #ccc;
-      color: white;
-    }
-
-    & > .postButton {
-      background-color: $idea-color;
-      color: white;
     }
   }
 }

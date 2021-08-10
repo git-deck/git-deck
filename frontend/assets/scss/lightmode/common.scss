@@ -5,4 +5,30 @@
     a {
         color: $git-blue;
     }
+
+    .modal-content {
+        & > .header {
+          border-color: $border;
+          .material-icons {
+            color: gray;
+          }
+        }
+      
+        & > .main-contents {      
+          & > .addButton {
+            background: $git-black;
+            color: white;
+          }
+          & > .addButton:disabled {
+            background: #ccc;
+            color: white;
+          }
+      
+          & > .postButton {
+            background-color: $idea-color;
+            color: white;
+          }
+        }
+    }
+      
 }
