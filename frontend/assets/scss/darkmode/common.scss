@@ -1,0 +1,9 @@
+.dark-mode{
+    .container{
+        color: $dark-text;
+        background-color: #0E1117;
+    }
+    a {
+        color: $git-dark-blue;
+    }
+}
