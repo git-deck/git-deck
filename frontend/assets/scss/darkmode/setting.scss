@@ -1,0 +1,15 @@
+.dark-mode .label_column{
+    
+    & > header {
+        border-color: $border-dark;        
+    }
+    &> .bottom{
+        border-color: $border-dark;
+        .bottomContent{
+            .closemessage{
+                color : #ff6347;
+                text-decoration: none;
+            }
+        }
+    }
+}
