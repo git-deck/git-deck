@@ -28,6 +28,7 @@
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/auth-next",
+      "@nuxtjs/color-mode",
     ]
   },
   "exclude": [

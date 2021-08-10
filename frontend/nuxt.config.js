@@ -38,6 +38,7 @@ export default {
     'nuxt-webfontloader',
     '@nuxtjs/auth',
     '@nuxtjs/markdownit',
+    '@nuxtjs/color-mode',
   ],
 
   markdownit: {
