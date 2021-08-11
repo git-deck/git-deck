@@ -9,8 +9,7 @@
     border-color: $border-dark;
 
     .modal-content {
-        background-color: #0E1117;
-        border: 1px solid $dark-text;
+        background-color: $git-black;
         & > .header {
           border-color: $border-dark;
           .material-icons {
@@ -20,7 +19,7 @@
       
         & > .main-contents {            
           & > .addButton {
-            background-color: #21262C;
+            background-color: #0E1117;
             color: $dark-text;
             border: 1px solid $border-dark;
             &:hover{
