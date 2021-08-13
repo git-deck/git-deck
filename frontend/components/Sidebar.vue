@@ -6,7 +6,7 @@
       </button>
       <div class="sidebar-button">
         <button style="padding-bottom: 0" @click="showModal('settings')">
-          <span class="material-icons"> settings </span>
+          <span class="material-icons settings"> settings </span>
         </button>
         <button style="padding-top: 0" @click="showModal('column-modal')">
           <span class="material-icons"> add </span>

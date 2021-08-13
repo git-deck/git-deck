@@ -213,13 +213,19 @@ export default Vue.extend({
       this.settingOpened = !this.settingOpened
     },
     // ラベルのON OFF管理
-    clickLabel(Blockname: string, index: number) {
+    clickLabel(Blockname: string, name: string) {
       // labelOpened:false->選択中
       if (Blockname === 'category') {
+        const index = this.categoryLabels.findIndex(
+          ({ label }) => label.name === name
+        )
         this.categoryLabels[index].labelOpened =
           !this.categoryLabels[index].labelOpened
       }
       if (Blockname === 'labels') {
+        const index = this.labelItems.findIndex(
+          ({ label }) => label.name === name
+        )
         if (index === -1) {
           if (this.allLabel.labelOpened) {
             // すべて：選択中でないときにボタン押した

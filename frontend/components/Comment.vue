@@ -7,16 +7,20 @@
     }"
   >
     <div class="iconItem">
+      <a v-if="author != null" :href="author.url">
+        <Icon :avatar-url="author.avatarUrl" :class="type" />
+      </a>
       <Icon
-        :avatar-url="author == null ? '' : author.avatarUrl"
+        v-else
+        :avatar-url="'https://github.com/github.png'"
         :class="type"
       />
       <div v-if="thread" class="thread-line"></div>
     </div>
     <div
-      v-if="readmore || fold"
+      v-if="readmore || fold || showFoldIcon"
       class="threadLine"
-      :class="{ dotted: readmore }"
+      :class="{ dotted: readmore || (showFoldIcon && !isLongCommentOpened) }"
     ></div>
     <div class="titleItem">
       <div v-if="(type === 'issue') | (type === 'pullRequest')">
@@ -95,11 +99,7 @@
       </div>
       <div class="textItemCon" v-html="$md.render(body)"></div>
     </div>
-    <button
-      v-if="height > MAX_COMMENT_HEIGT"
-      class="buttonItem"
-      @click="LongCommentClick"
-    >
+    <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
     </button>
     <div v-if="readmore" class="readmoreItem">
@@ -165,8 +165,8 @@ export default Vue.extend({
       default() {
         return {
           login: 'habara-k',
-          avatarUrl: 'https://github.com/knknk98.png',
-          url: 'https://github.com/knknk98',
+          avatarUrl: 'https://github.com/github.png',
+          url: 'https://github.com/github',
         }
       },
     },
@@ -236,6 +236,9 @@ export default Vue.extend({
         this.thread &&
         this.readmore
       )
+    },
+    showFoldIcon() {
+      return this.height > this.MAX_COMMENT_HEIGT
     },
     textHeight(): string {
       if (!this.isLongCommentOpened && this.height > this.MAX_COMMENT_HEIGT) {

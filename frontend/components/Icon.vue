@@ -9,7 +9,7 @@ export default Vue.extend({
   props: {
     avatarUrl: {
       type: String,
-      default: 'https://github.com/knknk98.png',
+      default: 'https://github.com/github.png',
     },
   },
 })
