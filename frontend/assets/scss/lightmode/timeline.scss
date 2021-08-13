@@ -1,0 +1,101 @@
+.light-mode{
+  .column {
+    background-color: white;
+    border-color: $border;
+    &:first-child {
+      border-color: $border;
+    }
+    & > header {
+      border-color: $border;
+      .repoicon {
+        color: $git-blue;
+      }
+      .tune {
+        color: $git-black;
+        &:hover {
+          background: rgb(240, 240, 240);
+          color: $git-green;
+        }
+      }
+      .refresh {
+        color: $git-black;
+        &:hover {
+          background: rgb(240, 240, 240);
+          color: $git-green;
+        }
+      }
+      .title {
+        color: $git-blue;
+      }
+    }
+    
+    & > main {
+      & .comment {
+        border-color: $border;
+        &.reply > .iconItem::before {
+          background: $border;
+        }
+        & > .iconItem {  
+          & > .thread-line {
+            background-color: $border;
+          }
+        }
+        & > .threadLine {
+          border-right: 3px solid $border;
+          &.dotted {
+            border-right: 3px dotted $border;
+          }
+        }
+        & > .titleItem {
+          a {
+            color: black;
+          }
+          .titleLine {
+            & > .title {
+              & > .number {
+                color: gray;
+              }
+            }
+          }
+          & > .assign {
+            color: gray;
+          }
+        }
+        & > .markItem {
+          .comment-type-mark {
+            color: white;
+          }
+          .pull-request-open {
+            background-color: $git-green;
+          }
+          .pull-request-closed {
+            background-color: $git-red;
+          }
+          .pull-request-merged {
+            background-color: $git-purple;
+          }
+          .issue-open {
+            background-color: $git-green;
+          }
+          .issue-closed {
+            background-color: $git-red;
+          }
+        }
+        & > .dateItem {
+          color: gray;
+        }
+        & > .readmoreItem {  
+          & > .readmore {
+            color: $git-blue;
+          }
+        }  
+        & > .buttonItem {
+          color: $git-black;
+          &:hover{
+            color: $git-green;
+          }
+        }
+      }
+    }
+  }
+}

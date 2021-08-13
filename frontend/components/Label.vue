@@ -1,9 +1,9 @@
 <template>
   <span
     :style="{
-      border: getBooleanByColor(color) ? bordercss : '',
-      backgroundColor: disabled ? 'rgb(197 197 197)' : color,
-      color: disabled ? 'white' : getColorByBgColor(color),
+      border: getBooleanByColor() ? 'solid 0.2px ' + borderColor : 'none',
+      backgroundColor: disabled ? 'rgb(197 197 197)' : backgroundColor,
+      color: disabled ? 'white' : textColor,
     }"
     class="label"
     :class="{ disabled }"
@@ -14,7 +14,10 @@
 <script lang="ts">
 import Vue from 'vue'
 type DataType = {
-  bordercss: any
+  r: number
+  g: number
+  b: number
+  isWhiteTextMode: boolean
 }
 export default Vue.extend({
   name: 'Label',
@@ -34,24 +37,66 @@ export default Vue.extend({
   },
   data(): DataType {
     return {
-      bordercss: 'solid 0.2px rgb(197,197,197)',
+      r: 0,
+      g: 0,
+      b: 0,
+      isWhiteTextMode: true,
     }
   },
-  methods: {
-    getColorByBgColor(hexcolor: string) {
-      const r = parseInt(hexcolor.substr(1, 2), 16)
-      const g = parseInt(hexcolor.substr(3, 2), 16)
-      const b = parseInt(hexcolor.substr(5, 2), 16)
-      return (r * 249 + g * 587 + b * 134) / 1000 < 172 ? 'white' : 'black'
+  computed: {
+    backgroundColor(): string {
+      if (this.$colorMode.value === 'dark') {
+        if (this.isWhiteTextMode) {
+          return this.rgb(this.r / 3, this.g / 1.5, this.b / 1.5)
+        } else {
+          return this.rgb(this.r * 0.5, this.g * 0.5, this.b * 0.5)
+        }
+      } else {
+        return this.color
+      }
     },
-    getBooleanByColor(hexcolor: string) {
-      const r = parseInt(hexcolor.substr(1, 2), 16)
-      const g = parseInt(hexcolor.substr(3, 2), 16)
-      const b = parseInt(hexcolor.substr(5, 2), 16)
+    borderColor(): string {
+      if (this.$colorMode.value === 'dark') {
+        if (this.isWhiteTextMode) {
+          return this.rgb(this.r * 1.1, this.g * 2.7, this.b * 2.2)
+        } else {
+          return this.rgb(this.r, this.g, this.b)
+        }
+      } else {
+        return 'rgb(197,197,197)'
+      }
+    },
+    textColor(): string {
+      if (this.$colorMode.value === 'dark') {
+        if (this.isWhiteTextMode) {
+          return this.rgb(this.r * 1.1, this.g * 2.7, this.b * 2.2)
+        } else {
+          return this.color
+        }
+      } else {
+        return this.isWhiteTextMode ? 'white' : 'black'
+      }
+    },
+  },
+  mounted() {
+    this.r = parseInt(this.color.substr(1, 2), 16)
+    this.g = parseInt(this.color.substr(3, 2), 16)
+    this.b = parseInt(this.color.substr(5, 2), 16)
+    this.isWhiteTextMode =
+      (this.r * 249 + this.g * 587 + this.b * 134) / 1000 < 172
+  },
+  methods: {
+    getBooleanByColor() {
       // この条件分の閾値を変えれば枠線の付く色の種類を変えれる
-      return r + g + b > 650
+      if (this.$colorMode.value === 'dark') {
+        return !this.disabled
+      } else {
+        return this.r + this.g + this.b > 650
+      }
+    },
+    rgb(r: number, g: number, b: number): string {
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
     },
   },
 })
 </script>
-<style scoped></style>

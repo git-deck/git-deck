@@ -3,13 +3,15 @@
   display: flex;
   height: 100vh;
   width: 100vw;
-  color: $git-black;
-  font-size: 14px;
+  font-size: 14px;  
 }
 
 a {
-  color: $git-blue;
   text-decoration: none;
+}
+
+button{
+  background-color: transparent;
 }
 
 .user-icon {
@@ -34,8 +36,6 @@ a {
   text-overflow: ellipsis;
   // ラベル内のテキストが選択されないようにする
   user-select: none;
-  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
-    rgba(17, 17, 26, 0.1) 0px 0px 8px;
 
   &.disabled {
     box-shadow: none;
@@ -50,7 +50,6 @@ a {
   & > .header {
     display: inline-flex;
     border-bottom: 1px solid;
-    border-color: $border;
     align-items: baseline;
     width: 100%;
 
@@ -61,7 +60,6 @@ a {
 
     .material-icons {
       font-size: 24px;
-      color: gray;
     }
     button {
       padding: 0px;
@@ -95,20 +93,6 @@ a {
       border-radius: 4px;
       cursor: pointer;
       align-self: flex-end;
-    }
-
-    & > .addButton {
-      background: $git-black;
-      color: white;
-    }
-    & > .addButton:disabled {
-      background: #ccc;
-      color: white;
-    }
-
-    & > .postButton {
-      background-color: $idea-color;
-      color: white;
     }
   }
 }

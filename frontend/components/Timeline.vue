@@ -7,7 +7,7 @@
         /
         <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
       </span>
-      <button class="Refresh" @click="load">
+      <button class="refresh" @click="load">
         <span class="material-icons"> replay </span>
       </button>
       <button class="tune" @click="clickSettings">
@@ -52,7 +52,6 @@ import { getPullRequests } from '@/APIClient/pullRequests.ts'
 import { howLongAgo } from '@/utils/howLongAgo.ts'
 
 axios.defaults.baseURL = 'http://localhost:5000'
-
 
 type LabelItem = {
   label: Label
@@ -120,54 +119,72 @@ export default Vue.extend({
     },
 
     async getIssues() {
-      let states = []
+      const states = []
       for (const categoryLabel of this.categoryLabels) {
-        if (!categoryLabel.labelOpened && ["open", "closed"].includes(categoryLabel.label.name)) {
+        if (
+          !categoryLabel.labelOpened &&
+          ['open', 'closed'].includes(categoryLabel.label.name)
+        ) {
           states.push(categoryLabel.label.name.toUpperCase())
         }
       }
-      let labels = []
+      const labels = []
       for (const i in this.labelItems) {
         if (!this.labelItems[i].labelOpened) {
           labels.push(this.labelItems[i].label.name)
         }
       }
-      let filter = {}
+      const filter = {}
       if (labels.length > 0) {
-        filter["labels"] = labels
+        filter.labels = labels
       }
 
-      return await getIssues(this.$auth.getToken('github'), this.owner, this.repo, states, filter)
+      return await getIssues(
+        this.$auth.getToken('github'),
+        this.owner,
+        this.repo,
+        states,
+        filter
+      )
     },
 
     async getPullRequests() {
-      let states = []
+      const states = []
       for (const categoryLabel of this.categoryLabels) {
-        if (!categoryLabel.labelOpened && ["open", "closed"].includes(categoryLabel.label.name)) {
+        if (
+          !categoryLabel.labelOpened &&
+          ['open', 'closed'].includes(categoryLabel.label.name)
+        ) {
           states.push(categoryLabel.label.name.toUpperCase())
         }
       }
-      let labels = []
+      const labels = []
       for (const i in this.labelItems) {
         if (!this.labelItems[i].labelOpened) {
           labels.push(this.labelItems[i].label.name)
         }
       }
 
-      return await getPullRequests(this.$auth.getToken('github'), this.owner, this.repo, states, labels)
+      return await getPullRequests(
+        this.$auth.getToken('github'),
+        this.owner,
+        this.repo,
+        states,
+        labels
+      )
     },
 
     getTimeline() {
       // issue, pullRequest を取得して並び替える.
       Promise.all([this.getIssues(), this.getPullRequests()])
-        .then(values => {
-          let timeline = [...values[0], ...values[1]]
+        .then((values) => {
+          const timeline = [...values[0], ...values[1]]
           timeline.sort((a, b) => {
-            let keyA = a["updatedAt"]
-            let keyB = b["updatedAt"]
-            if (keyA > keyB) return -1;
-            if (keyA < keyB) return 1;
-            return 0;
+            const keyA = a.updatedAt
+            const keyB = b.updatedAt
+            if (keyA > keyB) return -1
+            if (keyA < keyB) return 1
+            return 0
           })
           this.contents = timeline
         })

@@ -1,0 +1,24 @@
+.light-mode .label_column{
+    
+    & > header {   
+        border-color: $border;     
+        & > .labelsBlock{
+            .labelsBlockmes{
+                color: gray;
+            }
+        }
+        & > .categoryBlock{
+            .categoryBlockmes{
+                color: gray;
+            }
+        }
+    }
+    &> .bottom{
+        border-color: $border;
+        .bottomContent{
+            .closemessage{
+                color : #ff6347;
+            }
+        }
+    }
+}

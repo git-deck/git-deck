@@ -4,9 +4,14 @@
       <button @click="clickMyAvatar">
         <Icon :avatar-url="avatarUrl" />
       </button>
-      <button class="add-button" @click="showModal">
-        <span class="material-icons"> add </span>
-      </button>
+      <div class="sidebar-button">
+        <button style="padding-bottom: 0" @click="showModal('settings')">
+          <span class="material-icons"> settings </span>
+        </button>
+        <button style="padding-top: 0" @click="showModal('column-modal')">
+          <span class="material-icons"> add </span>
+        </button>
+      </div>
     </div>
     <div v-if="isOpenedPulldownMenu" class="pulldown-menu">
       <p class="header">
@@ -19,7 +24,7 @@
       <div class="modal-content">
         <div class="header">
           <div class="topic">カラムを追加する</div>
-          <button @click="hideModal">
+          <button @click="hideModal('column-modal')">
             <span class="material-icons">close</span>
           </button>
         </div>
@@ -45,6 +50,24 @@
           >
             追加
           </button>
+        </div>
+      </div>
+    </modal>
+    <modal name="settings" :click-to-close="false" :draggable="true">
+      <div class="modal-content">
+        <div class="header">
+          <div class="topic">設定画面</div>
+          <button @click="hideModal('settings')">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+        <div class="main-contents">
+          <p>カラーモード</p>
+          <select v-model="$colorMode.preference">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
         </div>
       </div>
     </modal>
@@ -97,11 +120,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    showModal() {
-      this.$modal.show('column-modal')
+    showModal(name: string) {
+      this.$modal.show(name)
     },
-    hideModal() {
-      this.$modal.hide('column-modal')
+    hideModal(name: string) {
+      this.$modal.hide(name)
       this.repositoryInput = ''
       this.errorMsg = ''
     },
