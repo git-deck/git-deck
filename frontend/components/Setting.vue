@@ -38,7 +38,7 @@
             :key="index"
             class="labels"
             style="cursor: pointer"
-            @click="$emit('clickLabel', 'labels', index)"
+            @click="$emit('clickLabel', 'labels', label.label.name)"
           >
             <Label0
               :color="label.label.color"
