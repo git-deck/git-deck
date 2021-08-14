@@ -1,21 +1,20 @@
 version: "3"
 services:
-  vue:
-    container_name: issue-front
+  web:
+    container_name: gitdeck
     # 対話モード
     tty: true
     # Dockerfileの場所
-    build:
-      context: ./
-      dockerfile: ./frontend/Dockerfile
+    build: .
     working_dir: /home
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
-      - ./frontend:/home:cached
+      - ./webapp:/home:cached
     # コンテナ内部の3000を外部から3000でアクセスする
     ports:
       - 3000:3000
+    env_file: .env
     environment:
       - HOST=0.0.0.0
       - NUXT_ENV_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
