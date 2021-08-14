@@ -9,7 +9,11 @@
         @appendTimeline="append"
       />
       <div>
-        <draggable v-model="timeline" class="columns" handle=".drag_handler" -->
+        <draggable
+          v-model="timeline"
+          class="columns vertical-panes"
+          handle=".drag_handler"
+        >
           <Timeline
             v-for="tl in timeline"
             :id="tl.id"

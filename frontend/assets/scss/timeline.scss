@@ -11,12 +11,8 @@
   border-right: 6px solid;
   overflow-x: hidden;
 
-  &:first-child {
-    border-left: 6px solid;
-  }
-
   // ヘッダー
-  header {
+  & > header {
     border-bottom: 1px solid;
     min-height: 30px;
     max-height: 80px;
@@ -78,7 +74,7 @@
   }
 
   // 投稿部分
-  main {
+  & > main {
     flex: 1;
     overflow-y: scroll;
 

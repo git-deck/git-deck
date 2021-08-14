@@ -1,5 +1,5 @@
 <template>
-  <vue-resizable active="r" min-width="50" width="320">
+  <vue-resizable active="r" min-width="200" width="320">
     <div class="column">
       <header>
         <span class="material-icons drag_handler">drag_indicator</span>
