@@ -1,8 +1,11 @@
 // タイムライン
+.drag_handler{
+  cursor: move;
+}
+
 .column {
   flex: 0 0 auto;
   height: 100vh;
-  width: 320px;
   display: flex;
   flex-direction: column;
   border-right: 6px solid;
@@ -13,7 +16,7 @@
   }
 
   // ヘッダー
-  & > header {
+  header {
     border-bottom: 1px solid;
     min-height: 30px;
     max-height: 80px;
@@ -75,7 +78,7 @@
   }
 
   // 投稿部分
-  & > main {
+  main {
     flex: 1;
     overflow-y: scroll;
 

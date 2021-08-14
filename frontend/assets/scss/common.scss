@@ -14,6 +14,11 @@ button{
   background-color: transparent;
 }
 
+.columns{
+  display: flex;
+  margin-left: 60px;
+}
+
 .user-icon {
   border-radius: 50%;
   width: 35px;

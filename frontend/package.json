@@ -23,7 +23,8 @@
     "nuxt-webfontloader": "^1.1.0",
     "octicons-vue": "^1.0.10",
     "vue-js-modal": "^2.0.0-rc.6",
-    "vue-multipane": "^0.9.5"
+    "vue-resizable": "^2.0.5",
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.3",
