@@ -1,6 +1,22 @@
 // タイムライン
 .drag_handler{
+  position:absolute;
   cursor: move;
+  top: 0;
+  left: 1px;
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  height: 60px;
+  padding: 5px 0;
+  .drag_icon{
+    font-size: 32px;
+    margin-top: -10px;
+  }
+  .num {
+    font-size: 8px;
+    font-weight: bold;
+  }
 }
 
 .column {
@@ -10,19 +26,18 @@
   flex-direction: column;
   border-right: 6px solid;
   overflow-x: hidden;
-
   // ヘッダー
   & > header {
     border-bottom: 1px solid;
-    min-height: 30px;
-    max-height: 80px;
     display: flex;
-    padding: 20px;
-
+    padding: 20px 10px;
+    height: 60px;
+ 
     .repoicon {
       height: 18px;
       width: 18px;
       padding-right: 6px;
+      margin-left: 7px;
     }
 
     & > .title {
@@ -38,7 +53,6 @@
       background: transparent;
       cursor: pointer;
       padding: 0;
-      margin-right: -8px;
       border-radius: 2px;
       .material-icons {
         font-size: 20px;

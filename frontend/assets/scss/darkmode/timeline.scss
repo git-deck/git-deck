@@ -1,4 +1,10 @@
 .dark-mode{
+  .drag_handler{
+    color: #aab8c2;
+    &:hover{
+      color: white;
+    }
+  }
     .column{
       background-color: #0E1117;
       border-color: $border-dark;

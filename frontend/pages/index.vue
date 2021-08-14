@@ -13,11 +13,13 @@
           v-model="timeline"
           class="columns vertical-panes"
           handle=".drag_handler"
+          animation="150"
         >
           <Timeline
-            v-for="tl in timeline"
+            v-for="(tl, index) in timeline"
             :id="tl.id"
             :key="tl.id"
+            :column-num="index"
             :owner="tl.owner"
             :repo="tl.repo"
             :add-callbacks="addCallbacks"

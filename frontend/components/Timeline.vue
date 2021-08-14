@@ -2,7 +2,10 @@
   <vue-resizable active="r" min-width="200" width="320">
     <div class="column">
       <header>
-        <span class="material-icons drag_handler">drag_indicator</span>
+        <span class="drag_handler"
+          ><span class="num">{{ columnNum }}</span
+          ><span class="drag_icon">|</span></span
+        >
         <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
         <span class="title">
           <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
@@ -91,6 +94,10 @@ export default Vue.extend({
     },
     addCallbacks: {
       type: Function,
+      required: true,
+    },
+    columnNum: {
+      type: Number,
       required: true,
     },
   },
