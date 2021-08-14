@@ -16,11 +16,10 @@ RUN npm uninstall -g yarn && \
     yarn global add @vue/cli nuxt create-nuxt-app
 
 # コンテナソースパス作成・移動
-#WORKDIR /app/front
+COPY webapp /home
+WORKDIR /home
 # パッケージインストール
 RUN yarn
-# Port公開
-EXPOSE 3000
 # 開発サーバー立ち上げ(installの差分がある場合実行に時間がかかる)
 CMD sh -c "yarn install && yarn run dev"
 
