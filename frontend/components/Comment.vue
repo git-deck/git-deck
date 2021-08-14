@@ -254,11 +254,15 @@ export default Vue.extend({
   },
   mounted() {
     this.$props.addCallbacks(() => {
+      if (this.$refs.textarea != null) {
+        const tmp = this.$refs.textarea.clientHeight
+        this.height = tmp
+      }
+    })
+    if (this.$refs.textarea != null) {
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
-    })
-    const tmp = this.$refs.textarea.clientHeight
-    this.height = tmp
+    }
   },
   methods: {
     LongCommentClick() {
