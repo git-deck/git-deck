@@ -6,17 +6,16 @@ services:
     tty: true
     # Dockerfileの場所
     build: .
-    working_dir: /home
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
       - ./webapp:/home:cached
     # コンテナ内部の3000を外部から3000でアクセスする
     ports:
-      - 3000:3000
-    env_file: .env
+      - 3000:$PORT
     environment:
+      - PORT=$PORT
       - HOST=0.0.0.0
-      - NUXT_ENV_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
-      - NUXT_ENV_GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - NUXT_ENV_GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID
+      - NUXT_ENV_GITHUB_CLIENT_SECRET=$GITHUB_CLIENT_SECRET
 
