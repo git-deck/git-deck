@@ -74,7 +74,6 @@ type DataType = {
 
 export default Vue.extend({
   components: { Octicon, VueResizable },
-
   props: {
     id: {
       type: Number,
