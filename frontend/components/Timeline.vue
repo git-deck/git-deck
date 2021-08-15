@@ -1,11 +1,7 @@
 <template>
   <vue-resizable active="r" min-width="200" width="320">
     <div class="column">
-      <header>
-        <span class="drag_handler"
-          ><span class="num">{{ columnNum }}</span
-          ><span class="drag_icon">|</span></span
-        >
+      <header class="drag_handler">
         <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
         <span class="title">
           <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
