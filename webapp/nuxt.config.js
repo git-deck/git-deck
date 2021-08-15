@@ -76,4 +76,10 @@ export default {
       home: '/',
     },
   },
+
+  typescript: {
+    typeCheck: {
+      async: false
+    }
+  }
 }
