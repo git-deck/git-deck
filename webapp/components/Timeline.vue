@@ -47,12 +47,13 @@ import axios from 'axios'
 import { Octicon, Octicons } from 'octicons-vue'
 import { request, GraphQLClient } from 'graphql-request'
 import * as gql from 'gql-query-builder'
-import VueResizable from 'vue-resizable'
+const VueResizable = require('vue-resizable')
 import { Content, Label } from '@/models/types'
-import { getLabels } from '@/APIClient/labels.ts'
-import { getIssues } from '@/APIClient/issues.ts'
-import { getPullRequests } from '@/APIClient/pullRequests.ts'
-import { howLongAgo } from '@/utils/howLongAgo.ts'
+import { getLabels } from '@/APIClient/labels'
+import { getIssues } from '@/APIClient/issues'
+import { getPullRequests } from '@/APIClient/pullRequests'
+import { howLongAgo } from '@/utils/howLongAgo'
+import { RefreshScheme } from '@nuxtjs/auth-next'
 
 axios.defaults.baseURL = 'http://localhost:5000'
 
@@ -69,7 +70,7 @@ type DataType = {
   isLoading: boolean
   // setting から持ってきた
   categoryLabels: Array<LabelItem>
-  allLabel: Label
+  allLabel: LabelItem
 }
 
 export default Vue.extend({
@@ -109,10 +110,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    ownerUrl() {
+    ownerUrl(): String {
       return 'https://github.com/' + this.owner
     },
-    repoUrl() {
+    repoUrl(): String {
       return 'https://github.com/' + this.owner + '/' + this.repo
     },
   },
@@ -140,13 +141,14 @@ export default Vue.extend({
           labels.push(this.labelItems[i].label.name)
         }
       }
-      const filter = {}
+      const filter: any = {}
       if (labels.length > 0) {
         filter.labels = labels
       }
 
+      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
       return await getIssues(
-        this.$auth.getToken('github'),
+        token,
         this.owner,
         this.repo,
         states,
@@ -171,8 +173,9 @@ export default Vue.extend({
         }
       }
 
+      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
       return await getPullRequests(
-        this.$auth.getToken('github'),
+        token,
         this.owner,
         this.repo,
         states,
@@ -200,7 +203,8 @@ export default Vue.extend({
     },
 
     getLabels() {
-      getLabels(this.$auth.getToken('github'), this.owner, this.repo)
+      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+      getLabels(token, this.owner, this.repo)
         .then((data) => {
           this.labelItems = data
         })

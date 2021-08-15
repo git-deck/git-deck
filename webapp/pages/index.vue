@@ -34,21 +34,25 @@
 <script lang="ts">
 import Vue from 'vue'
 import VModal from 'vue-js-modal'
-import axios from 'axios'
 import draggable from 'vuedraggable'
 
 import {
   getSavedRepository,
   removeRepositoryToLocalStorage,
-} from '@/utils/localStorage.ts'
-import { checkRepository } from '@/APIClient/repository.ts'
-
-axios.defaults.baseURL = 'http://localhost:5000'
+} from '@/utils/localStorage'
+import { checkRepository } from '@/APIClient/repository'
+import { RefreshScheme } from '@nuxtjs/auth-next'
 
 Vue.use(VModal)
 
+type Timeline = {
+  owner: String
+  repo: String
+  id: Number
+}
+
 type DataType = {
-  timeline: Object[]
+  timeline: Timeline[]
   addingColumnErrorMsg: String
   avatarUrl: String
   userName: String
@@ -74,16 +78,28 @@ export default Vue.extend({
     }
   },
   created() {
-    this.avatarUrl = this.$auth.user.avatar_url
-    this.userName = this.$auth.user.login
+    const user = this.$auth.user
+    if (user === null) {
+        throw new Error("Failed to get authorized user")
+        return
+    }
+    this.avatarUrl = (user.avatar_url as String)
+    this.userName = (user.login as String)
     // localStorageからレポジトリを取得
-    getSavedRepository().map((repositoryName) =>
-      checkRepository(this.$auth.getToken('github'), repositoryName).then(
+    getSavedRepository().map((repositoryName) => {
+      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+      checkRepository(token, repositoryName).then(
         () => {
-          this.append(...repositoryName.split('/'))
+          const split = repositoryName.split('/')
+
+          if (split.length == 2) {
+            const owner: string = split[0]
+            const repo: string = split[1]
+            this.append(owner, repo)
+          }
         }
       )
-    )
+    })
   },
   methods: {
     append(owner: string, repo: string) {
@@ -94,7 +110,7 @@ export default Vue.extend({
       })
     },
     close(id: number) {
-      const index = this.timeline.findIndex((x) => x.id === id)
+      const index = this.timeline.findIndex((x: Timeline) => x.id === id)
       const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
       removeRepositoryToLocalStorage(reponame)
       this.timeline.splice(index, 1)
@@ -102,7 +118,7 @@ export default Vue.extend({
     resized() {
       this.callbacks.forEach((callback) => callback())
     },
-    addCallbacks(callback) {
+    addCallbacks(callback: () => void) {
       this.callbacks.push(callback)
     },
   },

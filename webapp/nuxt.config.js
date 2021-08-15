@@ -36,7 +36,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-webfontloader',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
   ],
