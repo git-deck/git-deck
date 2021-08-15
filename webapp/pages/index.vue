@@ -5,18 +5,18 @@
         ref="sidebar"
         :user-name="userName"
         :avatar-url="avatarUrl"
-        :timeline="timeline"
+        :timeline-config="timelineConfig"
         @appendTimeline="append"
       />
       <div>
         <draggable
-          v-model="timeline"
+          v-model="timelineConfig"
           class="columns vertical-panes"
           handle=".drag_handler"
           animation="150"
         >
           <Timeline
-            v-for="(tl, index) in timeline"
+            v-for="(tl, index) in timelineConfig"
             :id="tl.id"
             :key="tl.id"
             :column-num="index"
@@ -42,17 +42,12 @@ import {
 } from '@/utils/localStorage'
 import { checkRepository } from '@/APIClient/repository'
 import { RefreshScheme } from '@nuxtjs/auth-next'
+import { TimelineConfig } from '@/models/types'
 
 Vue.use(VModal)
 
-type Timeline = {
-  owner: String
-  repo: String
-  id: Number
-}
-
 type DataType = {
-  timeline: Timeline[]
+  timelineConfig: TimelineConfig[]
   addingColumnErrorMsg: String
   avatarUrl: String
   userName: String
@@ -64,7 +59,7 @@ export default Vue.extend({
   },
   data(): DataType {
     return {
-      timeline: [
+      timelineConfig: [
         {
           owner: 'habara-k',
           repo: 'gitdeck-tutorial',
@@ -103,17 +98,17 @@ export default Vue.extend({
   },
   methods: {
     append(owner: string, repo: string) {
-      this.timeline.push({
+      this.timelineConfig.push({
         owner,
         repo,
         id: Math.floor(Math.random() * 1000000000),
       })
     },
     close(id: number) {
-      const index = this.timeline.findIndex((x: Timeline) => x.id === id)
-      const reponame = `${this.timeline[index].owner}/${this.timeline[index].repo}`
+      const index = this.timelineConfig.findIndex((x: TimelineConfig) => x.id === id)
+      const reponame = `${this.timelineConfig[index].owner}/${this.timelineConfig[index].repo}`
       removeRepositoryToLocalStorage(reponame)
-      this.timeline.splice(index, 1)
+      this.timelineConfig.splice(index, 1)
     },
     resized() {
       this.callbacks.forEach((callback) => callback())

@@ -75,8 +75,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
 import { checkRepository } from '@/APIClient/repository'
+import { TimelineConfig } from '@/models/types'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
 import { RefreshScheme } from '@nuxtjs/auth-next'
 
@@ -103,8 +104,8 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    timeline: {
-      type: Array,
+    timelineConfig: {
+      type: Array as PropType<Array<TimelineConfig>>,
       required: true,
     },
   },
@@ -161,10 +162,14 @@ export default Vue.extend({
         return
       }
 
-      // TODO: 既に登録済みのリポジトリを追加しない
-
       const owner: String = parsed[1]
       const repo: String = parsed[2]
+
+      // 既に登録済みのリポジトリを追加しない
+      if (this.timelineConfig.some((tl: TimelineConfig) => (tl.owner === owner && tl.repo === repo))) {
+        return
+      }
+
       const self = this
       try {
         const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string

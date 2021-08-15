@@ -42,7 +42,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import { request, GraphQLClient } from 'graphql-request'
@@ -55,7 +54,6 @@ import { getPullRequests } from '@/APIClient/pullRequests'
 import { howLongAgo } from '@/utils/howLongAgo'
 import { RefreshScheme } from '@nuxtjs/auth-next'
 
-axios.defaults.baseURL = 'http://localhost:5000'
 
 type LabelItem = {
   label: Label

@@ -5,7 +5,7 @@ export type User = {
   login: string
 }
 
-export type Category = 'issue' | 'pullRequest' | 'idea'
+export type Category = 'issue' | 'pullRequest'
 
 export type Comment = {
   author: User
@@ -51,11 +51,10 @@ export type PullRequest = {
   url: string
 }
 
-export type Idea = {
-  author: User
-  body: string
-  category: Category
-  howLongAgo: string
-}
+export type Content = Issue | PullRequest
 
-export type Content = Issue | PullRequest | Idea
+export type TimelineConfig = {
+  owner: string
+  repo: string
+  id: number
+}
