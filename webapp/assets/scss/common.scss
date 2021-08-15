@@ -1,6 +1,5 @@
 // 共通で使うもの
 .container {
-  display: flex;
   height: 100vh;
   width: 100vw;
   font-size: 14px;  
@@ -12,6 +11,11 @@ a {
 
 button{
   background-color: transparent;
+}
+
+
+.columns{
+  display: flex;
 }
 
 .user-icon {

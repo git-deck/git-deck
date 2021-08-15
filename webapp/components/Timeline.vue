@@ -1,51 +1,54 @@
 <template>
-  <div class="column pane">
-    <header>
-      <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
-      <span class="title">
-        <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
-        /
-        <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
-      </span>
-      <button class="refresh" @click="load">
-        <span class="material-icons"> replay </span>
-      </button>
-      <button class="tune" @click="clickSettings">
-        <span class="material-icons"> tune </span>
-      </button>
-    </header>
-    <Setting
-      v-show="settingOpened"
-      ref="setting"
-      :label-items="labelItems"
-      :all-label="allLabel"
-      :category-labels="categoryLabels"
-      @loadTimeline="load"
-      @closeTimeline="close"
-      @clickLabel="clickLabel"
-    />
-    <main>
-      <div v-if="isLoading" class="loading">
-        <img src="@/assets/img/loading.gif" />
-      </div>
-      <ContentBox
-        v-for="(content, index) in contents"
-        :key="index"
-        :content="content"
-        :add-callbacks="addCallbacks"
-      ></ContentBox>
-    </main>
-  </div>
+  <vue-resizable active="r" min-width="200" width="320">
+    <div class="column">
+      <header class="drag_handler">
+        <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
+        <span class="title">
+          <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
+          /
+          <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
+        </span>
+        <button class="refresh" @click="load">
+          <span class="material-icons"> replay </span>
+        </button>
+        <button class="tune" @click="clickSettings">
+          <span class="material-icons"> tune </span>
+        </button>
+      </header>
+      <Setting
+        v-show="settingOpened"
+        ref="setting"
+        :label-items="labelItems"
+        :all-label="allLabel"
+        :category-labels="categoryLabels"
+        @loadTimeline="load"
+        @closeTimeline="close"
+        @clickLabel="clickLabel"
+      />
+      <main>
+        <div v-if="isLoading" class="loading">
+          <img src="@/assets/img/loading.gif" />
+        </div>
+        <ContentBox
+          v-for="(content, index) in contents"
+          :key="index"
+          :content="content"
+          :add-callbacks="addCallbacks"
+        ></ContentBox>
+      </main>
+    </div>
+  </vue-resizable>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Content, Label } from '@/models/types'
 import axios from 'axios'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import { request, GraphQLClient } from 'graphql-request'
 import * as gql from 'gql-query-builder'
+import VueResizable from 'vue-resizable'
+import { Content, Label } from '@/models/types'
 import { getLabels } from '@/APIClient/labels.ts'
 import { getIssues } from '@/APIClient/issues.ts'
 import { getPullRequests } from '@/APIClient/pullRequests.ts'
@@ -70,8 +73,7 @@ type DataType = {
 }
 
 export default Vue.extend({
-  components: { Octicon },
-
+  components: { Octicon, VueResizable },
   props: {
     id: {
       type: Number,
@@ -87,6 +89,10 @@ export default Vue.extend({
     },
     addCallbacks: {
       type: Function,
+      required: true,
+    },
+    columnNum: {
+      type: Number,
       required: true,
     },
   },

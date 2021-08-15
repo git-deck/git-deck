@@ -1,29 +1,33 @@
 <template>
-  <div class="container">
-    <Sidebar
-      ref="sidebar"
-      :user-name="userName"
-      :avatar-url="avatarUrl"
-      :timeline="timeline"
-      @appendTimeline="append"
-    />
-    <multipane
-      class="vertical-panes"
-      layout="vertical"
-      @paneResizeStop="resized"
-    >
-      <template v-for="(tl, index) in timeline" ref="test">
-        <Timeline
-          :id="tl.id"
-          :key="tl.id"
-          :owner="tl.owner"
-          :repo="tl.repo"
-          :add-callbacks="addCallbacks"
-          @closeTimeline="close"
-        />
-        <multipane-resizer :key="index + 'resizer'"></multipane-resizer>
-      </template>
-    </multipane>
+  <div>
+    <div class="container">
+      <Sidebar
+        ref="sidebar"
+        :user-name="userName"
+        :avatar-url="avatarUrl"
+        :timeline="timeline"
+        @appendTimeline="append"
+      />
+      <div>
+        <draggable
+          v-model="timeline"
+          class="columns vertical-panes"
+          handle=".drag_handler"
+          animation="150"
+        >
+          <Timeline
+            v-for="(tl, index) in timeline"
+            :id="tl.id"
+            :key="tl.id"
+            :column-num="index"
+            :owner="tl.owner"
+            :repo="tl.repo"
+            :add-callbacks="addCallbacks"
+            @closeTimeline="close"
+          />
+        </draggable>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,7 +35,8 @@
 import Vue from 'vue'
 import VModal from 'vue-js-modal'
 import axios from 'axios'
-import { Multipane, MultipaneResizer } from 'vue-multipane'
+import draggable from 'vuedraggable'
+
 import {
   getSavedRepository,
   removeRepositoryToLocalStorage,
@@ -51,8 +56,7 @@ type DataType = {
 }
 export default Vue.extend({
   components: {
-    Multipane,
-    MultipaneResizer,
+    draggable,
   },
   data(): DataType {
     return {
@@ -74,9 +78,11 @@ export default Vue.extend({
     this.userName = this.$auth.user.login
     // localStorageからレポジトリを取得
     getSavedRepository().map((repositoryName) =>
-      checkRepository(this.$auth.getToken('github'), repositoryName).then(() => {
-        this.append(...repositoryName.split('/'))
-      })
+      checkRepository(this.$auth.getToken('github'), repositoryName).then(
+        () => {
+          this.append(...repositoryName.split('/'))
+        }
+      )
     )
   },
   methods: {
