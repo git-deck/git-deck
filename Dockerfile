@@ -19,8 +19,8 @@ RUN npm uninstall -g yarn && \
 COPY webapp /home
 WORKDIR /home
 # パッケージインストール
-#RUN yarn
+RUN yarn
 # 開発サーバー立ち上げ(installの差分がある場合実行に時間がかかる)
-#CMD sh -c "yarn install && yarn run dev"
+CMD sh -c "yarn install && yarn run dev"
 
 ENV CHOKIDAR_USEPOLLING=true
