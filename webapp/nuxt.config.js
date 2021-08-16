@@ -64,8 +64,8 @@ export default {
   auth: {
     strategies: {
       github: {
-        client_id: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-        client_secret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
+        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
         scope: 'repo',
       },
     },
@@ -77,9 +77,9 @@ export default {
     },
   },
 
-  typescript: {
-    typeCheck: {
-      async: false
-    }
-  }
+  //typescript: {
+  //  typeCheck: {
+  //    async: false
+  //  }
+  //}
 }

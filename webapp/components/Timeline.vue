@@ -44,14 +44,14 @@
 import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
-import { request, GraphQLClient } from 'graphql-request'
-import * as gql from 'gql-query-builder'
-const VueResizable = require('vue-resizable')
+//const VueResizable = require('vue-resizable')
+
+import VueResizable from 'vue-resizable'
+
 import { Content, Label } from '@/models/types'
 import { getLabels } from '@/APIClient/labels'
 import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
-import { howLongAgo } from '@/utils/howLongAgo'
 import { RefreshScheme } from '@nuxtjs/auth-next'
 
 
