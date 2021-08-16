@@ -75,12 +75,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import { checkRepository } from '@/APIClient/repository.ts'
-import { saveRepositoryToLocalStorage } from '@/utils/localStorage.ts'
-
-axios.defaults.baseURL = 'http://localhost:5000'
+import Vue, { PropType } from 'vue'
+import { checkRepository } from '@/APIClient/repository'
+import { TimelineConfig } from '@/models/types'
+import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
+import { RefreshScheme } from '@nuxtjs/auth-next'
 
 type DataType = {
   repositoryInput: String
@@ -105,8 +104,8 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    timeline: {
-      type: Array,
+    timelineConfig: {
+      type: Array as PropType<Array<TimelineConfig>>,
       required: true,
     },
   },
@@ -131,10 +130,8 @@ export default Vue.extend({
     setErrorMsg(errorMsg: string) {
       this.errorMsg = errorMsg
     },
-    updateValue(e) {
-      this.repositoryInput = e.target.value
-    },
-    onPaste(e) {
+    onPaste(e: ClipboardEvent) {
+      if (e.clipboardData == null) return
       const input = e.clipboardData.getData('text')
       if (input != null && typeof input === 'string') {
         const res = input.match(
@@ -152,44 +149,42 @@ export default Vue.extend({
       const res = this.repositoryInput.match(
         /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
       )
-      let parsed = []
+      let parsed: Array<String> | null = []
       if (res?.groups?.repo != null && res?.groups?.owner != null) {
         parsed = ['', res.groups.owner, res.groups.repo]
       } else {
         parsed = this.repositoryInput.match(/^([^/]+)\/([^/]+)$/)
       }
-      console.log('parsed:', parsed)
-
-      console.log(this.timeline)
 
       if (parsed == null || parsed.length < 3) {
         this.setErrorMsg('入力形式が正しくありません')
         this.isSearchingRepository = false
-      } else if (
-        this.timeline.find(
-          ({ owner, repo }) => owner === parsed[1] && repo === parsed[2]
+        return
+      }
+
+      const owner: String = parsed[1]
+      const repo: String = parsed[2]
+
+      // 既に登録済みのリポジトリを追加しない
+      if (this.timelineConfig.some((tl: TimelineConfig) => (tl.owner === owner && tl.repo === repo))) {
+        return
+      }
+
+      const self = this
+      try {
+        const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+        const res = await checkRepository(
+          token,
+          `${owner}/${repo}`
         )
-      ) {
-        this.setErrorMsg('既に登録済みのレポジトリです')
-        this.isSearchingRepository = false
-      } else {
-        const owner = parsed[1]
-        const repo = parsed[2]
-        const self = this
-        try {
-          const res = await checkRepository(
-            self.$auth.getToken('github'),
-            `${owner}/${repo}`
-          )
-          this.$emit('appendTimeline', owner, repo)
-          saveRepositoryToLocalStorage(`${owner}/${repo}`)
-          this.hideModal()
-        } catch (error) {
-          console.error(error)
-          this.setErrorMsg('リポジトリが見つかりません')
-        } finally {
-          self.isSearchingRepository = false
-        }
+        this.$emit('appendTimeline', owner, repo)
+        saveRepositoryToLocalStorage(`${owner}/${repo}`)
+        this.hideModal('column-modal')
+      } catch (error) {
+        console.error(error)
+        this.setErrorMsg('リポジトリが見つかりません')
+      } finally {
+        self.isSearchingRepository = false
       }
     },
     clickMyAvatar() {

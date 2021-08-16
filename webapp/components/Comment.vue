@@ -116,9 +116,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
 // @ts-ignore
-import { Octicon, Octicons } from 'octicons-vue'
+import { User, Label } from '@/models/types'
+const { Octicon, Octicons } = require('octicons-vue')
 type DataType = {
   Octicons: any
   height: Number
@@ -161,7 +162,7 @@ export default Vue.extend({
       default: '2日',
     },
     author: {
-      type: Object,
+      type: Object as PropType<User>,
       default() {
         return {
           login: 'habara-k',
@@ -186,18 +187,6 @@ export default Vue.extend({
       type: Array,
       default() {
         return [
-          {
-            name: 'bug',
-          },
-          {
-            name: 'backend',
-          },
-          {
-            name: 'frontend',
-          },
-          {
-            name: 'good first',
-          },
         ]
       },
     },
@@ -205,18 +194,6 @@ export default Vue.extend({
       type: Array,
       default() {
         return [
-          {
-            avatarUrl: 'https://github.com/habara-k.png',
-          },
-          {
-            avatarUrl: 'https://github.com/knknk98.png',
-          },
-          {
-            avatarUrl: 'https://github.com/zwwaa-ku.png',
-          },
-          {
-            avatarUrl: 'https://github.com/yuta-ike.png',
-          },
         ]
       },
     },
@@ -230,7 +207,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    showReadMoreIcon() {
+    showReadMoreIcon(): Boolean {
       return (
         (this.type === 'issue' || this.type === 'pullRequest') &&
         this.thread &&
@@ -254,12 +231,12 @@ export default Vue.extend({
   },
   mounted() {
     this.$props.addCallbacks(() => {
-      if (this.$refs.textarea != null) {
+      if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
         const tmp = this.$refs.textarea.clientHeight
         this.height = tmp
       }
     })
-    if (this.$refs.textarea != null) {
+    if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
     }
