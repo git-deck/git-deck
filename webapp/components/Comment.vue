@@ -93,7 +93,7 @@
           :color="label.color"
         />
       </div>
-      <div class="textItemCon" v-html="$md.render(body1)"></div>
+      <div class="textItemCon" v-html="$md.render(body)"></div>
     </div>
     <button
       v-if="height > MAX_COMMENT_HEIGT"
@@ -118,7 +118,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 // @ts-ignore
-import { User, Label } from '@/models/types'
+import User from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
 const hljs = require('highlight.js')
 type DataType = {
@@ -126,7 +126,6 @@ type DataType = {
   height: Number
   isLongCommentOpened: boolean
   MAX_COMMENT_HEIGT: Number
-  body1: String
 }
 export default Vue.extend({
   components: { Octicon },
@@ -204,7 +203,6 @@ export default Vue.extend({
       height: 0,
       isLongCommentOpened: false,
       MAX_COMMENT_HEIGT: 350,
-      body1: '',
     }
   },
   computed: {
@@ -244,9 +242,11 @@ export default Vue.extend({
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
     }
-    const regex = /```vue/i
-    this.body1 = this.body.replace(regex, '```html')
-    console.log(this.body)
+    const elms = document.querySelectorAll('.language-vue')
+    elms.forEach((elm) => {
+      elm.classList.remove('language-vue')
+      elm.classList.add('language-html')
+    })
     hljs.highlightAll()
   },
   methods: {
