@@ -93,7 +93,7 @@
           :color="label.color"
         />
       </div>
-      <div class="textItemCon" v-html="$md.render(body)"></div>
+      <div class="textItemCon" v-html="$md.render(body1)"></div>
     </div>
     <button
       v-if="height > MAX_COMMENT_HEIGT"
@@ -120,11 +120,13 @@ import Vue, { PropType } from 'vue'
 // @ts-ignore
 import { User, Label } from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
+const hljs = require('highlight.js')
 type DataType = {
   Octicons: any
   height: Number
   isLongCommentOpened: boolean
   MAX_COMMENT_HEIGT: Number
+  body1: String
 }
 export default Vue.extend({
   components: { Octicon },
@@ -186,15 +188,13 @@ export default Vue.extend({
     labels: {
       type: Array,
       default() {
-        return [
-        ]
+        return []
       },
     },
     assignees: {
       type: Array,
       default() {
-        return [
-        ]
+        return []
       },
     },
   },
@@ -204,6 +204,7 @@ export default Vue.extend({
       height: 0,
       isLongCommentOpened: false,
       MAX_COMMENT_HEIGT: 350,
+      body1: '',
     }
   },
   computed: {
@@ -231,7 +232,10 @@ export default Vue.extend({
   },
   mounted() {
     this.$props.addCallbacks(() => {
-      if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
+      if (
+        this.$refs.textarea != null &&
+        this.$refs.textarea instanceof Element
+      ) {
         const tmp = this.$refs.textarea.clientHeight
         this.height = tmp
       }
@@ -240,6 +244,10 @@ export default Vue.extend({
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
     }
+    const regex = /```vue/i
+    this.body1 = this.body.replace(regex, '```html')
+    console.log(this.body)
+    hljs.highlightAll()
   },
   methods: {
     LongCommentClick() {
