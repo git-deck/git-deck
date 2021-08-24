@@ -248,7 +248,7 @@ export default Vue.extend({
       elm.classList.add('language-html')
     })
     if (document.getElementsByTagName('code').length > 0) {
-      hljs.initHighlightingOnLoad()
+      hljs.highlightAll()
     }
   },
   methods: {
