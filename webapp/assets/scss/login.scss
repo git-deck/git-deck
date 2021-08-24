@@ -12,6 +12,9 @@
     justify-content: space-around;
     align-items: center;
     padding: 80px;
+    position: absolute;
+    min-height: 500px;
+    box-sizing: border-box;
     &>.caption{
         width: 500px;
         &>.title{
@@ -26,6 +29,13 @@
                 margin-left: 12px;
             }
         }
+    }
+    .footer{
+        position:absolute;
+        bottom:0;
+        text-align:right;
+        margin:0px 15px 5px 0px;
+        width:100%;
     }
     
     .login-button {
