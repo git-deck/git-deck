@@ -1,4 +1,4 @@
-import { request, GraphQLClient } from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 import * as gql from 'gql-query-builder'
 import { howLongAgo } from '@/utils/howLongAgo.js'
 
