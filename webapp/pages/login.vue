@@ -25,6 +25,9 @@
           <a href="https://github.com/signup" target="_blank">Sign up now »</a>
         </div>
       </div>
+      <div class="footer">
+        <p>supported by "今日もいっぱい汗角蔵"</p>
+      </div>
     </div>
   </div>
 </template>
