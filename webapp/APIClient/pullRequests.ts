@@ -4,10 +4,10 @@ import {GraphQLClient} from 'graphql-request'
 
 export const getPullRequests =
     async (token: string, owner: string, repo: string, states: Object,
-           labels: Array<string>) => {
-  const pull_requests_limit = 100
-  const assignees_limit = 100
-  const labels_limit = 100
+           labels: Array<string>, after: string | null) => {
+  const pull_requests_limit = 10
+  const assignees_limit = 10
+  const labels_limit = 10
   const comments_limit = 100
 
   let pullRequestVariables: any = {
@@ -20,9 +20,16 @@ export const getPullRequests =
       },
       type : "IssueOrder"
     }
-  } if (labels.length > 0) {
+  }
+
+  if (labels.length > 0) {
     pullRequestVariables.labels = {value : labels, type : "[String!]"};
   }
+  if (after !== null) {
+    pullRequestVariables.after = { value : after }
+  }
+
+  console.log("pullRequestVariables:", pullRequestVariables)
 
   const query = gql.query({
     operation : 'repository',
@@ -33,67 +40,75 @@ export const getPullRequests =
     fields : [ {
       operation : 'pullRequests',
       variables : pullRequestVariables,
-      fields : [ {
-        edges : [ {
-          node : [
-            'number',
-            'title',
-            'state',
-            'url',
-            'createdAt',
-            'updatedAt',
-            'body',
-            {
-              author : [
-                'login',
-                'url',
-                'avatarUrl',
-              ]
-            },
-            {
-              operation : 'assignees',
-              variables : {
-                first : {
-                  value : assignees_limit,
-                },
+      fields : [
+        {
+          pageInfo : [
+            'hasNextPage',
+            'endCursor',
+          ],
+        },
+        {
+          edges : [ {
+            node : [
+              'number',
+              'title',
+              'state',
+              'url',
+              'createdAt',
+              'updatedAt',
+              'body',
+              {
+                author : [
+                  'login',
+                  'url',
+                  'avatarUrl',
+                ]
               },
-              fields :
-                  [ {edges : [ {node : [ 'login', 'url', 'avatarUrl' ]} ]} ]
-            },
-            {
-              operation : 'labels',
-              variables : {
-                first : {
-                  value : labels_limit,
+              {
+                operation : 'assignees',
+                variables : {
+                  first : {
+                    value : assignees_limit,
+                  },
                 },
+                fields :
+                    [ {edges : [ {node : [ 'login', 'url', 'avatarUrl' ]} ]} ]
               },
-              fields : [ {
-                edges : [ {
-                  node : [
-                    'name',
-                    'color',
-                  ]
+              {
+                operation : 'labels',
+                variables : {
+                  first : {
+                    value : labels_limit,
+                  },
+                },
+                fields : [ {
+                  edges : [ {
+                    node : [
+                      'name',
+                      'color',
+                    ]
+                  } ]
                 } ]
-              } ]
-            },
-            {
-              operation : 'comments',
-              variables : {
-                first : {
-                  value : comments_limit,
-                },
               },
-              fields : [ {
-                edges : [ {
-                  node : [
-                    'body', 'createdAt', 'updatedAt', 'url',
-                    {author : [ 'login', 'url', 'avatarUrl' ]}
-                  ]
+              {
+                operation : 'comments',
+                variables : {
+                  first : {
+                    value : comments_limit,
+                  },
+                },
+                fields : [ {
+                  edges : [ {
+                    node : [
+                      'body', 'createdAt', 'updatedAt', 'url',
+                      {author : [ 'login', 'url', 'avatarUrl' ]}
+                    ]
+                  } ]
                 } ]
-              } ]
-            },
-          ]
-        } ]
+              },
+            ]
+          }
+        ]
       } ]
     } ]
   })
@@ -101,29 +116,28 @@ export const getPullRequests =
   const client = new GraphQLClient('https://api.github.com/graphql',
                                    {headers : {'Authorization' : token}})
 
-        return await client
-                .request(query.query, query.variables)
-                .then((data) => {
-                        data = data.repository.pullRequests.edges.map((pr: any) => {
-                                pr = pr.node
-                                pr.comments = pr.comments.edges.map((comment: any) => {
-                                        comment = comment.node
-                                comment.howLongAgo =
-                                    howLongAgo(new Date(comment.updatedAt))
-                                        return comment
-                                })
-                                        pr.assignees = pr.assignees.edges.map(
-                                            (assignee: any) => (assignee.node))
-                                        pr.labels = pr.labels.edges.map(
-                                            (label: any) => ({
-                                              color : `#${label.node.color}`,
-                                              name : label.node.name,
-                                            }))
-                                        pr.category = "pullRequest"
-                                        pr.howLongAgo =
-                                            howLongAgo(new Date(pr.updatedAt))
-                                return pr
-                        })
-                        return data
-                })
+  return await client
+    .request(query.query, query.variables)
+    .then((data) => {
+      return {
+        "pullRequests": data.repository.pullRequests.edges.map((pr: any) => {
+          pr = pr.node
+          pr.comments = pr.comments.edges.map((comment: any) => {
+            comment = comment.node
+            comment.howLongAgo = howLongAgo(new Date(comment.updatedAt))
+            return comment
+          })
+          pr.assignees =
+              pr.assignees.edges.map((assignee: any) => (assignee.node))
+          pr.labels = pr.labels.edges.map((label: any) => ({
+                                            color : `#${label.node.color}`,
+                                            name : label.node.name,
+                                          }))
+          pr.category = "pullRequest"
+          pr.howLongAgo = howLongAgo(new Date(pr.updatedAt))
+          return pr
+        }),
+        "pageInfo": data.repository.pullRequests.pageInfo,
+      }
+    })
 }

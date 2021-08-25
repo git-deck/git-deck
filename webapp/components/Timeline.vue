@@ -8,7 +8,7 @@
           /
           <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
         </span>
-        <button class="refresh" @click="load">
+        <button class="refresh" @click="search">
           <span class="material-icons"> replay </span>
         </button>
         <button class="tune" @click="clickSettings">
@@ -21,7 +21,7 @@
         :label-items="labelItems"
         :all-label="allLabel"
         :category-labels="categoryLabels"
-        @loadTimeline="load"
+        @loadTimeline="search"
         @closeTimeline="close"
         @clickLabel="clickLabel"
       />
@@ -35,6 +35,12 @@
           :content="content"
           :add-callbacks="addCallbacks"
         ></ContentBox>
+        <infinite-loading
+          @infinite="infiniteHandler"
+          :identifier="infiniteId">
+          <span slot="no-more"></span>
+          <span slot="no-results"></span>
+        </infinite-loading>
       </main>
     </div>
   </vue-resizable>
@@ -44,11 +50,11 @@
 import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
-//const VueResizable = require('vue-resizable')
 
 import VueResizable from 'vue-resizable'
+import InfiniteLoading from 'vue-infinite-loading'
 
-import { Content, Label } from '@/models/types'
+import { Content, Issue, PullRequest, Label } from '@/models/types'
 import { getLabels } from '@/APIClient/labels'
 import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
@@ -63,16 +69,27 @@ type LabelItem = {
 type DataType = {
   Octicons: any
   settingOpened: boolean
-  contents: Content[]
-  labelItems: LabelItem[]
+  contents: Array<Content>
+  labelItems: Array<LabelItem>
   isLoading: boolean
   // setting から持ってきた
   categoryLabels: Array<LabelItem>
   allLabel: LabelItem
+
+  issues: Array<Issue>
+  issueHasNextPage: boolean,
+  issueEndCursor: string | null,
+  issueIndex: number,
+  pullRequests: Array<PullRequest>
+  pullRequestHasNextPage: boolean,
+  pullRequestEndCursor: string | null,
+  pullRequestIndex: number,
+
+  infiniteId: number,
 }
 
 export default Vue.extend({
-  components: { Octicon, VueResizable },
+  components: { Octicon, VueResizable, InfiniteLoading },
   props: {
     id: {
       type: Number,
@@ -105,6 +122,15 @@ export default Vue.extend({
       isLoading: false,
       allLabel: JSON.parse(JSON.stringify(ALL_LABEL)), // copy
       categoryLabels: JSON.parse(JSON.stringify(CATEGORY_LABELS)), // copy
+      issues: [],
+      issueHasNextPage: true,
+      issueEndCursor: null,
+      issueIndex: 0,
+      pullRequests: [],
+      pullRequestHasNextPage: true,
+      pullRequestEndCursor: null,
+      pullRequestIndex: 0,
+      infiniteId: 0,
     }
   },
   computed: {
@@ -116,14 +142,48 @@ export default Vue.extend({
     },
   },
   created() {
-    this.load()
+    this.getLabels()
   },
   methods: {
+    infiniteHandler($state: any) {
+      let self = this
+      this.getTimeline(() => {
+          if (self.issueHasNextPage || self.pullRequestHasNextPage) {
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
+        })
+    },
+
+    clearContents() {
+      this.issues = []
+      this.issueHasNextPage = true
+      this.issueEndCursor = null
+      this.issueIndex = 0
+      this.pullRequests = []
+      this.pullRequestHasNextPage = true
+      this.pullRequestEndCursor = null
+      this.pullRequestIndex = 0
+      this.contents = []
+      this.infiniteId += 1
+    },
+
     close() {
       this.$emit('closeTimeline', this.id)
     },
 
-    async getIssues() {
+    async getIssues(endCursor: string | null = null) {
+      if (!this.issueHasNextPage) {
+        return {
+          issues: [],
+          pageInfo: {
+            hasNextPage: false,
+            endCursor: null,
+          }
+        }
+      }
+
       const states = []
       for (const categoryLabel of this.categoryLabels) {
         if (
@@ -150,16 +210,27 @@ export default Vue.extend({
         this.owner,
         this.repo,
         states,
-        filter
+        filter,
+        endCursor,
       )
     },
 
-    async getPullRequests() {
+    async getPullRequests(endCursor: string | null = null) {
+      if (!this.pullRequestHasNextPage) {
+        return {
+          pullRequests: [],
+          pageInfo: {
+            hasNextPage: false,
+            endCursor: null,
+          }
+        }
+      }
+
       const states = []
       for (const categoryLabel of this.categoryLabels) {
         if (
           !categoryLabel.labelOpened &&
-          ['open', 'closed'].includes(categoryLabel.label.name)
+          ['open', 'closed', 'merged'].includes(categoryLabel.label.name)
         ) {
           states.push(categoryLabel.label.name.toUpperCase())
         }
@@ -177,23 +248,40 @@ export default Vue.extend({
         this.owner,
         this.repo,
         states,
-        labels
+        labels,
+        endCursor,
       )
     },
 
-    getTimeline() {
-      // issue, pullRequest を取得して並び替える.
-      Promise.all([this.getIssues(), this.getPullRequests()])
+    getTimeline(callback: Function) {
+      Promise.all([
+          this.getIssues(this.issueEndCursor),
+          this.getPullRequests(this.pullRequestEndCursor)])
         .then((values) => {
-          const timeline = [...values[0], ...values[1]]
-          timeline.sort((a, b) => {
-            const keyA = a.updatedAt
-            const keyB = b.updatedAt
-            if (keyA > keyB) return -1
-            if (keyA < keyB) return 1
-            return 0
-          })
-          this.contents = timeline
+          this.issues.push(...values[0].issues)
+          this.issueHasNextPage = values[0].pageInfo.hasNextPage
+          this.issueEndCursor = values[0].pageInfo.endCursor
+          this.pullRequests.push(...values[1].pullRequests)
+          this.pullRequestHasNextPage = values[1].pageInfo.hasNextPage
+          this.pullRequestEndCursor = values[1].pageInfo.endCursor
+
+
+          for (let k = 0; k < 100; k += 1) {
+            if (this.issueIndex == this.issues.length && this.issueHasNextPage) break
+            if (this.pullRequestIndex == this.pullRequests.length && this.pullRequestHasNextPage) break
+            if (this.issueIndex == this.issues.length && this.pullRequestIndex == this.pullRequests.length) break
+            if (this.pullRequestIndex == this.pullRequests.length || (
+                  this.issueIndex < this.issues.length && this.issues[this.issueIndex].updatedAt < this.pullRequests[this.pullRequestIndex].updatedAt)) {
+              this.contents.push(this.issues[this.issueIndex])
+              this.issueIndex += 1
+            }
+            else if (this.issueIndex == this.issues.length || (
+                  this.pullRequestIndex < this.pullRequests.length && this.issues[this.issueIndex].updatedAt >= this.pullRequests[this.pullRequestIndex].updatedAt)) {
+              this.contents.push(this.pullRequests[this.pullRequestIndex])
+              this.pullRequestIndex += 1
+            }
+          }
+          callback()
         })
         .catch((errors) => {
           console.error(errors)
@@ -211,9 +299,8 @@ export default Vue.extend({
         })
     },
 
-    load() {
-      this.getTimeline()
-      this.getLabels()
+    search() {
+      this.clearContents()
     },
 
     // ラベル絞り込みボタンの開閉
