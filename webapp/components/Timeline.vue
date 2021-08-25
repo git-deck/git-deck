@@ -271,12 +271,12 @@ export default Vue.extend({
             if (this.pullRequestIndex == this.pullRequests.length && this.pullRequestHasNextPage) break
             if (this.issueIndex == this.issues.length && this.pullRequestIndex == this.pullRequests.length) break
             if (this.pullRequestIndex == this.pullRequests.length || (
-                  this.issueIndex < this.issues.length && this.issues[this.issueIndex].updatedAt < this.pullRequests[this.pullRequestIndex].updatedAt)) {
+                  this.issueIndex < this.issues.length && this.issues[this.issueIndex].updatedAt > this.pullRequests[this.pullRequestIndex].updatedAt)) {
               this.contents.push(this.issues[this.issueIndex])
               this.issueIndex += 1
             }
             else if (this.issueIndex == this.issues.length || (
-                  this.pullRequestIndex < this.pullRequests.length && this.issues[this.issueIndex].updatedAt >= this.pullRequests[this.pullRequestIndex].updatedAt)) {
+                  this.pullRequestIndex < this.pullRequests.length && this.issues[this.issueIndex].updatedAt <= this.pullRequests[this.pullRequestIndex].updatedAt)) {
               this.contents.push(this.pullRequests[this.pullRequestIndex])
               this.pullRequestIndex += 1
             }
