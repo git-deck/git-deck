@@ -20,6 +20,7 @@
     "gql-query-builder": "^3.5.5",
     "graphql": "^15.5.1",
     "graphql-request": "^3.5.0",
+    "highlight.js": "^11.2.0",
     "markdown-it": "^12.0.6",
     "nuxt": "^2.15.3",
     "nuxt-webfontloader": "^1.1.0",

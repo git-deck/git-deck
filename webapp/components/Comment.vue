@@ -118,8 +118,9 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 // @ts-ignore
-import { User, Label } from '@/models/types'
+import User from '@/models/types'
 const { Octicon, Octicons } = require('octicons-vue')
+const hljs = require('highlight.js')
 type DataType = {
   Octicons: any
   height: Number
@@ -186,15 +187,13 @@ export default Vue.extend({
     labels: {
       type: Array,
       default() {
-        return [
-        ]
+        return []
       },
     },
     assignees: {
       type: Array,
       default() {
-        return [
-        ]
+        return []
       },
     },
   },
@@ -231,7 +230,10 @@ export default Vue.extend({
   },
   mounted() {
     this.$props.addCallbacks(() => {
-      if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
+      if (
+        this.$refs.textarea != null &&
+        this.$refs.textarea instanceof Element
+      ) {
         const tmp = this.$refs.textarea.clientHeight
         this.height = tmp
       }
@@ -239,6 +241,14 @@ export default Vue.extend({
     if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
+    }
+    const elms = document.querySelectorAll('.language-vue')
+    elms.forEach((elm) => {
+      elm.classList.remove('language-vue')
+      elm.classList.add('language-html')
+    })
+    if (document.getElementsByTagName('code').length > 0) {
+      hljs.highlightAll()
     }
   },
   methods: {

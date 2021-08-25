@@ -77,9 +77,9 @@ export default {
     },
   },
 
-  //typescript: {
+  // typescript: {
   //  typeCheck: {
   //    async: false
   //  }
-  //}
+  // }
 }
