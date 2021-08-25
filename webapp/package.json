@@ -24,6 +24,7 @@
     "nuxt": "^2.15.3",
     "nuxt-webfontloader": "^1.1.0",
     "octicons-vue": "^1.0.10",
+    "vue-infinite-loading": "^2.4.5",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-resizable": "^2.0.5",
     "vuedraggable": "^2.24.3"

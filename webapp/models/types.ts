@@ -33,6 +33,7 @@ export type Issue = {
   state: IssueState
   title: string
   url: string
+  updatedAt: Date
 }
 
 export type PullRequestState = 'OPEN' | 'CLOSED' | 'MERGED'
@@ -49,6 +50,7 @@ export type PullRequest = {
   state: PullRequestState
   title: string
   url: string
+  updatedAt: Date
 }
 
 export type Content = Issue | PullRequest
