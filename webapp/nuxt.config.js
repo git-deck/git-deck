@@ -39,7 +39,12 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
+    '@nuxtjs/google-adsense',
   ],
+
+  'google-adsense': {
+    id: 'ca-pub-3253334117542861',
+  },
 
   markdownit: {
     injected: true,
