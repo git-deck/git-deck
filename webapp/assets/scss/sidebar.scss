@@ -18,8 +18,13 @@ $sidebar-width: 60px;
     .material-icons {
       color: #aab8c2;
       font-size: 40px;
+      margin-top: 12px;
       &:hover {
         color: white;
+      }
+
+      &.settings {
+        font-size: 28px;
       }
     }
     .sidebar-button {
@@ -92,6 +97,7 @@ $sidebar-width: 60px;
       border-radius: 5px;
       font-size: 12px;
       padding: 5px 10px;
+      cursor: pointer;
     }
   }
 }

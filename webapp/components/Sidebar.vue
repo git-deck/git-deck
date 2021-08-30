@@ -6,7 +6,7 @@
       </button>
       <div class="sidebar-button">
         <button style="padding-bottom: 0" @click="showModal('settings')">
-          <span class="material-icons"> settings </span>
+          <span class="material-icons settings"> settings </span>
         </button>
         <button style="padding-top: 0" @click="showModal('column-modal')">
           <span class="material-icons"> add </span>
@@ -166,17 +166,20 @@ export default Vue.extend({
       const repo: String = parsed[2]
 
       // 既に登録済みのリポジトリを追加しない
-      if (this.timelineConfig.some((tl: TimelineConfig) => (tl.owner === owner && tl.repo === repo))) {
+      if (
+        this.timelineConfig.some(
+          (tl: TimelineConfig) => tl.owner === owner && tl.repo === repo
+        )
+      ) {
         return
       }
 
       const self = this
       try {
-        const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
-        const res = await checkRepository(
-          token,
-          `${owner}/${repo}`
-        )
+        const token: string = (
+          this.$auth.strategy as RefreshScheme
+        ).token.get() as string
+        const res = await checkRepository(token, `${owner}/${repo}`)
         this.$emit('appendTimeline', owner, repo)
         saveRepositoryToLocalStorage(`${owner}/${repo}`)
         this.hideModal('column-modal')
