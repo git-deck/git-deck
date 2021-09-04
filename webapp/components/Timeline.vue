@@ -35,9 +35,7 @@
           :content="content"
           :add-callbacks="addCallbacks"
         ></ContentBox>
-        <infinite-loading
-          @infinite="infiniteHandler"
-          :identifier="infiniteId">
+        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
           <span slot="no-more"></span>
           <span slot="no-results"></span>
         </infinite-loading>
@@ -60,7 +58,6 @@ import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
 import { RefreshScheme } from '@nuxtjs/auth-next'
 
-
 type LabelItem = {
   label: Label
   labelOpened: Boolean
@@ -77,15 +74,15 @@ type DataType = {
   allLabel: LabelItem
 
   issues: Array<Issue>
-  issueHasNextPage: boolean,
-  issueEndCursor: string | null,
-  issueIndex: number,
+  issueHasNextPage: boolean
+  issueEndCursor: string | null
+  issueIndex: number
   pullRequests: Array<PullRequest>
-  pullRequestHasNextPage: boolean,
-  pullRequestEndCursor: string | null,
-  pullRequestIndex: number,
+  pullRequestHasNextPage: boolean
+  pullRequestEndCursor: string | null
+  pullRequestIndex: number
 
-  infiniteId: number,
+  infiniteId: number
 }
 
 export default Vue.extend({
@@ -146,14 +143,14 @@ export default Vue.extend({
   },
   methods: {
     infiniteHandler($state: any) {
-      let self = this
+      const self = this
       this.getTimeline(() => {
-          if (self.issueHasNextPage || self.pullRequestHasNextPage) {
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-        })
+        if (self.issueHasNextPage || self.pullRequestHasNextPage) {
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      })
     },
 
     clearContents() {
@@ -180,7 +177,7 @@ export default Vue.extend({
           pageInfo: {
             hasNextPage: false,
             endCursor: null,
-          }
+          },
         }
       }
 
@@ -204,14 +201,16 @@ export default Vue.extend({
         filter.labels = labels
       }
 
-      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+      const token: string = (
+        this.$auth.strategy as RefreshScheme
+      ).token.get() as string
       return await getIssues(
         token,
         this.owner,
         this.repo,
         states,
         filter,
-        endCursor,
+        endCursor
       )
     },
 
@@ -222,7 +221,7 @@ export default Vue.extend({
           pageInfo: {
             hasNextPage: false,
             endCursor: null,
-          }
+          },
         }
       }
 
@@ -242,21 +241,24 @@ export default Vue.extend({
         }
       }
 
-      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+      const token: string = (
+        this.$auth.strategy as RefreshScheme
+      ).token.get() as string
       return await getPullRequests(
         token,
         this.owner,
         this.repo,
         states,
         labels,
-        endCursor,
+        endCursor
       )
     },
 
     getTimeline(callback: Function) {
       Promise.all([
-          this.getIssues(this.issueEndCursor),
-          this.getPullRequests(this.pullRequestEndCursor)])
+        this.getIssues(this.issueEndCursor),
+        this.getPullRequests(this.pullRequestEndCursor),
+      ])
         .then((values) => {
           this.issues.push(...values[0].issues)
           this.issueHasNextPage = values[0].pageInfo.hasNextPage
@@ -265,18 +267,33 @@ export default Vue.extend({
           this.pullRequestHasNextPage = values[1].pageInfo.hasNextPage
           this.pullRequestEndCursor = values[1].pageInfo.endCursor
 
-
           for (let k = 0; k < 100; k += 1) {
-            if (this.issueIndex == this.issues.length && this.issueHasNextPage) break
-            if (this.pullRequestIndex == this.pullRequests.length && this.pullRequestHasNextPage) break
-            if (this.issueIndex == this.issues.length && this.pullRequestIndex == this.pullRequests.length) break
-            if (this.pullRequestIndex == this.pullRequests.length || (
-                  this.issueIndex < this.issues.length && this.issues[this.issueIndex].updatedAt > this.pullRequests[this.pullRequestIndex].updatedAt)) {
+            if (this.issueIndex == this.issues.length && this.issueHasNextPage)
+              break
+            if (
+              this.pullRequestIndex == this.pullRequests.length &&
+              this.pullRequestHasNextPage
+            )
+              break
+            if (
+              this.issueIndex == this.issues.length &&
+              this.pullRequestIndex == this.pullRequests.length
+            )
+              break
+            if (
+              this.pullRequestIndex == this.pullRequests.length ||
+              (this.issueIndex < this.issues.length &&
+                this.issues[this.issueIndex].updatedAt >
+                  this.pullRequests[this.pullRequestIndex].updatedAt)
+            ) {
               this.contents.push(this.issues[this.issueIndex])
               this.issueIndex += 1
-            }
-            else if (this.issueIndex == this.issues.length || (
-                  this.pullRequestIndex < this.pullRequests.length && this.issues[this.issueIndex].updatedAt <= this.pullRequests[this.pullRequestIndex].updatedAt)) {
+            } else if (
+              this.issueIndex == this.issues.length ||
+              (this.pullRequestIndex < this.pullRequests.length &&
+                this.issues[this.issueIndex].updatedAt <=
+                  this.pullRequests[this.pullRequestIndex].updatedAt)
+            ) {
               this.contents.push(this.pullRequests[this.pullRequestIndex])
               this.pullRequestIndex += 1
             }
@@ -289,7 +306,9 @@ export default Vue.extend({
     },
 
     getLabels() {
-      const token: string = (this.$auth.strategy as RefreshScheme).token.get() as string
+      const token: string = (
+        this.$auth.strategy as RefreshScheme
+      ).token.get() as string
       getLabels(token, this.owner, this.repo)
         .then((data) => {
           this.labelItems = data
@@ -308,13 +327,19 @@ export default Vue.extend({
       this.settingOpened = !this.settingOpened
     },
     // ラベルのON OFF管理
-    clickLabel(Blockname: string, index: number) {
+    clickLabel(Blockname: string, name: string) {
       // labelOpened:false->選択中
       if (Blockname === 'category') {
+        const index = this.categoryLabels.findIndex(
+          ({ label }) => label.name === name
+        )
         this.categoryLabels[index].labelOpened =
           !this.categoryLabels[index].labelOpened
       }
       if (Blockname === 'labels') {
+        const index = this.labelItems.findIndex(
+          ({ label }) => label.name === name
+        )
         if (index === -1) {
           if (this.allLabel.labelOpened) {
             // すべて：選択中でないときにボタン押した

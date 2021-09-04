@@ -7,7 +7,6 @@
   border-right: 6px solid;
   overflow-x: hidden;
 
-
   // ヘッダー
   & > header {
     border-bottom: 1px solid;
@@ -15,7 +14,7 @@
     padding: 20px 10px;
     height: 60px;
     cursor: move;
- 
+
     .repoicon {
       height: 18px;
       width: 18px;
@@ -36,6 +35,7 @@
       background: transparent;
       cursor: pointer;
       padding: 0;
+      margin-right: -8px;
       border-radius: 2px;
       .material-icons {
         font-size: 20px;
@@ -43,7 +43,7 @@
     }
 
     .refresh {
-      margin-right: 3px;
+      margin-right: 8px;
       padding: 0;
       border: none;
       width: 20px;
@@ -87,7 +87,7 @@
       grid-template-areas:
         'areaIcon         areaTitle areaDate areaMark'
         'areaIcon         areaText  areaText areaText'
-        'dottedThreadLine readmore  readmore areaButton';
+        'threadLine readmore  readmore areaButton';
 
       &.reply > .iconItem::before {
         content: '';
@@ -115,7 +115,7 @@
       }
 
       & > .threadLine {
-        grid-area: dottedThreadLine;
+        grid-area: threadLine;
         border-right: 3px solid $border;
         &.dotted {
           border-right: 3px dotted $border;
@@ -130,6 +130,13 @@
         word-break: break-all;
         margin: 0 7px;
         .titleLine {
+          cursor: pointer;
+          transition: all 0.2s;
+          text-decoration: underline;
+          text-decoration-color: transparent;
+          &:hover {
+            text-decoration-color: inherit;
+          }
           & > .title {
             font-weight: bold;
             font-size: 12px;
@@ -190,7 +197,7 @@
         margin-bottom: 8px;
         overflow-y: hidden;
         overflow-x: scroll;
-        .labels{
+        .labels {
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
@@ -202,9 +209,8 @@
           -ms-flex-wrap: wrap;
           flex-wrap: wrap;
           align-items: center;
-
         }
-        .textItemCon{
+        .textItemCon {
           margin-top: 4px;
         }
       }
