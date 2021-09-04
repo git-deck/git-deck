@@ -23,6 +23,7 @@ export default Vue.extend({
   name: 'Label',
   props: {
     color: {
+      // example : '#rrggbb'
       type: String,
       required: true,
     },
@@ -87,7 +88,7 @@ export default Vue.extend({
   },
   methods: {
     getBooleanByColor() {
-      // この条件分の閾値を変えれば枠線の付く色の種類を変えれる
+      // borderをつけるかどうか
       if (this.$colorMode.value === 'dark') {
         return !this.disabled
       } else {

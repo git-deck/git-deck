@@ -337,7 +337,7 @@ export default Vue.extend({
           !this.categoryLabels[index].labelOpened
       }
       if (Blockname === 'labels') {
-        const index = this.categoryLabels.findIndex(
+        const index = this.labelItems.findIndex(
           ({ label }) => label.name === name
         )
         if (index === -1) {
