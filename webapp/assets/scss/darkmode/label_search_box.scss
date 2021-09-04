@@ -1,0 +1,23 @@
+.dark-mode .search {
+  & > .search-box {
+    background: black;
+    color: $dark-text;
+  }
+  & > .options {
+    .label-option {
+      &.all-select {
+        color: $dark-text;
+      }
+      & > .material-icons {
+        color: $dark-text;
+      }
+      & > .label-content {
+        color: $dark-text;
+      }
+
+      &:hover {
+        background: #000000ff;
+      }
+    }
+  }
+}

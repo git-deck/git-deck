@@ -1,0 +1,23 @@
+.light-mode .search {
+  & > .search-box {
+    background: #f0f0f0;
+    color: $git-black;
+  }
+  & > .options {
+    .label-option {
+      &.all-select {
+        color: $git-black;
+      }
+      & > .material-icons {
+        color: $git-black;
+      }
+      & > .label-content {
+        color: $git-black;
+      }
+
+      &:hover {
+        background: #0000000e;
+      }
+    }
+  }
+}
