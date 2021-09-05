@@ -13,12 +13,12 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-type DataType = {
-  r: number
-  g: number
-  b: number
-  isWhiteTextMode: boolean
-}
+// type DataType = {
+//   r: number
+//   g: number
+//   b: number
+//   isWhiteTextMode: boolean
+// }
 export default Vue.extend({
   name: 'Label',
   props: {
@@ -36,15 +36,27 @@ export default Vue.extend({
       default: false,
     },
   },
-  data(): DataType {
-    return {
-      r: 0,
-      g: 0,
-      b: 0,
-      isWhiteTextMode: true,
-    }
-  },
+  // data(): DataType {
+  //   return {
+  //     r: 0,
+  //     g: 0,
+  //     b: 0,
+  //     isWhiteTextMode: true,
+  //   }
+  // },
   computed: {
+    r(): number {
+      return parseInt(this.color.substr(1, 2), 16)
+    },
+    g(): number {
+      return parseInt(this.color.substr(3, 2), 16)
+    },
+    b(): number {
+      return parseInt(this.color.substr(5, 2), 16)
+    },
+    isWhiteTextMode(): boolean {
+      return (this.r * 249 + this.g * 587 + this.b * 134) / 1000 < 172
+    },
     backgroundColor(): string {
       if (this.$colorMode.value === 'dark') {
         if (this.isWhiteTextMode) {
@@ -79,13 +91,14 @@ export default Vue.extend({
       }
     },
   },
-  mounted() {
-    this.r = parseInt(this.color.substr(1, 2), 16)
-    this.g = parseInt(this.color.substr(3, 2), 16)
-    this.b = parseInt(this.color.substr(5, 2), 16)
-    this.isWhiteTextMode =
-      (this.r * 249 + this.g * 587 + this.b * 134) / 1000 < 172
-  },
+
+  // mounted() {
+  //   this.r = parseInt(this.color.substr(1, 2), 16)
+  //   this.g = parseInt(this.color.substr(3, 2), 16)
+  //   this.b = parseInt(this.color.substr(5, 2), 16)
+  //   this.isWhiteTextMode =
+  //     (this.r * 249 + this.g * 587 + this.b * 134) / 1000 < 172
+  // },
   methods: {
     getBooleanByColor() {
       // borderをつけるかどうか
