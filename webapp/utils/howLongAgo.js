@@ -1,5 +1,5 @@
 export const howLongAgo = (time) => {
-  let now = new Date()
+  const now = new Date()
 
   if (now.getFullYear() != time.getFullYear()) {
     return (
@@ -12,11 +12,11 @@ export const howLongAgo = (time) => {
   }
 
   let sec = Math.floor((now - time) / 1000)
-  let days = Math.floor(sec / (24 * 3600))
+  const days = Math.floor(sec / (24 * 3600))
   sec -= days * 24 * 3600
-  let hours = Math.floor(sec / 3600)
+  const hours = Math.floor(sec / 3600)
   sec -= hours * 3600
-  let minutes = Math.floor(sec / 60)
+  const minutes = Math.floor(sec / 60)
   sec -= minutes * 60
 
   if (days >= 7) {
