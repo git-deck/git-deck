@@ -34,8 +34,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
-const { Octicon, Octicons } = require('octicons-vue')
+// @ts-ignore
+import { Octicon, Octicons } from 'octicons-vue'
 type DataType = {
   Octicons: any
 }

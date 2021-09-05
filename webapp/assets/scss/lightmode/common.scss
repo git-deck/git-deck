@@ -1,38 +1,37 @@
-.light-mode{
-    .container{
-        color: $git-black;
-    }
-    a {
-        color: $git-blue;
+.light-mode {
+  .container {
+    color: $git-black;
+  }
+  a {
+    color: $git-blue;
+  }
+
+  .label {
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+      rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  }
+  .modal-content {
+    & > .header {
+      border-color: $border;
+      .material-icons {
+        color: gray;
+      }
     }
 
-    .label {
-        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
-          rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    & > .main-contents {
+      & > .addButton {
+        background: $git-black;
+        color: white;
+      }
+      & > .addButton:disabled {
+        background: #ccc;
+        color: white;
+      }
+
+      & > .postButton {
+        background-color: $idea-color;
+        color: white;
+      }
     }
-    .modal-content {
-        & > .header {
-          border-color: $border;
-          .material-icons {
-            color: gray;
-          }
-        }
-      
-        & > .main-contents {      
-          & > .addButton {
-            background: $git-black;
-            color: white;
-          }
-          & > .addButton:disabled {
-            background: #ccc;
-            color: white;
-          }
-      
-          & > .postButton {
-            background-color: $idea-color;
-            color: white;
-          }
-        }
-    }
-      
+  }
 }

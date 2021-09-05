@@ -16,10 +16,16 @@ const _calcDistance = (str1: string, str2: string) => {
     for (k = -D; k <= D; k += 2) {
       kk = k + offset
       x =
-        k == -D || (k != D && V[kk - 1] < V[kk + 1]) ? V[kk + 1] : V[kk - 1] + 1
+        k === -D || (k !== D && V[kk - 1] < V[kk + 1])
+          ? V[kk + 1]
+          : V[kk - 1] + 1
       y = x - k
       // while (x < len1 && y < len2 && str1[x] == str2[y]) {
-      while (x < len1 && y < len2 && str1.charCodeAt(x) == str2.charCodeAt(y)) {
+      while (
+        x < len1 &&
+        y < len2 &&
+        str1.charCodeAt(x) === str2.charCodeAt(y)
+      ) {
         x++
         y++
       }
