@@ -20,10 +20,17 @@
       </p>
       <button @click="logout">Log out</button>
     </div>
-    <modal name="column-modal" :click-to-close="false" :draggable="true">
+    <modal
+      name="column-modal"
+      :click-to-close="false"
+      :draggable="true"
+      height="auto"
+      class="column-add-modal"
+    >
       <div class="modal-content">
         <div class="header">
           <div class="topic">カラムを追加する</div>
+
           <button @click="hideModal('column-modal')">
             <span class="material-icons">close</span>
           </button>
@@ -32,20 +39,76 @@
           <label for="repository-input" class="repositoryInputLabel"
             >追加したいリポジトリ名またはURLを入力してください</label
           >
-          <input
-            id="repository-input"
-            v-model="repositoryInput"
-            v-focus
-            placeholder="owner/repository"
-            class="inputField"
-            size="50%"
-            @paste="onPaste"
-            @paste.prevent
-          />
-          <div v-if="errorMsg != ''" style="color: red">{{ errorMsg }}</div>
+          <fieldset class="inputFieldset">
+            <input
+              id="repository-input"
+              v-model="repositoryInput"
+              v-focus
+              list="my-repositories"
+              autocomplete="on"
+              autofocus
+              placeholder="owner/repository または URL"
+              class="inputField"
+              size="50%"
+              @paste="onPaste"
+              @paste.prevent
+            />
+            <datalist id="my-repositories">
+              <option
+                v-for="repository in myRepositories"
+                :key="repository.owner + '/' + repository.name"
+                :value="repository.owner + '/' + repository.name"
+              ></option>
+            </datalist>
+          </fieldset>
+          <hr class="separator" />
+          <p>または自分のレポジトリから選ぶ</p>
+          <div class="repository-recommend hide-scrollbar">
+            <button
+              v-for="repository in myRepositories.slice(0, 5)"
+              :key="repository.owner + '/' + repository.name"
+              class="recommended-button"
+              :class="{
+                selected:
+                  repositoryInput === repository.owner + '/' + repository.name,
+              }"
+              :aria-pressed="
+                repositoryInput === repository.owner + '/' + repository.name
+              "
+              @click="
+                repositoryInput = repository.owner + '/' + repository.name
+              "
+            >
+              {{ repository.name }}
+            </button>
+            <label
+              class="recommended-button show-all-button"
+              :class="{
+                selected:
+                  othersSelectedRepository === repositoryInput &&
+                  othersSelectedRepository !== '',
+              }"
+            >
+              <select
+                v-model="othersSelectedRepository"
+                @change="repositoryInput = $event.target.value"
+              >
+                <option value="">他のリポジトリ</option>
+                <option
+                  v-for="repository in myRepositories"
+                  :key="repository.owner + '/' + repository.name"
+                  :value="repository.owner + '/' + repository.name"
+                >
+                  {{ repository.name }}
+                </option>
+                <option value="リンクについて">リンクについて</option>
+              </select>
+            </label>
+          </div>
+          <div style="color: red">{{ errorMsg }}</div>
           <button
             class="addButton"
-            :disabled="isSearchingRepository"
+            :disabled="isSearchingRepository || !inputIsValid"
             @click="append"
           >
             追加
@@ -76,16 +139,18 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { checkRepository } from '@/APIClient/repository'
+import { checkRepository, getMyRepositories } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
 import { RefreshScheme } from '@nuxtjs/auth-next'
 
 type DataType = {
-  repositoryInput: String
-  errorMsg: String
-  isOpenedPulldownMenu: Boolean
-  isSearchingRepository: Boolean
+  repositoryInput: string
+  errorMsg: string
+  isOpenedPulldownMenu: boolean
+  isSearchingRepository: boolean
+  myRepositories: { owner: string; name: string }[]
+  othersSelectedRepository: string
 }
 Vue.directive('focus', {
   // ひも付いている要素が DOM に挿入される時...
@@ -116,7 +181,27 @@ export default Vue.extend({
       errorMsg: '',
       isOpenedPulldownMenu: false,
       isSearchingRepository: false,
+      myRepositories: [],
+      othersSelectedRepository: '',
     }
+  },
+  computed: {
+    inputIsValid(): boolean {
+      const res = this.repositoryInput.match(
+        /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
+      )
+
+      return (
+        (res?.groups?.repo != null && (res?.groups?.owner != null) == null) ||
+        /^([^/]+)\/([^/]+)$/.test(this.repositoryInput)
+      )
+    },
+  },
+  async mounted() {
+    const token: string = (
+      this.$auth.strategy as RefreshScheme
+    ).token.get() as string
+    this.myRepositories = await getMyRepositories(token, this.userName)
   },
   methods: {
     showModal(name: string) {
@@ -146,6 +231,12 @@ export default Vue.extend({
     },
     async append() {
       this.isSearchingRepository = true
+      if (this.repositoryInput.length === 0) {
+        this.setErrorMsg('リポジトリ名またはURL入力してください')
+        this.isSearchingRepository = false
+        return
+      }
+
       const res = this.repositoryInput.match(
         /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
       )
@@ -180,12 +271,20 @@ export default Vue.extend({
           this.$auth.strategy as RefreshScheme
         ).token.get() as string
         await checkRepository(token, `${owner}/${repo}`)
-        this.$emit('appendTimeline', owner, repo)
         saveRepositoryToLocalStorage(`${owner}/${repo}`)
+        this.$emit('appendTimeline', owner, repo)
         this.hideModal('column-modal')
       } catch (error) {
-        console.error(error)
-        this.setErrorMsg('リポジトリが見つかりません')
+        if (
+          error?.response?.errors?.find((e: any) => e?.type === 'NOT_FOUND') !=
+          null
+        ) {
+          console.log(error.response.errors)
+          console.error(error?.response.errors)
+          this.setErrorMsg('リポジトリが見つかりません')
+        } else {
+          this.setErrorMsg('エラーが発生しました')
+        }
       } finally {
         self.isSearchingRepository = false
       }

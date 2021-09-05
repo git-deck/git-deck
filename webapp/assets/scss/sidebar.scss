@@ -105,3 +105,95 @@ $sidebar-width: 60px;
 .vertical-panes {
   margin-left: $sidebar-width;
 }
+
+.column-add-modal .main-contents {
+  & > .inputFieldset {
+    border: none;
+    padding: 0;
+
+    & > .inputField {
+      padding: 12px 16px;
+      border-radius: 4px;
+      width: 100%;
+    }
+  }
+
+  & > .separator {
+    width: 100%;
+    color: rgb(231, 231, 231);
+    margin-top: 24px;
+    margin-bottom: 20px;
+  }
+
+  & > .repository-recommend {
+    display: flex;
+    flex-wrap: wrap;
+    // overflow-x: scroll;
+    margin-top: 10px;
+    margin-bottom: 12px;
+
+    & > .recommended-button {
+      padding: 4px 12px;
+      flex-shrink: 0;
+      border-radius: 99px;
+      ackground: white;
+      border: 2px solid $git-black;
+      color: $git-black;
+      font-weight: bold;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      margin-right: 8px;
+      font-size: 12px;
+      cursor: pointer;
+
+      &.selected {
+        text-decoration: underline;
+        background: $git-black;
+        color: white;
+        transition: none;
+
+        &:hover {
+          background: $git-black;
+          opacity: 0.8;
+        }
+      }
+
+      &:active,
+      &:hover {
+        background: rgb(239, 239, 239);
+      }
+
+      &.selected.show-all-button > select {
+        background: $git-black;
+        color: white;
+        border: none;
+        outline: none;
+        padding: 4px 12px;
+      }
+
+      &.show-all-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: default;
+
+        &:active,
+        &:hover {
+          opacity: 1;
+        }
+
+        & > select {
+          padding: 4px 12px;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          &:focus,
+          &:active {
+            outline: none;
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}

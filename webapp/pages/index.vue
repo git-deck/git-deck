@@ -86,6 +86,7 @@ export default Vue.extend({
       const token: string = (
         this.$auth.strategy as RefreshScheme
       ).token.get() as string
+      // TODO: 順番が保存されなさそう
       checkRepository(token, repositoryName).then(() => {
         const split = repositoryName.split('/')
 
