@@ -10,13 +10,13 @@ export const getIssues = async (
   filter: Object,
   after: string | null
 ) => {
-  const issues_limit = 10
-  const assignees_limit = 10
-  const labels_limit = 10
-  const comments_limit = 100
+  const issuesLimit = 10
+  const assigneesLimit = 10
+  const labelsLimit = 10
+  const commentsLimit = 100
 
-  let issueVariables: any = {
-    first: { value: issues_limit },
+  const issueVariables: any = {
+    first: { value: issuesLimit },
     states: { value: states, type: '[IssueState!]' },
     filterBy: { value: filter, type: 'IssueFilters' },
     orderBy: {
@@ -64,7 +64,7 @@ export const getIssues = async (
                     operation: 'assignees',
                     variables: {
                       first: {
-                        value: assignees_limit,
+                        value: assigneesLimit,
                       },
                     },
                     fields: [
@@ -75,7 +75,7 @@ export const getIssues = async (
                     operation: 'labels',
                     variables: {
                       first: {
-                        value: labels_limit,
+                        value: labelsLimit,
                       },
                     },
                     fields: [
@@ -92,7 +92,7 @@ export const getIssues = async (
                     operation: 'comments',
                     variables: {
                       first: {
-                        value: comments_limit,
+                        value: commentsLimit,
                       },
                     },
                     fields: [

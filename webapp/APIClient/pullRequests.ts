@@ -10,13 +10,13 @@ export const getPullRequests = async (
   labels: Array<string>,
   after: string | null
 ) => {
-  const pull_requests_limit = 10
-  const assignees_limit = 10
-  const labels_limit = 10
-  const comments_limit = 100
+  const pullRequestsLimit = 10
+  const assigneesLimit = 10
+  const labelsLimit = 10
+  const commentsLimit = 100
 
-  let pullRequestVariables: any = {
-    first: { value: pull_requests_limit },
+  const pullRequestVariables: any = {
+    first: { value: pullRequestsLimit },
     states: { value: states, type: '[PullRequestState!]' },
     orderBy: {
       value: {
@@ -68,7 +68,7 @@ export const getPullRequests = async (
                     operation: 'assignees',
                     variables: {
                       first: {
-                        value: assignees_limit,
+                        value: assigneesLimit,
                       },
                     },
                     fields: [
@@ -79,7 +79,7 @@ export const getPullRequests = async (
                     operation: 'labels',
                     variables: {
                       first: {
-                        value: labels_limit,
+                        value: labelsLimit,
                       },
                     },
                     fields: [
@@ -96,7 +96,7 @@ export const getPullRequests = async (
                     operation: 'comments',
                     variables: {
                       first: {
-                        value: comments_limit,
+                        value: commentsLimit,
                       },
                     },
                     fields: [

@@ -26,5 +26,5 @@ export const checkRepository = async (
     headers: { Authorization: token },
   })
 
-  return await client.request(query.query, query.variables).then((data) => data)
+  return await client.request(query.query, query.variables)
 }

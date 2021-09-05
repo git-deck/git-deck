@@ -1,8 +1,8 @@
-import { request, GraphQLClient } from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 import * as gql from 'gql-query-builder'
 
 export const getLabels = async (token: string, owner: string, repo: string) => {
-  const labels_limit = 100
+  const labelsLimit = 100
   const query = gql.query({
     operation: 'repository',
     variables: {
@@ -20,7 +20,7 @@ export const getLabels = async (token: string, owner: string, repo: string) => {
         operation: 'labels',
         variables: {
           first: {
-            value: labels_limit,
+            value: labelsLimit,
           },
         },
         fields: [
