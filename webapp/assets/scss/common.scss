@@ -1,13 +1,13 @@
 // 共通で使うもの
 body {
-  overscroll-behavior: none;  // iOSでover scrollを防ぐ 
-                              // https://github.com/git-deck/git-deck/issues/167
+  overscroll-behavior: none; // iOSでover scrollを防ぐ
+  // https://github.com/git-deck/git-deck/issues/167
 }
 
 .container {
   height: 100vh;
   width: 100vw;
-  font-size: 14px;  
+  font-size: 14px;
 }
 
 a {
@@ -18,12 +18,11 @@ pre {
   color: white;
 }
 
-button{
+button {
   background-color: transparent;
 }
 
-
-.columns{
+.columns {
   display: flex;
 }
 

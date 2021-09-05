@@ -1,66 +1,65 @@
-.label_column{
-    
-    & > header {
-        border-bottom: 1px solid;
-        padding: 5px 15px;
-        
-        & > .labelsBlock{
-            padding: 2px 0px 0px 0px;
-            .labelsBlockmes{
-                font-size: 12px;
-            }
-            .Lab{
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
+.label_column {
+  & > header {
+    border-bottom: 1px solid;
+    padding: 5px 15px;
 
-                -webkit-box-orient: horizontal;
-                -webkit-box-direction: normal;
-                -ms-flex-direction: row;
-                flex-direction: row;
-                -ms-flex-wrap: wrap;
-                flex-wrap: wrap;
-                align-items: center;
-                .labels{
-                    font-size: 0;
-                }
-            }
-        }
-        & > .categoryBlock{
-            .categoryBlockmes{
-                font-size: 12px;
-            }
-            .Lab{
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-
-                -webkit-box-orient: horizontal;
-                -webkit-box-direction: normal;
-                -ms-flex-direction: row;
-                flex-direction: row;
-                -ms-flex-wrap: wrap;
-                flex-wrap: wrap;
-                align-items: center;
-                .labels{
-                    font-size: 0;
-                }
-            }
-        }
-    }
-    &> .bottom{
-        border-bottom: 1px solid;
-        padding: 4px 5px;
+    & > .labelsBlock {
+      padding: 2px 0px 0px 0px;
+      .labelsBlockmes {
+        font-size: 12px;
+      }
+      .Lab {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        .bottomContent{
-            margin: 0 0 0 auto;
-            .closemessage{
-                cursor: pointer;
-                font-size: 10px;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        align-items: center;
+        .labels {
+          font-size: 0;
         }
+      }
     }
+    & > .categoryBlock {
+      .categoryBlockmes {
+        font-size: 12px;
+      }
+      .Lab {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        align-items: center;
+        .labels {
+          font-size: 0;
+        }
+      }
+    }
+  }
+  & > .bottom {
+    border-bottom: 1px solid;
+    padding: 4px 5px;
+    display: flex;
+    .bottomContent {
+      margin: 0 0 0 auto;
+      .closemessage {
+        cursor: pointer;
+        font-size: 10px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }

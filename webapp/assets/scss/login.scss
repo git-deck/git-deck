@@ -1,78 +1,78 @@
 .login-page {
-    height: 100%;
-    width: 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-color: $git-black;
-    color: white;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 80px;
+  height: 100%;
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: $git-black;
+  color: white;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 80px;
+  position: absolute;
+  min-height: 500px;
+  box-sizing: border-box;
+  & > .caption {
+    width: 500px;
+    & > .title {
+      display: inline-flex;
+      font-weight: bold;
+      font-size: 36px;
+      margin-bottom: 16px;
+      align-items: flex-end;
+      .cat-icon {
+        height: 60px;
+        width: 60px;
+        margin-left: 12px;
+      }
+    }
+  }
+  .footer {
     position: absolute;
-    min-height: 500px;
-    box-sizing: border-box;
-    &>.caption{
-        width: 500px;
-        &>.title{
-            display: inline-flex;
-            font-weight: bold;
-            font-size: 36px;
-            margin-bottom: 16px;
-            align-items: flex-end;
-            .cat-icon{
-                height: 60px;
-                width: 60px;
-                margin-left: 12px;
-            }
-        }
-    }
-    .footer{
-        position:absolute;
-        bottom:0;
-        text-align:right;
-        margin:0px 15px 5px 0px;
-        width:100%;
-    }
-    
-    .login-button {
-        width: 400px;
-        background-color: white;
-        color: black;
-        padding: 20px;
-        & > .caption{
-            border-bottom: 2px solid;
-            border-color: $border;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        & > button{
-            width: 360px;
-            border: none;
-            border-radius: 24px;
-            background-color: $git-black;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            &>.github-mark{
-                color: white;
-                margin-right: 10px;
-                height: 18px;
-                width: 18px;
-            }
-        }
+    bottom: 0;
+    text-align: right;
+    margin: 0px 15px 5px 0px;
+    width: 100%;
+  }
 
-        & > .link{
-            border-top: 2px solid;
-            border-color: $border;
-            margin-top: 20px;
-            padding-top: 10px;
-        }
-    }   
+  .login-button {
+    width: 400px;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    & > .caption {
+      border-bottom: 2px solid;
+      border-color: $border;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    & > button {
+      width: 360px;
+      border: none;
+      border-radius: 24px;
+      background-color: $git-black;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      & > .github-mark {
+        color: white;
+        margin-right: 10px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    & > .link {
+      border-top: 2px solid;
+      border-color: $border;
+      margin-top: 20px;
+      padding-top: 10px;
+    }
+  }
 }

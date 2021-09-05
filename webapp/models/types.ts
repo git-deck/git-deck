@@ -1,4 +1,3 @@
-
 export type User = {
   avatarUrl: string
   url: string

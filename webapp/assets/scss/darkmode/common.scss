@@ -1,43 +1,42 @@
-.dark-mode{
-    .container{
-        color: $dark-text;
-        background-color: #0E1117;
-    }
-    a {
-        color: $git-dark-blue;
-    }
-    border-color: $border-dark;
+.dark-mode {
+  .container {
+    color: $dark-text;
+    background-color: #0e1117;
+  }
+  a {
+    color: $git-dark-blue;
+  }
+  border-color: $border-dark;
 
-    .modal-content {
-        background-color: $git-black;
-        & > .header {
-          border-color: $border-dark;
-          .material-icons {
-            color: $dark-gray;
-          }
-        }
-      
-        & > .main-contents {            
-          & > .addButton {
-            background-color: #0E1117;
-            color: $dark-text;
-            border: 1px solid $border-dark;
-            &:hover{
-                background-color: #31363B;
-                border-color: $dark-gray;
-                color: white;
-            }
-          }
-          & > .addButton:disabled {
-            background: #ccc;
-            color: white;
-          }
-      
-          & > .postButton {
-            background-color: $idea-color;
-            color: white;
-          }
+  .modal-content {
+    background-color: $git-black;
+    & > .header {
+      border-color: $border-dark;
+      .material-icons {
+        color: $dark-gray;
+      }
+    }
+
+    & > .main-contents {
+      & > .addButton {
+        background-color: #0e1117;
+        color: $dark-text;
+        border: 1px solid $border-dark;
+        &:hover {
+          background-color: #31363b;
+          border-color: $dark-gray;
+          color: white;
         }
       }
-      
+      & > .addButton:disabled {
+        background: #ccc;
+        color: white;
+      }
+
+      & > .postButton {
+        background-color: $idea-color;
+        color: white;
+      }
+    }
+  }
 }
