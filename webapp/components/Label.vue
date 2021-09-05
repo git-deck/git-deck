@@ -19,6 +19,7 @@ import Vue from 'vue'
 //   b: number
 //   isWhiteTextMode: boolean
 // }
+const COLORCODE_MAX = 255
 export default Vue.extend({
   name: 'Label',
   props: {
@@ -76,7 +77,7 @@ export default Vue.extend({
           return this.rgb(this.r, this.g, this.b)
         }
       } else {
-        return 'rgb(197,197,197)'
+        return this.Normalization(this.r, this.g, this.b)
       }
     },
     textColor(): string {
@@ -105,11 +106,24 @@ export default Vue.extend({
       if (this.$colorMode.value === 'dark') {
         return !this.disabled
       } else {
-        return this.r + this.g + this.b > 650
+        return this.r * -91 + this.g * -287 + this.b * -30 + 100000 < 0
+        // rgb(208,255,255), rgb(255,240,255), rgb(255, 255, 112)の3点を通る面を境界としたとき,上の式になる
       }
     },
     rgb(r: number, g: number, b: number): string {
       return 'rgb(' + r + ',' + g + ',' + b + ')'
+    },
+    Normalization(r: number, g: number, b: number): string {
+      const BASE = 60 * 3
+      const N_R = COLORCODE_MAX + 1 - r
+      const N_G = COLORCODE_MAX + 1 - g
+      const N_B = COLORCODE_MAX + 1 - b
+      const MUL = Math.floor(BASE / (N_R + N_G + N_B))
+      return this.rgb(
+        COLORCODE_MAX + 1 - MUL * N_R,
+        COLORCODE_MAX + 1 - MUL * N_G,
+        COLORCODE_MAX + 1 - MUL * N_B
+      )
     },
   },
 })
