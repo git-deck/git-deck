@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>callback page</div>
+</template>
 <script>
 export default {
   head: {

@@ -85,6 +85,7 @@ export default {
   markdownit: {
     injected: true,
     html: true,
+    runtime: true,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

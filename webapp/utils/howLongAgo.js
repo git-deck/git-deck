@@ -1,7 +1,7 @@
 export const howLongAgo = (time) => {
   const now = new Date()
 
-  if (now.getFullYear() != time.getFullYear()) {
+  if (now.getFullYear() !== time.getFullYear()) {
     return (
       time.getDate() +
       ' ' +

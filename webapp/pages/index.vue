@@ -78,19 +78,18 @@ export default Vue.extend({
     const user = this.$auth.user
     if (user === null) {
       throw new Error('Failed to get authorized user')
-      return
     }
     this.avatarUrl = user.avatar_url as String
     this.userName = user.login as String
     // localStorageからレポジトリを取得
-    getSavedRepository().map((repositoryName) => {
+    getSavedRepository().forEach((repositoryName) => {
       const token: string = (
         this.$auth.strategy as RefreshScheme
       ).token.get() as string
       checkRepository(token, repositoryName).then(() => {
         const split = repositoryName.split('/')
 
-        if (split.length == 2) {
+        if (split.length === 2) {
           const owner: string = split[0]
           const repo: string = split[1]
           this.append(owner, repo)

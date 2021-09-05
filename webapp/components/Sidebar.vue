@@ -179,7 +179,7 @@ export default Vue.extend({
         const token: string = (
           this.$auth.strategy as RefreshScheme
         ).token.get() as string
-        const res = await checkRepository(token, `${owner}/${repo}`)
+        await checkRepository(token, `${owner}/${repo}`)
         this.$emit('appendTimeline', owner, repo)
         saveRepositoryToLocalStorage(`${owner}/${repo}`)
         this.hideModal('column-modal')
