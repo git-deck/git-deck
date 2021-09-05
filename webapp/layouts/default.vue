@@ -17,7 +17,6 @@ export default {
         href: 'https://fonts.gstatic.com',
       },
     ],
-    title: 'GitDeck',
   },
 }
 </script>
