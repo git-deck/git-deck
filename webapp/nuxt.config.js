@@ -6,7 +6,7 @@ export default {
   head: {
     title: 'GitDeck',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ja',
     },
     meta: [
       { charset: 'utf-8' },
@@ -85,6 +85,7 @@ export default {
   markdownit: {
     injected: true,
     html: true,
+    runtime: true,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

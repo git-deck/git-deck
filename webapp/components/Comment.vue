@@ -23,12 +23,12 @@
       :class="{ dotted: readmore || (showFoldIcon && !isLongCommentOpened) }"
     ></div>
     <div class="titleItem">
-      <div v-if="(type === 'issue') | (type === 'pullRequest')">
+      <div v-if="type === 'issue' || type === 'pullRequest'">
         <a :href="url" target="_blank" class="titleLine">
           <h1 class="title">
             {{ title }}
             <span
-              v-if="(type === 'issue') | (type === 'pullRequest')"
+              v-if="type === 'issue' || type === 'pullRequest'"
               class="number"
               >#{{ number }}</span
             >
@@ -38,14 +38,12 @@
       <div v-else class="titleLine">
         <h1 class="title">
           {{ title }}
-          <span
-            v-if="(type === 'issue') | (type === 'pullRequest')"
-            class="number"
+          <span v-if="type === 'issue' || type === 'pullRequest'" class="number"
             >#{{ number }}</span
           >
         </h1>
       </div>
-      <div v-if="(type === 'issue') | (type === 'pullRequest')" class="assign">
+      <div v-if="type === 'issue' || type === 'pullRequest'" class="assign">
         <Icon
           v-for="(assignee, index) in assignees.slice(0, 3)"
           :key="index"
@@ -82,11 +80,6 @@
         :icon="Octicons.issueClosed"
         class-name="comment-type-mark issue-closed"
       />
-      <Octicon
-        v-if="type === 'idea'"
-        :icon="Octicons.lightBulb"
-        class-name="comment-type-mark idea"
-      />
     </div>
     <div ref="textarea" class="textItem" :style="{ height: textHeight }">
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
@@ -97,7 +90,8 @@
           :color="label.color"
         />
       </div>
-      <div class="textItemCon" v-html="$md.render(body)"></div>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div class="textItemCon" v-html="renderMarkdown(body)"></div>
     </div>
     <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
@@ -116,11 +110,12 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
+import Vue, { PropType, PropOptions } from 'vue'
+import { Label, User } from '@/models/types'
 // @ts-ignore
-import User from '@/models/types'
-const { Octicon, Octicons } = require('octicons-vue')
-const hljs = require('highlight.js')
+import { Octicon, Octicons } from 'octicons-vue'
+import hljs from 'highlight.js'
+
 type DataType = {
   Octicons: any
   height: Number
@@ -189,13 +184,13 @@ export default Vue.extend({
       default() {
         return []
       },
-    },
+    } as PropOptions<Label[]>,
     assignees: {
       type: Array,
       default() {
         return []
       },
-    },
+    } as PropOptions<User[]>,
   },
   data(): DataType {
     return {
@@ -257,6 +252,10 @@ export default Vue.extend({
   methods: {
     LongCommentClick() {
       this.isLongCommentOpened = !this.isLongCommentOpened
+    },
+    renderMarkdown(body: string): string {
+      // @ts-ignore
+      return this.$md.render(body)
     },
   },
 })

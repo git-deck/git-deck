@@ -1,4 +1,4 @@
-.light-mode{
+.light-mode {
   .column {
     background-color: white;
     border-color: $border;
@@ -28,14 +28,14 @@
         color: $git-blue;
       }
     }
-    
+
     & > main {
       & .comment {
         border-color: $border;
         &.reply > .iconItem::before {
           background: $border;
         }
-        & > .iconItem {  
+        & > .iconItem {
           & > .thread-line {
             background-color: $border;
           }
@@ -84,14 +84,14 @@
         & > .dateItem {
           color: gray;
         }
-        & > .readmoreItem {  
+        & > .readmoreItem {
           & > .readmore {
             color: $git-blue;
           }
-        }  
+        }
         & > .buttonItem {
           color: $git-black;
-          &:hover{
+          &:hover {
             color: $git-green;
           }
         }

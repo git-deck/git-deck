@@ -93,7 +93,7 @@ export default Vue.extend({
     } as PropOptions<LabelItem[]>,
   },
   computed: {
-    checkedlabelItems() {
+    checkedlabelItems(): LabelItem[] {
       return this.labelItems.filter((label) => !label.labelOpened)
     },
   },
