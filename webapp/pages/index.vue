@@ -7,6 +7,7 @@
         :avatar-url="avatarUrl"
         :timeline-config="timelineConfig"
         @appendTimeline="append"
+        @resetColumnWidth="resetColumnWidth"
       />
       <div>
         <draggable
@@ -18,6 +19,7 @@
           <Timeline
             v-for="(tl, index) in timelineConfig"
             :id="tl.id"
+            ref="timeline"
             :key="tl.id"
             :column-num="index"
             :owner="tl.owner"
@@ -118,6 +120,11 @@ export default Vue.extend({
     },
     addCallbacks(callback: () => void) {
       this.callbacks.push(callback)
+    },
+    resetColumnWidth() {
+      for (let i = 0; i < this.timelineConfig.length; i += 1) {
+        this.$refs.timeline[i].resetColumnWidth()
+      }
     },
   },
 })
