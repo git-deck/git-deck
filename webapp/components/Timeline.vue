@@ -372,7 +372,7 @@ export default Vue.extend({
     resetColumnWidth() {
       this.width = 320
     },
-    eHandler(data) {
+    eHandler(data: any) {
       this.width = data.width
     },
   },
