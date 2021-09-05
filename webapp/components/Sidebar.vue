@@ -68,6 +68,11 @@
             <option value="light">Light</option>
             <option value="dark">Dark</option>
           </select>
+          <br />
+          <p>カラム</p>
+          <button class="settings-button" @click="$emit('resetColumnWidth')">
+            カラムをデフォルトの幅に戻す
+          </button>
         </div>
       </div>
     </modal>
