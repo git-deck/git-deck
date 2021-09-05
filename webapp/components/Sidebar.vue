@@ -20,7 +20,7 @@
       </p>
       <button @click="logout">Log out</button>
     </div>
-    <modal name="column-modal" :click-to-close="false" :draggable="true">
+    <modal name="column-modal" :click-to-close="false">
       <div class="modal-content">
         <div class="header">
           <div class="topic">カラムを追加する</div>
@@ -53,7 +53,7 @@
         </div>
       </div>
     </modal>
-    <modal name="settings" :click-to-close="false" :draggable="true">
+    <modal name="settings" :click-to-close="false">
       <div class="modal-content">
         <div class="header">
           <div class="topic">設定画面</div>
