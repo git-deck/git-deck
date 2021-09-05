@@ -80,11 +80,6 @@
         :icon="Octicons.issueClosed"
         class-name="comment-type-mark issue-closed"
       />
-      <Octicon
-        v-if="type === 'idea'"
-        :icon="Octicons.lightBulb"
-        class-name="comment-type-mark idea"
-      />
     </div>
     <div ref="textarea" class="textItem" :style="{ height: textHeight }">
       <div v-if="type === 'issue' || type === 'pullRequest'" class="labels">
@@ -96,7 +91,7 @@
         />
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="textItemCon" v-html="$md.render(body)"></div>
+      <div class="textItemCon" v-html="renderMarkdown(body)"></div>
     </div>
     <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
@@ -257,6 +252,10 @@ export default Vue.extend({
   methods: {
     LongCommentClick() {
       this.isLongCommentOpened = !this.isLongCommentOpened
+    },
+    renderMarkdown(body: string): string {
+      // @ts-ignore
+      return this.$md.render(body)
     },
   },
 })
