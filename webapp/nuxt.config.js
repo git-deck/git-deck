@@ -17,6 +17,37 @@ export default {
         content:
           'GitDeckはGitHubリポジトリごとにタイムラインを横に並べて表示するサービスです。複数のリポジトリのIssue/Pull Requestやそこで行われている議論を一目でチェックすることができます。',
       },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'http://git-deck.work/',
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'GitDeck',
+      },
+      {
+        hid: 'og:type',
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          'GitHubの様々なリポジトリの情報をブラウザ上で一目でチェックできるサービスです',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/ogp.png',
+      },
+      {
+        hid: 'og:image',
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
