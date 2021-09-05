@@ -116,7 +116,7 @@
         </div>
       </div>
     </modal>
-    <modal name="settings" :click-to-close="false" :draggable="true">
+    <modal name="settings" :click-to-close="false">
       <div class="modal-content">
         <div class="header">
           <div class="topic">設定画面</div>
@@ -131,6 +131,11 @@
             <option value="light">Light</option>
             <option value="dark">Dark</option>
           </select>
+          <br />
+          <p>カラム</p>
+          <button class="settings-button" @click="$emit('resetColumnWidth')">
+            カラムをデフォルトの幅に戻す
+          </button>
         </div>
       </div>
     </modal>

@@ -20,6 +20,11 @@
         class="label-option"
         @click="() => $emit('clickLabel', 'labels', label.label.name)"
       >
+        <!-- 
+        今の仕様的にlabel.label.nameをキーにして
+        どの配列を触るかは'labels'というキーフレーズによって操作しているので
+        このvueファイル内でcopyを作ってそれをクリックしてもうまくlabelOpenedを操作できる
+       -->
         <span
           class="material-icons"
           :class="{ hide: label.labelOpened && allLabel.labelOpened }"
@@ -69,7 +74,7 @@ export default Vue.extend({
   computed: {
     labels(): any {
       // eslint-disable-next-line vue/no-mutating-props, vue/no-side-effects-in-computed-properties
-      return this.labelItems.sort((a: LabelItem, b: LabelItem) => {
+      return this.labelItems.slice().sort((a: LabelItem, b: LabelItem) => {
         // if (a.labelOpened && !b.labelOpened) {
         //   return -1
         // } else if (!a.labelOpened && b.labelOpened) {
