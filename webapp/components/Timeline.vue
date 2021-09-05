@@ -1,5 +1,13 @@
 <template>
-  <vue-resizable active="r" min-width="200" width="320">
+  <vue-resizable
+    active="r"
+    min-width="200"
+    :width="width"
+    @mount="eHandler"
+    @resize:move="eHandler"
+    @resize:start="eHandler"
+    @resize:end="eHandler"
+  >
     <div class="column">
       <header class="drag_handler">
         <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
@@ -83,6 +91,8 @@ type DataType = {
   pullRequestIndex: number
 
   infiniteId: number
+
+  width: number
 }
 
 export default Vue.extend({
@@ -128,6 +138,7 @@ export default Vue.extend({
       pullRequestEndCursor: null,
       pullRequestIndex: 0,
       infiniteId: 0,
+      width: 320,
     }
   },
   computed: {
@@ -357,6 +368,12 @@ export default Vue.extend({
             !this.labelItems[index].labelOpened
         }
       }
+    },
+    resetColumnWidth() {
+      this.width = 320
+    },
+    eHandler(data) {
+      this.width = data.width
     },
   },
 })
