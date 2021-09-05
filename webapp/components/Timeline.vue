@@ -1,5 +1,5 @@
 <template>
-  <vue-resizable active="r" min-width="200" width="320">
+  <vue-resizable :active="['r']" :min-width="200" :width="320">
     <div class="column">
       <header class="drag_handler">
         <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
