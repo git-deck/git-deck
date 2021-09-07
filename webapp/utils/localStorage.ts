@@ -1,6 +1,9 @@
 const ADDED_REPOSITORY = 'ADDED_REPOSITORY'
 
 export const removeRepositoryToLocalStorage = (repositoryName: string) => {
+  if (typeof window === 'undefined') {
+    return
+  }
   const repositories = JSON.parse(
     localStorage.getItem(ADDED_REPOSITORY) ?? '[]'
   )
@@ -17,6 +20,9 @@ export const removeRepositoryToLocalStorage = (repositoryName: string) => {
 }
 
 export const saveRepositoryToLocalStorage = (repositoryName: string) => {
+  if (typeof window === 'undefined') {
+    return
+  }
   const repositories = JSON.parse(
     localStorage.getItem(ADDED_REPOSITORY) ?? '[]'
   )
@@ -34,6 +40,9 @@ export const saveRepositoryToLocalStorage = (repositoryName: string) => {
 }
 
 export const getSavedRepository = () => {
+  if (typeof window === 'undefined') {
+    return []
+  }
   const str = localStorage.getItem(ADDED_REPOSITORY)
   if (str == null) return []
   const parsed = JSON.parse(str)
