@@ -25,6 +25,7 @@
             :owner="tl.owner"
             :repo="tl.repo"
             :add-callbacks="addCallbacks"
+            :add-reset-column-width-callbacks="addResetColumnWidthCallbacks"
             @closeTimeline="close"
           />
         </draggable>
@@ -45,6 +46,8 @@ import {
 } from '@/utils/localStorage'
 import { checkRepository } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
+import Timeline from '@/components/Timeline.vue'
+
 
 Vue.use(VModal)
 
@@ -54,11 +57,13 @@ type DataType = {
   avatarUrl: String
   userName: String
   callbacks: Array<() => void>
+  resetColumnWidthCallbacks: Array<() => void>
   test: any
 }
 export default Vue.extend({
   components: {
     draggable,
+    Timeline,
   },
   data(): DataType {
     return {
@@ -73,6 +78,7 @@ export default Vue.extend({
       avatarUrl: '',
       userName: '',
       callbacks: [],
+      resetColumnWidthCallbacks: [],
       test: '',
     }
   },
@@ -122,10 +128,11 @@ export default Vue.extend({
     addCallbacks(callback: () => void) {
       this.callbacks.push(callback)
     },
+    addResetColumnWidthCallbacks(callback: () => void) {
+      this.resetColumnWidthCallbacks.push(callback)
+    },
     resetColumnWidth() {
-      for (let i = 0; i < this.timelineConfig.length; i += 1) {
-        this.$refs.timeline[i].resetColumnWidth()
-      }
+      this.resetColumnWidthCallbacks.forEach((callback) => callback())
     },
   },
 })

@@ -2,8 +2,8 @@
   <span
     :style="{
       border: borderColor,
-      backgroundColor: disabled ? 'rgb(197 197 197)' : backgroundColor,
-      color: disabled ? 'white' : textColor,
+      backgroundColor: backgroundColor,
+      color: textColor,
     }"
     class="label"
     :class="{ disabled }"
@@ -33,6 +33,7 @@ export default Vue.extend({
       required: true,
     },
     disabled: {
+      // labelのオンオフを表す true->off
       type: Boolean,
       default: false,
     },
@@ -59,15 +60,29 @@ export default Vue.extend({
       return (this.r * 249 + this.g * 587 + this.b * 134) / 1000 < 172
     },
     backgroundColor(): string {
-      if (this.$colorMode.value === 'dark') {
+      if (this.disabled) {
+        if (this.$colorMode.value === 'dark') {
+          // darkmodeの背景色
+          return 'rgb(14, 17, 23)'
+        } else {
+          return 'rgb(197 197 197)'
+        }
+      } else if (this.$colorMode.value === 'dark') {
         return this.rgb(this.r * 0.2, this.g * 0.2, this.b * 0.2)
       } else {
         return this.color
       }
     },
+
     borderColor(): string {
       let returnVal: string = 'solid 0.2px '
-      if (this.$colorMode.value === 'dark') {
+      if (this.disabled) {
+        if (this.$colorMode.value === 'dark') {
+          returnVal += '#C8D1D9'
+        } else {
+          returnVal += 'rgb(197 197 197)'
+        }
+      } else if (this.$colorMode.value === 'dark') {
         if (this.getBooleanByColorInDarkMode()) {
           returnVal += this.NormalizationInDarkMode(this.r, this.g, this.b)
         } else if (this.getFixedBooleanByColorInDarkMode()) {
@@ -83,7 +98,13 @@ export default Vue.extend({
       return returnVal
     },
     textColor(): string {
-      if (this.$colorMode.value === 'dark') {
+      if (this.disabled) {
+        if (this.$colorMode.value === 'dark') {
+          return '#C8D1D9'
+        } else {
+          return 'white'
+        }
+      } else if (this.$colorMode.value === 'dark') {
         if (this.getBooleanByColorInDarkMode()) {
           return this.NormalizationInDarkMode(this.r, this.g, this.b)
         } else if (this.getFixedBooleanByColorInDarkMode()) {
@@ -148,3 +169,4 @@ export default Vue.extend({
   },
 })
 </script>
+<style lang="scss"></style>

@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="footer">
-        <p>supported by "今日もいっぱい汗角蔵"</p>
+        <p>&copy; 今日もいっぱい汗角蔵</p>
       </div>
     </div>
   </div>
