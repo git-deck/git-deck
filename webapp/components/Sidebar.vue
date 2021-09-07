@@ -101,7 +101,6 @@
                 >
                   {{ repository.name }}
                 </option>
-                <option value="リンクについて">リンクについて</option>
               </select>
             </label>
           </div>
