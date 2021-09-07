@@ -44,7 +44,6 @@ export default {
         content: '/ogp.png',
       },
       {
-        hid: 'og:image',
         name: 'twitter:card',
         content: 'summary_large_image',
       },
