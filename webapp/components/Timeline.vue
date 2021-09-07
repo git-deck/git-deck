@@ -57,7 +57,7 @@ import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 
-import VueResizable from 'vue-resizable'
+import VueResizable from '@/components/Resizable'
 import InfiniteLoading from 'vue-infinite-loading'
 
 import { Content, Issue, PullRequest, Label } from '@/models/types'
@@ -292,20 +292,20 @@ export default Vue.extend({
           this.pullRequestEndCursor = values[1].pageInfo.endCursor
 
           for (let k = 0; k < 100; k += 1) {
-            if (this.issueIndex == this.issues.length && this.issueHasNextPage)
+            if (this.issueIndex === this.issues.length && this.issueHasNextPage)
               break
             if (
-              this.pullRequestIndex == this.pullRequests.length &&
+              this.pullRequestIndex === this.pullRequests.length &&
               this.pullRequestHasNextPage
             )
               break
             if (
-              this.issueIndex == this.issues.length &&
-              this.pullRequestIndex == this.pullRequests.length
+              this.issueIndex === this.issues.length &&
+              this.pullRequestIndex === this.pullRequests.length
             )
               break
             if (
-              this.pullRequestIndex == this.pullRequests.length ||
+              this.pullRequestIndex === this.pullRequests.length ||
               (this.issueIndex < this.issues.length &&
                 this.issues[this.issueIndex].updatedAt >
                   this.pullRequests[this.pullRequestIndex].updatedAt)
@@ -313,7 +313,7 @@ export default Vue.extend({
               this.contents.push(this.issues[this.issueIndex])
               this.issueIndex += 1
             } else if (
-              this.issueIndex == this.issues.length ||
+              this.issueIndex === this.issues.length ||
               (this.pullRequestIndex < this.pullRequests.length &&
                 this.issues[this.issueIndex].updatedAt <=
                   this.pullRequests[this.pullRequestIndex].updatedAt)
