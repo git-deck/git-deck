@@ -219,8 +219,6 @@ export default {
       return
     }
 
-    console.log(window, document)
-
     document.documentElement.addEventListener(
       'mousemove',
       this.handleMove,
@@ -250,7 +248,6 @@ export default {
     if (typeof window === 'undefined') {
       return
     }
-    console.log(window, document)
     document.documentElement.removeEventListener(
       'mousemove',
       this.handleMove,

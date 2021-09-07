@@ -56,8 +56,6 @@
 import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
-
-import VueResizable from '@/components/Resizable'
 import InfiniteLoading from 'vue-infinite-loading'
 
 import { Content, Issue, PullRequest, Label } from '@/models/types'
@@ -65,6 +63,8 @@ import { getLabels } from '@/APIClient/labels'
 import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
 import { RefreshScheme } from '@nuxtjs/auth-next'
+// @ts-ignore
+import VueResizable from '@/components/Resizable'
 
 type LabelItem = {
   label: Label
