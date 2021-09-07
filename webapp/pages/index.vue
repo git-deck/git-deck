@@ -36,7 +36,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import VModal from 'vue-js-modal'
 import draggable from 'vuedraggable'
 
 import { RefreshScheme } from '@nuxtjs/auth-next'
@@ -47,9 +46,6 @@ import {
 import { checkRepository } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
 import Timeline from '@/components/Timeline.vue'
-
-
-Vue.use(VModal)
 
 type DataType = {
   timelineConfig: TimelineConfig[]
@@ -90,7 +86,7 @@ export default Vue.extend({
     this.avatarUrl = user.avatar_url as String
     this.userName = user.login as String
     // localStorageからレポジトリを取得
-    getSavedRepository().forEach((repositoryName) => {
+    getSavedRepository()?.forEach((repositoryName) => {
       const token: string = (
         this.$auth.strategy as RefreshScheme
       ).token.get() as string
