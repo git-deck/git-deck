@@ -95,6 +95,10 @@ type DataType = {
   width: number
 }
 
+type VueResizablePayload = {
+  width: number
+}
+
 export default Vue.extend({
   components: { Octicon, VueResizable, InfiniteLoading },
   props: {
@@ -111,6 +115,10 @@ export default Vue.extend({
       required: true,
     },
     addCallbacks: {
+      type: Function,
+      required: true,
+    },
+    addResetColumnWidthCallbacks: {
       type: Function,
       required: true,
     },
@@ -151,6 +159,11 @@ export default Vue.extend({
   },
   created() {
     this.getLabels()
+  },
+  mounted() {
+    this.$props.addResetColumnWidthCallbacks(() => {
+      this.resetColumnWidth()
+    })
   },
   methods: {
     infiniteHandler($state: any) {
@@ -372,7 +385,7 @@ export default Vue.extend({
     resetColumnWidth() {
       this.width = 320
     },
-    eHandler(data) {
+    eHandler(data: VueResizablePayload) {
       this.width = data.width
     },
   },
