@@ -63,7 +63,12 @@ export const getMyRepositories = async (
         },
         fields: [
           {
-            nodes: ['name'],
+            nodes: [
+              'name',
+              {
+                owner: ['login'],
+              },
+            ],
           },
         ],
       },
@@ -75,14 +80,14 @@ export const getMyRepositories = async (
   })
 
   const res = await client.request(query.query, query.variables)
-  const _repositoryNames = res.repositoryOwner.repositories.nodes.map(
-    (node: any) => node.name
+  const _repositories = res.repositoryOwner.repositories.nodes.map(
+    (node: any) => `${node.owner.login}/${node.name}`
   ) as string[]
 
-  const repositoryNames = Array.from(new Set(_repositoryNames)) // 重複排除
+  const repositories = Array.from(new Set(_repositories)) // 重複排除
 
-  return repositoryNames.map((name) => ({
-    name,
-    owner,
+  return repositories.map((repository) => ({
+    name: repository.split('/')[1],
+    owner: repository.split('/')[0],
   }))
 }

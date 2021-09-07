@@ -79,7 +79,7 @@
                 repositoryInput = repository.owner + '/' + repository.name
               "
             >
-              {{ repository.name }}
+              {{ repository.owner + '/' + repository.name }}
             </button>
             <label
               class="recommended-button show-all-button"
@@ -99,7 +99,7 @@
                   :key="repository.owner + '/' + repository.name"
                   :value="repository.owner + '/' + repository.name"
                 >
-                  {{ repository.name }}
+                  {{ repository.owner + '/' + repository.name }}
                 </option>
               </select>
             </label>
