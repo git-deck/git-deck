@@ -4,6 +4,14 @@ body {
   // https://github.com/git-deck/git-deck/issues/167
 }
 
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .container {
   height: 100vh;
   width: 100vw;
