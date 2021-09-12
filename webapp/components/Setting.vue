@@ -26,7 +26,7 @@
             v-if="!allLabel.labelOpened"
             class="labels"
             style="cursor: pointer"
-            @click="$emit('clickLabel', 'labels', -1)"
+            @click="$emit('clickLabel', 'labels', null)"
           >
             <Label0
               :color="allLabel.label.color"
