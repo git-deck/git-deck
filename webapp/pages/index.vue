@@ -9,27 +9,25 @@
         @appendTimeline="append"
         @resetColumnWidth="resetColumnWidth"
       />
-      <div>
-        <draggable
-          v-model="timelineConfig"
-          class="columns vertical-panes"
-          handle=".drag_handler"
-          animation="150"
-        >
-          <Timeline
-            v-for="(tl, index) in timelineConfig"
-            :id="tl.id"
-            ref="timeline"
-            :key="tl.id"
-            :column-num="index"
-            :owner="tl.owner"
-            :repo="tl.repo"
-            :add-callbacks="addCallbacks"
-            :add-reset-column-width-callbacks="addResetColumnWidthCallbacks"
-            @closeTimeline="close"
-          />
-        </draggable>
-      </div>
+      <draggable
+        v-model="timelineConfig"
+        class="columns vertical-panes"
+        handle=".drag_handler"
+        animation="150"
+      >
+        <Timeline
+          v-for="(tl, index) in timelineConfig"
+          :id="tl.id"
+          ref="timeline"
+          :key="tl.id"
+          :column-num="index"
+          :owner="tl.owner"
+          :repo="tl.repo"
+          :add-callbacks="addCallbacks"
+          :add-reset-column-width-callbacks="addResetColumnWidthCallbacks"
+          @closeTimeline="close"
+        />
+      </draggable>
     </div>
   </div>
 </template>

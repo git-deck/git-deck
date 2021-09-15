@@ -282,7 +282,8 @@ export default {
       const parentEl = this.$el.parentElement
       if (value) {
         this.prevState = { w: this.w, h: this.h, l: this.l, t: this.t }
-        this.t = this.l = 0
+        this.t = 0
+        this.l = 0
         this.w = parentEl.clientWidth
         this.h = parentEl.clientHeight
       } else {
@@ -480,6 +481,8 @@ export default {
 <style scoped>
 .resizable-component {
   position: relative;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .resizable-component > .resizable-r {
