@@ -1,7 +1,7 @@
 <template>
   <vue-resizable
-    active="r"
-    min-width="200"
+    :active="['r']"
+    :min-width="200"
     :width="width"
     @mount="eHandler"
     @resize:move="eHandler"
@@ -43,10 +43,15 @@
           :content="content"
           :add-callbacks="addCallbacks"
         ></ContentBox>
-        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
-          <span slot="no-more"></span>
-          <span slot="no-results"></span>
-        </infinite-loading>
+        <no-ssr placeholder="Loading...">
+          <infinite-loading
+            :identifier="infiniteId"
+            @infinite="infiniteHandler"
+          >
+            <span slot="no-more"></span>
+            <span slot="no-results"></span>
+          </infinite-loading>
+        </no-ssr>
       </main>
     </div>
   </vue-resizable>
