@@ -1,7 +1,7 @@
 <template>
   <vue-resizable
-    active="r"
-    min-width="200"
+    :active="['r']"
+    :min-width="200"
     :width="width"
     @mount="eHandler"
     @resize:move="eHandler"
@@ -43,10 +43,15 @@
           :content="content"
           :add-callbacks="addCallbacks"
         ></ContentBox>
-        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
-          <span slot="no-more"></span>
-          <span slot="no-results"></span>
-        </infinite-loading>
+        <no-ssr placeholder="Loading...">
+          <infinite-loading
+            :identifier="infiniteId"
+            @infinite="infiniteHandler"
+          >
+            <span slot="no-more"></span>
+            <span slot="no-results"></span>
+          </infinite-loading>
+        </no-ssr>
       </main>
     </div>
   </vue-resizable>
@@ -56,8 +61,6 @@
 import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
-
-import VueResizable from 'vue-resizable'
 import InfiniteLoading from 'vue-infinite-loading'
 
 import { Content, Issue, PullRequest, Label } from '@/models/types'
@@ -65,6 +68,8 @@ import { getLabels } from '@/APIClient/labels'
 import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
 import { RefreshScheme } from '@nuxtjs/auth-next'
+// @ts-ignore
+import VueResizable from '@/components/Resizable'
 
 type LabelItem = {
   label: Label
@@ -292,20 +297,20 @@ export default Vue.extend({
           this.pullRequestEndCursor = values[1].pageInfo.endCursor
 
           for (let k = 0; k < 100; k += 1) {
-            if (this.issueIndex == this.issues.length && this.issueHasNextPage)
+            if (this.issueIndex === this.issues.length && this.issueHasNextPage)
               break
             if (
-              this.pullRequestIndex == this.pullRequests.length &&
+              this.pullRequestIndex === this.pullRequests.length &&
               this.pullRequestHasNextPage
             )
               break
             if (
-              this.issueIndex == this.issues.length &&
-              this.pullRequestIndex == this.pullRequests.length
+              this.issueIndex === this.issues.length &&
+              this.pullRequestIndex === this.pullRequests.length
             )
               break
             if (
-              this.pullRequestIndex == this.pullRequests.length ||
+              this.pullRequestIndex === this.pullRequests.length ||
               (this.issueIndex < this.issues.length &&
                 this.issues[this.issueIndex].updatedAt >
                   this.pullRequests[this.pullRequestIndex].updatedAt)
@@ -313,7 +318,7 @@ export default Vue.extend({
               this.contents.push(this.issues[this.issueIndex])
               this.issueIndex += 1
             } else if (
-              this.issueIndex == this.issues.length ||
+              this.issueIndex === this.issues.length ||
               (this.pullRequestIndex < this.pullRequests.length &&
                 this.issues[this.issueIndex].updatedAt <=
                   this.pullRequests[this.pullRequestIndex].updatedAt)

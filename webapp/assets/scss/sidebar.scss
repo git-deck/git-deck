@@ -104,6 +104,10 @@ $sidebar-width: 60px;
 
 .vertical-panes {
   margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  flex-wrap: nowrap;
 }
 
 .column-add-modal .main-contents {

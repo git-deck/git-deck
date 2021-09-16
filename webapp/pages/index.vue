@@ -9,34 +9,31 @@
         @appendTimeline="append"
         @resetColumnWidth="resetColumnWidth"
       />
-      <div>
-        <draggable
-          v-model="timelineConfig"
-          class="columns vertical-panes"
-          handle=".drag_handler"
-          animation="150"
-        >
-          <Timeline
-            v-for="(tl, index) in timelineConfig"
-            :id="tl.id"
-            ref="timeline"
-            :key="tl.id"
-            :column-num="index"
-            :owner="tl.owner"
-            :repo="tl.repo"
-            :add-callbacks="addCallbacks"
-            :add-reset-column-width-callbacks="addResetColumnWidthCallbacks"
-            @closeTimeline="close"
-          />
-        </draggable>
-      </div>
+      <draggable
+        v-model="timelineConfig"
+        class="columns vertical-panes"
+        handle=".drag_handler"
+        animation="150"
+      >
+        <Timeline
+          v-for="(tl, index) in timelineConfig"
+          :id="tl.id"
+          ref="timeline"
+          :key="tl.id"
+          :column-num="index"
+          :owner="tl.owner"
+          :repo="tl.repo"
+          :add-callbacks="addCallbacks"
+          :add-reset-column-width-callbacks="addResetColumnWidthCallbacks"
+          @closeTimeline="close"
+        />
+      </draggable>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import VModal from 'vue-js-modal'
 import draggable from 'vuedraggable'
 
 import { RefreshScheme } from '@nuxtjs/auth-next'
@@ -47,9 +44,6 @@ import {
 import { checkRepository } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
 import Timeline from '@/components/Timeline.vue'
-
-
-Vue.use(VModal)
 
 type DataType = {
   timelineConfig: TimelineConfig[]
@@ -90,7 +84,7 @@ export default Vue.extend({
     this.avatarUrl = user.avatar_url as String
     this.userName = user.login as String
     // localStorageからレポジトリを取得
-    getSavedRepository().forEach((repositoryName) => {
+    getSavedRepository()?.forEach((repositoryName) => {
       const token: string = (
         this.$auth.strategy as RefreshScheme
       ).token.get() as string
