@@ -21,3 +21,13 @@
     }
   }
 }
+
+.light-mode .setting-button {
+  background: white;
+  border: 2px solid $git-black;
+  color: $git-black;
+  &:active,
+  &:hover {
+    background: rgb(239, 239, 239);
+  }
+}

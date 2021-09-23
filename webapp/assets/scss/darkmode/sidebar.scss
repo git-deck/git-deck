@@ -27,3 +27,20 @@
     }
   }
 }
+
+
+.dark-mode .setting-button {
+  background: $border-dark;
+  border: 1px solid $dark-gray;
+  &:active,
+  &:hover {
+    background: $dark-gray;
+  }
+  select, button{
+    color: $dark-text;
+    &:active,
+    &:hover {
+      color: $git-black;
+    }
+  }
+}

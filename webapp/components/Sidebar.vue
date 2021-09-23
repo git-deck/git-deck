@@ -125,16 +125,20 @@
         </div>
         <div class="main-contents">
           <p>カラーモード</p>
-          <select v-model="$colorMode.preference">
-            <option value="system">System</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
+          <label class="setting-button">
+            <select v-model="$colorMode.preference">
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
           <br />
           <p>カラム</p>
-          <button class="settings-button" @click="$emit('resetColumnWidth')">
-            カラムをデフォルトの幅に戻す
-          </button>
+          <div class="setting-button">
+            <button @click="$emit('resetColumnWidth')">
+              カラムをデフォルトの幅に戻す
+            </button>
+          </div>
         </div>
       </div>
     </modal>
