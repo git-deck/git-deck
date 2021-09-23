@@ -140,7 +140,7 @@ $sidebar-width: 60px;
       padding: 4px 12px;
       flex-shrink: 0;
       border-radius: 99px;
-      ackground: white;
+      background: white;
       border: 2px solid $git-black;
       color: $git-black;
       font-weight: bold;
@@ -199,6 +199,31 @@ $sidebar-width: 60px;
           }
         }
       }
+    }
+  }
+}
+
+.setting-button {
+  padding: 4px 12px;
+  flex-shrink: 0;
+  border-radius: 99px;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  margin-right: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  select,button {
+    background: transparent;
+    padding: 4px 12px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    &:focus,
+    &:active {
+      outline: none;
+      border: none;
     }
   }
 }
