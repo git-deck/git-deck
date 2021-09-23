@@ -375,15 +375,20 @@ export default Vue.extend({
             this.labelItems.map((element) => (element.labelOpened = true))
             this.allLabel.labelOpened = false
           } else {
-            this.allLabel.labelOpened = !this.allLabel.labelOpened
+            // this.allLabel.labelOpened = !this.allLabel.labelOpened
           }
         } else if (!this.allLabel.labelOpened) {
-          this.allLabel.labelOpened = !this.allLabel.labelOpened
+          this.allLabel.labelOpened = true
           this.labelItems[index].labelOpened =
             !this.labelItems[index].labelOpened
         } else {
           this.labelItems[index].labelOpened =
             !this.labelItems[index].labelOpened
+          if (
+            this.labelItems.every((element) => element.labelOpened === true)
+          ) {
+            this.allLabel.labelOpened = false
+          }
         }
       }
     },
