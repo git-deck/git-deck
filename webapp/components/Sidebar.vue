@@ -132,13 +132,13 @@
               <option value="dark">Dark</option>
             </select>
           </label>
-          <br />
           <p>カラム</p>
           <div class="setting-button">
             <button @click="$emit('resetColumnWidth')">
               カラムをデフォルトの幅に戻す
             </button>
           </div>
+          <p>お問い合わせは<a href="https://forms.gle/yJQT8uy4qRCHfjtG7" target="_blank">こちら</a>から</p>
         </div>
       </div>
     </modal>
