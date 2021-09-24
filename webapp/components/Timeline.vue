@@ -422,7 +422,7 @@ const CATEGORY_LABELS: LabelItem[] = [
       color: '#bd2c00',
       name: 'closed',
     },
-    labelOpened: false,
+    labelOpened: true,
   },
   {
     label: {
