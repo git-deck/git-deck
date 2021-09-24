@@ -349,6 +349,7 @@ export default Vue.extend({
 
     search() {
       this.clearContents()
+      this.settingOpened = false
     },
 
     // ラベル絞り込みボタンの開閉
