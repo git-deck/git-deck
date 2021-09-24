@@ -20,6 +20,7 @@ COPY webapp /home
 WORKDIR /home
 # パッケージインストール
 RUN yarn
+RUN yarn generate
 
 # productionモードで立ち上げ
 ARG GITHUB_CLIENT_ID
