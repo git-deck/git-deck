@@ -91,7 +91,7 @@
         />
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="textItemCon" v-html="renderMarkdown(body)"></div>
+      <div class="textItemCon" v-html="$sanitize(renderMarkdown(body))"></div>
     </div>
     <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
@@ -115,6 +115,7 @@ import { Label, User } from '@/models/types'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import hljs from 'highlight.js'
+import sanitizeHTML from 'sanitize-html'
 
 type DataType = {
   Octicons: any
@@ -122,6 +123,9 @@ type DataType = {
   isLongCommentOpened: boolean
   MAX_COMMENT_HEIGT: Number
 }
+
+Vue.prototype.$sanitize = sanitizeHTML
+
 export default Vue.extend({
   components: { Octicon },
   props: {
