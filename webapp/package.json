@@ -18,6 +18,7 @@
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/google-adsense": "^1.4.0",
     "@nuxtjs/markdownit": "^2.0.0",
+    "@types/sanitize-html": "^2.3.2",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
     "gql-query-builder": "^3.5.5",
@@ -28,6 +29,7 @@
     "nuxt": "^2.15.3",
     "nuxt-webfontloader": "^1.1.0",
     "octicons-vue": "^1.0.10",
+    "sanitize-html": "^2.5.1",
     "vue-infinite-loading": "^2.4.5",
     "vue-js-modal": "^2.0.0-rc.6",
     "vuedraggable": "^2.24.3"
