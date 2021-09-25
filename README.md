@@ -1,7 +1,7 @@
 ![ヘッダー画像](/resourse/readme-header.png)
 ## GitHubの通知は分散しすぎてわからない！
 GitDeckはそんなあなたに向けたサービスです<br>
-複数リポジトリの情報を一画面でチェックできたり、issueにも満たないアイデアを投稿することができます
+複数リポジトリの情報を一画面でチェックできます
 
 [デモ動画](https://user-images.githubusercontent.com/34413567/124460483-63a7b680-ddca-11eb-88b9-5b6755f1f10a.mov)
 
