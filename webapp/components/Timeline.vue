@@ -349,6 +349,7 @@ export default Vue.extend({
 
     search() {
       this.clearContents()
+      this.settingOpened = false
     },
 
     // ラベル絞り込みボタンの開閉
@@ -422,7 +423,7 @@ const CATEGORY_LABELS: LabelItem[] = [
       color: '#bd2c00',
       name: 'closed',
     },
-    labelOpened: false,
+    labelOpened: true,
   },
   {
     label: {

@@ -63,8 +63,8 @@ export default Vue.extend({
     return {
       timelineConfig: [
         {
-          owner: 'habara-k',
-          repo: 'gitdeck-tutorial',
+          owner: 'git-deck',
+          repo: 'tutorial',
           id: Math.floor(Math.random() * 1000000000),
         },
       ],
