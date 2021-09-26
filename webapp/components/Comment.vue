@@ -91,7 +91,7 @@
         />
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="textItemCon" v-html="$sanitize(renderMarkdown(body))"></div>
+      <div class="textItemCon" v-html="$sanitize(renderMarkdown(body),{allowedTags: $sanitize.defaults.allowedTags.concat([ 'img' ])})"></div>
     </div>
     <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
