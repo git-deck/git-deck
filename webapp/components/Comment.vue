@@ -233,6 +233,16 @@ export default Vue.extend({
       })
     },
   },
+  updated() {
+    const elms = document.querySelectorAll('.language-vue')
+    elms.forEach((elm) => {
+      elm.classList.remove('language-vue')
+      elm.classList.add('language-html')
+    })
+    if (document.getElementsByTagName('code').length > 0) {
+      hljs.highlightAll()
+    }
+  },
   mounted() {
     this.$props.addCallbacks(() => {
       if (
@@ -246,14 +256,6 @@ export default Vue.extend({
     if (this.$refs.textarea != null && this.$refs.textarea instanceof Element) {
       const tmp = this.$refs.textarea.clientHeight
       this.height = tmp
-    }
-    const elms = document.querySelectorAll('.language-vue')
-    elms.forEach((elm) => {
-      elm.classList.remove('language-vue')
-      elm.classList.add('language-html')
-    })
-    if (document.getElementsByTagName('code').length > 0) {
-      hljs.highlightAll()
     }
   },
   methods: {
