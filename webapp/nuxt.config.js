@@ -87,6 +87,7 @@ export default {
     injected: true,
     html: true,
     runtime: true,
+    use: ['markdown-it-emoji']
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
