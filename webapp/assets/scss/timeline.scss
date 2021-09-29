@@ -191,10 +191,9 @@
       }
       & > .textItem {
         grid-area: areaText;
-        margin: 0px 7px 4px 7px;
+        margin: 0px 7px;
         word-break: break-all;
         font-size: 12px;
-        margin-bottom: 8px;
         overflow-y: hidden;
         overflow-x: scroll;
         .labels {
@@ -210,8 +209,18 @@
           flex-wrap: wrap;
           align-items: center;
         }
-        .textItemCon {
+        & > .textItemCon {
           margin-top: 4px;
+
+          & p {
+            margin-bottom: 0.8em;
+          }
+
+          & blockquote {
+            position: relative;
+            padding: 0 1em;
+            border-left: 0.2em solid;
+          }
         }
       }
       & > .readmoreItem {

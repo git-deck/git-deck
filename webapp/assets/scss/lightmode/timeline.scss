@@ -84,6 +84,14 @@
         & > .dateItem {
           color: gray;
         }
+        & > .textItem {
+          & > .textItemCon {
+            & blockquote {
+              border-color: $border;
+              color: #57606a;
+            }
+          }
+        }
         & > .readmoreItem {
           & > .readmore {
             color: $git-blue;
