@@ -20,12 +20,7 @@ COPY webapp /home
 WORKDIR /home
 # パッケージインストール
 RUN yarn
+# 開発サーバー立ち上げ(installの差分がある場合実行に時間がかかる)
+CMD sh -c "yarn install && yarn run dev"
 
-# productionモードで立ち上げ
-ARG GITHUB_CLIENT_ID
-ARG GITHUB_CLIENT_SECRET
-ENV NUXT_ENV_GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID
-ENV NUXT_ENV_GITHUB_CLIENT_SECRET=$GITHUB_CLIENT_SECRET
-ENV HOST=0.0.0.0
-RUN yarn build
-CMD sh -c "yarn run start"
+ENV CHOKIDAR_USEPOLLING=true
