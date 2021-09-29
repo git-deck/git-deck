@@ -138,7 +138,13 @@
               カラムをデフォルトの幅に戻す
             </button>
           </div>
-          <p>お問い合わせは<a href="https://forms.gle/yJQT8uy4qRCHfjtG7" target="_blank">こちら</a>から</p>
+          <p>
+            お問い合わせは<a
+              href="https://forms.gle/yJQT8uy4qRCHfjtG7"
+              target="_blank"
+              >こちら</a
+            >から
+          </p>
         </div>
       </div>
     </modal>
@@ -168,6 +174,7 @@ Vue.directive('focus', {
   },
 })
 export default Vue.extend({
+  name: 'Sidebar',
   props: {
     userName: {
       type: String,
