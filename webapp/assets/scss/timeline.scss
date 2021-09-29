@@ -221,6 +221,15 @@
             padding: 0 1em;
             border-left: 0.2em solid;
           }
+
+          & table {
+            border-collapse: collapse;
+            & th,
+            & td {
+              padding: 4px 12px;
+              border: 1px solid;
+            }
+          }
         }
       }
       & > .readmoreItem {

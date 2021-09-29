@@ -84,6 +84,17 @@
               border-color: #8b949e;
               color: #8b949e;
             }
+
+            & table {
+              & th,
+              & td {
+                border-color: #30363d;
+              }
+
+              & tr:nth-child(even) {
+                background: rgb(22, 27, 23);
+              }
+            }
           }
         }
         & > .readmoreItem {
