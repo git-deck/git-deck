@@ -4,8 +4,10 @@ services:
     container_name: gitdeck
     # 対話モード
     tty: true
-    # Dockerfileの場所
-    build: .
+    # dockerfileの場所
+    build:
+        context: .
+        dockerfile: Dockerfile.dev
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
