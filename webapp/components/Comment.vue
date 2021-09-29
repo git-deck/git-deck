@@ -91,7 +91,7 @@
         />
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="textItemCon" v-html="$sanitize(renderMarkdown(body))"></div>
+      <div class="textItemCon" v-html="htmlBody"></div>
     </div>
     <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
@@ -123,8 +123,6 @@ type DataType = {
   isLongCommentOpened: boolean
   MAX_COMMENT_HEIGT: Number
 }
-
-Vue.prototype.$sanitize = sanitizeHTML
 
 export default Vue.extend({
   components: { Octicon },
@@ -228,6 +226,11 @@ export default Vue.extend({
       } else {
         return '▼'
       }
+    },
+    htmlBody(): string {
+      return sanitizeHTML(this.renderMarkdown(this.body), {
+        allowedTags: sanitizeHTML.defaults.allowedTags.concat(['img']),
+      })
     },
   },
   mounted() {
