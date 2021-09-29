@@ -34,8 +34,6 @@ export const getPullRequests = async (
     pullRequestVariables.after = { value: after }
   }
 
-  console.log('pullRequestVariables:', pullRequestVariables)
-
   const query = gql.query({
     operation: 'repository',
     variables: {

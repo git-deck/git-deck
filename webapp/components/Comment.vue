@@ -229,7 +229,7 @@ export default Vue.extend({
     },
     htmlBody(): string {
       return sanitizeHTML(this.renderMarkdown(this.body), {
-        allowedTags: sanitizeHTML.defaults.allowedTags.concat(['img']),
+        allowedTags: sanitizeHTML.defaults.allowedTags.concat(['img', 'del']),
       })
     },
   },

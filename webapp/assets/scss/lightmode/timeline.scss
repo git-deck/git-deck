@@ -84,6 +84,25 @@
         & > .dateItem {
           color: gray;
         }
+        & > .textItem {
+          & > .textItemCon {
+            & blockquote {
+              border-color: $border;
+              color: #57606a;
+            }
+
+            & table {
+              & th,
+              & td {
+                border-color: #d0d7de;
+              }
+
+              & tr:nth-child(even) {
+                background: rgb(246, 248, 250);
+              }
+            }
+          }
+        }
         & > .readmoreItem {
           & > .readmore {
             color: $git-blue;
