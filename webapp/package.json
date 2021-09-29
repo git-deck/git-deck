@@ -26,6 +26,7 @@
     "graphql-request": "^3.5.0",
     "highlight.js": "^11.2.0",
     "markdown-it": "^12.0.6",
+    "markdown-it-emoji": "^2.0.0",
     "nuxt": "^2.15.3",
     "nuxt-webfontloader": "^1.1.0",
     "octicons-vue": "^1.0.10",
