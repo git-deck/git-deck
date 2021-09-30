@@ -7,8 +7,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: cd webapp && yarn install && yarn generate
         env:
-          NUXT_ENV_GITHUB_CLIENT_ID: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_ID }}'
-          NUXT_ENV_GITHUB_CLIENT_SECRET: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_SECRET }}'
+          GITHUB_CLIENT_ID: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_ID }}'
+          GITHUB_CLIENT_SECRET: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_SECRET }}'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
