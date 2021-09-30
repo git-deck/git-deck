@@ -5,9 +5,7 @@ services:
     # 対話モード
     tty: true
     # dockerfileの場所
-    build:
-        context: .
-        dockerfile: Dockerfile.dev
+    build: .
     # ホストOSとコンテナ内でソースコードを共有する
     # cachedで高速化
     volumes:
