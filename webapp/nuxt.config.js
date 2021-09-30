@@ -96,6 +96,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
+  generate: {
+    dir: 'public'
+  },
+
   // WebFontLoader
   webfontloader: {
     google: {
@@ -105,21 +109,39 @@ export default {
 
   env: {},
 
-  auth: {
-    strategies: {
-      github: {
-        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
-        scope: 'repo',
+  // auth: {
+  //   strategies: {
+  //     github: {
+  //       clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+  //       clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
+  //       scope: 'repo',
+  //     },
+  //   },
+  //   redirect: {
+  //     login: '/login',
+  //     logout: '/login',
+  //     callback: '/callback',
+  //     home: '/',
+  //   },
+  // },
+
+  publicRuntimeConfig: {
+    auth: {
+      strategies: {
+        github: {
+          clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+          clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
+          scope: 'repo',
+        },
+      },
+      redirect: {
+        login: '/login',
+        logout: '/login',
+        callback: '/callback',
+        home: '/',
       },
     },
-    redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: '/callback',
-      home: '/',
-    },
-  },
+  }
 
   // typescript: {
   //  typeCheck: {
