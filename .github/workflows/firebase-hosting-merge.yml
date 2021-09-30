@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install && yarn generate
+      - run: cd webapp && yarn install && yarn generate
         env:
           NUXT_ENV_GITHUB_CLIENT_ID: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_ID }}'
           NUXT_ENV_GITHUB_CLIENT_SECRET: '${{ secrets.NUXT_ENV_GITHUB_CLIENT_SECRET }}'
