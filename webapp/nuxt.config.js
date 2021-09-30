@@ -109,39 +109,21 @@ export default {
 
   env: {},
 
-  // auth: {
-  //   strategies: {
-  //     github: {
-  //       clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-  //       clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
-  //       scope: 'repo',
-  //     },
-  //   },
-  //   redirect: {
-  //     login: '/login',
-  //     logout: '/login',
-  //     callback: '/callback',
-  //     home: '/',
-  //   },
-  // },
-
-  publicRuntimeConfig: {
-    auth: {
-      strategies: {
-        github: {
-          clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-          clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
-          scope: 'repo',
-        },
-      },
-      redirect: {
-        login: '/login',
-        logout: '/login',
-        callback: '/callback',
-        home: '/',
+  auth: {
+    strategies: {
+      github: {
+        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
+        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
+        scope: 'repo',
       },
     },
-  }
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/callback',
+      home: '/',
+    },
+  },
 
   // typescript: {
   //  typeCheck: {
