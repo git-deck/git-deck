@@ -5,9 +5,11 @@ GitDeckはそんなあなたに向けたサービスです<br>
 
 [デモ動画](https://user-images.githubusercontent.com/34413567/134767993-63f1ecb0-d04f-4234-973f-c3415f34ff38.mov)
 
+## 技育祭-開発／スキル支援部門最優秀賞👑
+2021年9月18日~26日に開催された[技育祭2021](https://talent.supporterz.jp/events/b89ddfc0-d4d0-4a9a-8092-14376eb89e85/)にて学生4人で参加し、[最優秀賞](https://twitter.com/chomado/status/1446741326834196481?s=21)を受賞しました🎉🎉🎉
 
 ## 技育CAMPハッカソン最優秀賞👑
-2021年7月3日〜4日に開催された[サポーターズ 技育CAMP ハッカソンvol.5「開発を効率化するアプリケーションを作ろう！」](https://talent.supporterz.jp/events/b89ddfc0-d4d0-4a9a-8092-14376eb89e85/)にて学生4人で制作し、[最優秀賞](https://twitter.com/geek_pjt/status/1411617994032046085?s=20)を受賞しました🎉🎉🎉
+2021年7月3日〜4日に開催された[サポーターズ 技育CAMP ハッカソンvol.5「開発を効率化するアプリケーションを作ろう！」](https://talent.supporterz.jp/geekten/2021/)にて学生4人で制作し、[最優秀賞](https://twitter.com/geek_pjt/status/1411617994032046085?s=20)を受賞しました🎉🎉🎉
 
 ハッカソン成果発表会での発表スライドは[こちら](https://docs.google.com/presentation/d/1OADEi6gixuiuqC9YDkTika9M2B2zQLtKWK73cejNURE/edit?usp=sharing)
 
