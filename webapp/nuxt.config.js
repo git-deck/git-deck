@@ -129,10 +129,4 @@ export default {
       enabled: process.env.NODE_ENV === 'production'
      }),
   ],
-
-  // typescript: {
-  //  typeCheck: {
-  //    async: false
-  //  }
-  // }
 }
