@@ -19,7 +19,7 @@
     "@nuxtjs/google-adsense": "^1.4.0",
     "@nuxtjs/markdownit": "^2.0.0",
     "@types/sanitize-html": "^2.3.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "core-js": "^3.9.1",
     "gql-query-builder": "^3.5.5",
     "graphql": "^15.5.1",
