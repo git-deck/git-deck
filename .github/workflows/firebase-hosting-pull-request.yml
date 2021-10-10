@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd webapp && yarn && yarn generate NUXT_ENV_GITHUB_CLIENT_ID=$CLIENT_ID NUXT_ENV_GITHUB_CLIENT_SECRET=$CLIENT_SECRET
+      - run: cd webapp && yarn && NUXT_ENV_GITHUB_CLIENT_ID=$CLIENT_ID NUXT_ENV_GITHUB_CLIENT_SECRET=$CLIENT_SECRET yarn generate
         env:
           CLIENT_ID: '${{ secrets.FIREBASE_PR_GITHUB_CLIENT_ID }}'
           CLIENT_SECRET: '${{ secrets.FIREBASE_PR_GITHUB_CLIENT_SECRET }}'
