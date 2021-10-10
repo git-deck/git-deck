@@ -27,7 +27,7 @@
     "highlight.js": "^11.2.0",
     "markdown-it": "^12.0.6",
     "markdown-it-emoji": "^2.0.0",
-    "nuxt": "^2.15.3",
+    "nuxt": "^2.13.3",
     "nuxt-webfontloader": "^1.1.0",
     "octicons-vue": "^1.0.10",
     "sanitize-html": "^2.5.1",
@@ -46,7 +46,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.7.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "prettier": "^2.2.1",
     "sass-loader": "^10.1.1"
   }
