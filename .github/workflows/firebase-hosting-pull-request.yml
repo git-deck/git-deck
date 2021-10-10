@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd webapp && yarn && yarn generate
+        env:
+          NUXT_ENV_GITHUB_CLIENT_ID: '${{ secrets.FIREBASE_PR_GITHUB_CLIENT_ID }}'
+          NUXT_ENV_GITHUB_CLIENT_SECRET: '${{ secrets.FIREBASE_PR_GITHUB_CLIENT_SECRET }}'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
