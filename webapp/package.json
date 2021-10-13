@@ -13,8 +13,6 @@
     "format:fix": "prettier \"**/*.{js,ts,vue}\" --write --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.9.1",
-    "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/google-adsense": "^1.4.0",
     "@nuxtjs/markdownit": "^2.0.0",

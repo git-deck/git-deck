@@ -74,7 +74,6 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-webfontloader',
-    '@nuxtjs/auth-next',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
     '@nuxtjs/google-adsense',
@@ -105,22 +104,6 @@ export default {
   },
 
   env: {},
-
-  auth: {
-    strategies: {
-      github: {
-        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
-        scope: 'repo',
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: '/callback',
-      home: '/',
-    },
-  },
 
   // typescript: {
   //  typeCheck: {
