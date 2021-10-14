@@ -1,7 +1,8 @@
+import { NuxtConfig } from '@nuxt/types'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
-  target: 'server',
+  ssr: true,
+  target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -57,7 +58,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: "~/plugins/vue-js-modal", ssr: false },
+    { src: '~/plugins/vue-js-modal', mode: 'client' },
+    { src: '~/plugins/getAccessToken', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -67,6 +69,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    'nuxt-typed-vuex',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -76,12 +79,13 @@ export default {
     'nuxt-webfontloader',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
-    '@nuxtjs/google-adsense',
+    // '@nuxtjs/google-adsense',
+    '@nuxtjs/firebase',
   ],
 
-  'google-adsense': {
-    id: 'ca-pub-3253334117542861',
-  },
+  // 'google-adsense': {
+  //   id: 'ca-pub-3253334117542861',
+  // },
 
   markdownit: {
     injected: true,
@@ -90,11 +94,33 @@ export default {
     use: ['markdown-it-emoji'],
   },
 
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyDb61ZJTnYm5IqaPEgmM_x3pe8H9rc9a2Y',
+      authDomain: 'git-deck-720f1.firebaseapp.com',
+      projectId: 'git-deck-720f1',
+      storageBucket: 'git-deck-720f1.appspot.com',
+      messagingSenderId: '206323601716',
+      appId: '1:206323601716:web:7cb9b126d8fafea69cd561',
+      measurementId: 'G-G1M2XXC55X',
+    },
+    services: {
+      auth: {
+        initialize: {
+          onAuthStateChangedAction: 'auth/onAuthStateChanged',
+        },
+        ssr: true,
+      },
+    },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [/typed-vuex/],
+  },
 
   // WebFontLoader
   webfontloader: {
@@ -110,4 +136,4 @@ export default {
   //    async: false
   //  }
   // }
-}
+} as NuxtConfig
