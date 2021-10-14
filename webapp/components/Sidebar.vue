@@ -156,7 +156,6 @@ import Vue, { PropType } from 'vue'
 import { checkRepository, getMyRepositories } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
-import { RefreshScheme } from '@nuxtjs/auth-next'
 
 type DataType = {
   repositoryInput: string
@@ -213,9 +212,10 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    const token: string = (
-      this.$auth.strategy as RefreshScheme
-    ).token.get() as string
+    const token = this.$accessor.auth.accessToken
+    if (token == null) {
+      return
+    }
     this.myRepositories = await getMyRepositories(token, this.userName)
   },
   methods: {
@@ -282,9 +282,10 @@ export default Vue.extend({
 
       const self = this
       try {
-        const token: string = (
-          this.$auth.strategy as RefreshScheme
-        ).token.get() as string
+        const token = this.$accessor.auth.accessToken
+        if (token == null) {
+          return
+        }
         await checkRepository(token, `${owner}/${repo}`)
         saveRepositoryToLocalStorage(`${owner}/${repo}`)
         this.$emit('appendTimeline', owner, repo)
@@ -307,8 +308,14 @@ export default Vue.extend({
     clickMyAvatar() {
       this.isOpenedPulldownMenu = !this.isOpenedPulldownMenu
     },
-    logout() {
-      this.$auth.logout()
+    async logout() {
+      try {
+        await this.$fire.auth.signOut()
+        this.$router.push('/login')
+      } catch (e) {
+        console.error(e)
+        alert('エラーが発生しました')
+      }
     },
   },
 })

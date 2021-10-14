@@ -36,7 +36,6 @@
 import Vue from 'vue'
 import draggable from 'vuedraggable'
 
-import { RefreshScheme } from '@nuxtjs/auth-next'
 import {
   getSavedRepository,
   removeRepositoryToLocalStorage,
@@ -59,6 +58,7 @@ export default Vue.extend({
     draggable,
     Timeline,
   },
+  middleware: ['auth'],
   data(): DataType {
     return {
       timelineConfig: [
@@ -77,21 +77,19 @@ export default Vue.extend({
     }
   },
   created() {
-    const user = this.$auth.user
-    if (user === null) {
-      throw new Error('Failed to get authorized user')
+    const token = this.$accessor.auth.accessToken
+    // const user = this.$auth.user
+    if (token == null) {
+      this.$router.push('/login')
+      return
     }
-    this.avatarUrl = user.avatar_url as String
-    this.userName = user.login as String
+    // this.avatarUrl = user.avatar_url as String
+    // this.userName = user.login as String
     // localStorageからレポジトリを取得
     getSavedRepository()?.forEach((repositoryName) => {
-      const token: string = (
-        this.$auth.strategy as RefreshScheme
-      ).token.get() as string
       // TODO: 順番が保存されなさそう
       checkRepository(token, repositoryName).then(() => {
         const split = repositoryName.split('/')
-
         if (split.length === 2) {
           const owner: string = split[0]
           const repo: string = split[1]
