@@ -123,7 +123,7 @@ export const getPullRequests = async (
   })
 
   const client = new GraphQLClient('https://api.github.com/graphql', {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   })
 
   return await client.request(query.query, query.variables).then((data) => {

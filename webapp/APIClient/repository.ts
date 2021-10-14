@@ -23,7 +23,7 @@ export const checkRepository = async (
   })
 
   const client = new GraphQLClient('https://api.github.com/graphql', {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   })
 
   return await client.request(query.query, query.variables)
@@ -76,7 +76,7 @@ export const getMyRepositories = async (
   })
 
   const client = new GraphQLClient('https://api.github.com/graphql', {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   })
 
   const res = await client.request(query.query, query.variables)
