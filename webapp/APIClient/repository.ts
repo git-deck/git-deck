@@ -80,9 +80,9 @@ export const getMyRepositories = async (
   })
 
   const res = await client.request(query.query, query.variables)
-  const _repositories = res.repositoryOwner.repositories.nodes.map(
+  const _repositories = (res.repositoryOwner?.repositories?.nodes?.map(
     (node: any) => `${node.owner.login}/${node.name}`
-  ) as string[]
+  ) ?? []) as string[]
 
   const repositories = Array.from(new Set(_repositories)) // 重複排除
 

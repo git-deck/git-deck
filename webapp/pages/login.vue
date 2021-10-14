@@ -47,6 +47,11 @@ export default Vue.extend({
       Octicons,
     }
   },
+  created() {
+    if (this.$accessor.auth.isLoggedIn) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     loginWithGitHub() {
       try {
