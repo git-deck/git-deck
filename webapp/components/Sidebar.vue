@@ -142,6 +142,7 @@
             お問い合わせは<a
               href="https://forms.gle/yJQT8uy4qRCHfjtG7"
               target="_blank"
+              rel="noopener noreferrer"
               >こちら</a
             >から
           </p>

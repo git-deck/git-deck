@@ -23,7 +23,12 @@
         </button>
         <div class="link">
           New to GitHub?
-          <a href="https://github.com/signup" target="_blank">Sign up now »</a>
+          <a
+            href="https://github.com/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Sign up now »</a
+          >
         </div>
       </div>
       <div class="footer">

@@ -7,7 +7,12 @@
     }"
   >
     <div class="iconItem">
-      <a v-if="author != null" :href="author.url">
+      <a
+        v-if="author != null"
+        :href="author.url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Icon :avatar-url="author.avatarUrl" :class="type" />
       </a>
       <Icon
@@ -24,7 +29,12 @@
     ></div>
     <div class="titleItem">
       <div v-if="type === 'issue' || type === 'pullRequest'">
-        <a :href="url" target="_blank" class="titleLine">
+        <a
+          :href="url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="titleLine"
+        >
           <h1 class="title">
             {{ title }}
             <span
