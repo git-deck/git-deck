@@ -1,5 +1,5 @@
 import { Plugin } from '@nuxt/types'
-import firebase from 'firebase'
+import firebase from '~/utils/firebase'
 import { getAccessTokenFromLocalStorage } from '~/utils/localStorage'
 
 const getAccessTokenPlugin: Plugin = async ({ $accessor }) => {

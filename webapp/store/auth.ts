@@ -1,5 +1,5 @@
 import { getterTree, mutationTree, actionTree } from 'typed-vuex'
-import firebase from 'firebase'
+import firebase from '~/utils/firebase'
 import { AuthUser } from '~/models/types'
 import { getUsername } from '~/APIClient/user'
 import { saveAccessTokenToLocalStorage } from '~/utils/localStorage'
