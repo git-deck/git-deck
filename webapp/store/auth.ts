@@ -2,6 +2,7 @@ import { getterTree, mutationTree, actionTree } from 'typed-vuex'
 import firebase from 'firebase'
 import { AuthUser } from '~/models/types'
 import { getUsername } from '~/APIClient/user'
+import { saveAccessTokenToLocalStorage } from '~/utils/localStorage'
 
 export const state = () => ({
   authUser: null as AuthUser | null,
@@ -26,6 +27,7 @@ export const mutations = mutationTree(state, {
   },
   SET_ACCESS_TOKEN(state, accessToken: string | null) {
     state.accessToken = accessToken
+    saveAccessTokenToLocalStorage(accessToken)
   },
   SET_USER_NAME(state, userName: string | null) {
     state.userName = userName

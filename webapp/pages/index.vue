@@ -36,7 +36,7 @@ import draggable from 'vuedraggable'
 
 import {
   getSavedRepository,
-  removeRepositoryToLocalStorage,
+  removeRepositoryFromLocalStorage,
 } from '@/utils/localStorage'
 import { checkRepository } from '@/APIClient/repository'
 import { TimelineConfig } from '@/models/types'
@@ -102,7 +102,7 @@ export default Vue.extend({
         (x: TimelineConfig) => x.id === id
       )
       const reponame = `${this.timelineConfig[index].owner}/${this.timelineConfig[index].repo}`
-      removeRepositoryToLocalStorage(reponame)
+      removeRepositoryFromLocalStorage(reponame)
       this.timelineConfig.splice(index, 1)
     },
     resized() {
