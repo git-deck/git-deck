@@ -90,3 +90,6 @@ sw.*
 *.swp
 
 package-lock.json
+
+# firebase
+.firebase
