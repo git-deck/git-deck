@@ -1,10 +1,12 @@
 import { getterTree, mutationTree, actionTree } from 'typed-vuex'
 import firebase from 'firebase'
 import { AuthUser } from '~/models/types'
+import { getUsername } from '~/APIClient/user'
 
 export const state = () => ({
   authUser: null as AuthUser | null,
   accessToken: null as string | null,
+  userName: null as string | null,
 })
 
 export type RootState = ReturnType<typeof state>
@@ -15,15 +17,23 @@ export const getters = getterTree(state, {
 
 export const mutations = mutationTree(state, {
   SET_AUTH_USER(state, authUser: firebase.User) {
-    const { uid, email } = authUser
-    state.authUser = { uid, email }
+    const { uid, email, photoURL } = authUser
+    state.authUser = {
+      uid,
+      email: email as string,
+      avaterUrl: photoURL as string,
+    }
   },
   SET_ACCESS_TOKEN(state, accessToken: string | null) {
     state.accessToken = accessToken
   },
+  SET_USER_NAME(state, userName: string | null) {
+    state.userName = userName
+  },
   RESET_USER(state) {
     state.authUser = null
     state.accessToken = null
+    state.userName = null
   },
 })
 
@@ -37,8 +47,15 @@ export const actions = actionTree(
         commit('RESET_USER')
       }
     },
-    setGithubAccessToken({ commit }, accessToken: string | null) {
+    async setGithubAccessToken({ commit, state }, accessToken: string | null) {
       commit('SET_ACCESS_TOKEN', accessToken)
+      if (
+        accessToken != null &&
+        (state.userName == null || state.accessToken !== accessToken)
+      ) {
+        const userName = await getUsername(accessToken)
+        commit('SET_USER_NAME', userName)
+      }
     },
   }
 )

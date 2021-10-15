@@ -62,5 +62,6 @@ export type TimelineConfig = {
 
 export type AuthUser = {
   uid: string
-  email: string | null
+  email: string
+  avaterUrl: string
 }

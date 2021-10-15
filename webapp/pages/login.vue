@@ -55,6 +55,8 @@ export default Vue.extend({
   methods: {
     loginWithGitHub() {
       try {
+        // NOTE: 直前にURLを変更することでfirebaseのリダイレクト先を`/`にする
+        history.pushState({}, '', '/')
         const provider = new this.$fireModule.auth.GithubAuthProvider()
         provider.addScope('repo')
         this.$fire.auth.signInWithRedirect(provider)

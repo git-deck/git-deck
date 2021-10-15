@@ -3,8 +3,6 @@
     <div class="container">
       <Sidebar
         ref="sidebar"
-        :user-name="userName"
-        :avatar-url="avatarUrl"
         :timeline-config="timelineConfig"
         @appendTimeline="append"
         @resetColumnWidth="resetColumnWidth"
@@ -47,8 +45,6 @@ import Timeline from '@/components/Timeline.vue'
 type DataType = {
   timelineConfig: TimelineConfig[]
   addingColumnErrorMsg: String
-  avatarUrl: String
-  userName: String
   callbacks: Array<() => void>
   resetColumnWidthCallbacks: Array<() => void>
   test: any
@@ -69,8 +65,6 @@ export default Vue.extend({
         },
       ],
       addingColumnErrorMsg: '',
-      avatarUrl: '',
-      userName: '',
       callbacks: [],
       resetColumnWidthCallbacks: [],
       test: '',
@@ -78,13 +72,10 @@ export default Vue.extend({
   },
   created() {
     const token = this.$accessor.auth.accessToken
-    // const user = this.$auth.user
     if (token == null) {
       this.$router.push('/login')
       return
     }
-    // this.avatarUrl = user.avatar_url as String
-    // this.userName = user.login as String
     // localStorageからレポジトリを取得
     getSavedRepository()?.forEach((repositoryName) => {
       // TODO: 順番が保存されなさそう
