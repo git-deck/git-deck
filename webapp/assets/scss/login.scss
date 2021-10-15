@@ -60,6 +60,9 @@
       padding: 10px;
       font-size: 16px;
       font-weight: bold;
+      &:hover {
+        cursor: pointer;
+      }
       & > .github-mark {
         color: white;
         margin-right: 10px;
