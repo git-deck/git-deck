@@ -79,7 +79,7 @@ export default {
     'nuxt-webfontloader',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
-    // '@nuxtjs/google-adsense',
+    '@nuxtjs/google-adsense',
     '@nuxtjs/firebase',
   ],
 
