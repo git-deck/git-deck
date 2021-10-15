@@ -96,13 +96,13 @@ export default {
 
   firebase: {
     config: {
-      apiKey: 'AIzaSyDb61ZJTnYm5IqaPEgmM_x3pe8H9rc9a2Y',
-      authDomain: 'git-deck-720f1.firebaseapp.com',
-      projectId: 'git-deck-720f1',
-      storageBucket: 'git-deck-720f1.appspot.com',
-      messagingSenderId: '206323601716',
-      appId: '1:206323601716:web:7cb9b126d8fafea69cd561',
-      measurementId: 'G-G1M2XXC55X',
+      apiKey: process.env.NUXT_ENV_API_KEY,
+      authDomain: process.env.NUXT_ENV_AUTH_DOMAIN,
+      projectId: process.env.NUXT_ENV_PROJECT_ID,
+      storageBucket: process.env.NUXT_ENV_STORAGE_BUCKET,
+      messagingSenderId: process.env.NUXT_ENV_MESSAGING_SENDER_ID,
+      appId: process.env.NUXT_ENV_APP_ID,
+      measurementId: process.env.NUXT_ENV_MEASUREMENT_ID,
     },
     services: {
       auth: {

@@ -36,6 +36,7 @@ export const mutations = mutationTree(state, {
     state.authUser = null
     state.accessToken = null
     state.userName = null
+    saveAccessTokenToLocalStorage(null)
   },
 })
 
