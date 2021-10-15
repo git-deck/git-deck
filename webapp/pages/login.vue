@@ -42,14 +42,29 @@ type DataType = {
 }
 export default Vue.extend({
   components: { Octicon },
+  middleware: ['unauth'],
   data(): DataType {
     return {
       Octicons,
     }
   },
+  created() {
+    if (this.$accessor.auth.isLoggedIn) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     loginWithGitHub() {
-      this.$auth.loginWith('github')
+      try {
+        // NOTE: 直前にURLを変更することでfirebaseのリダイレクト先を`/`にする
+        history.pushState({}, '', '/')
+        const provider = new this.$fireModule.auth.GithubAuthProvider()
+        provider.addScope('repo')
+        this.$fire.auth.signInWithRedirect(provider)
+      } catch (e) {
+        console.error(e)
+        alert('エラーが発生しました')
+      }
     },
   },
 })

@@ -139,3 +139,6 @@ db/data/*
 backend/migrations
 
 !.gitkeep
+
+# firabase
+firebase-auth-sw.js

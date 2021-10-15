@@ -59,3 +59,9 @@ export type TimelineConfig = {
   repo: string
   id: number
 }
+
+export type AuthUser = {
+  uid: string
+  email: string
+  avaterUrl: string
+}

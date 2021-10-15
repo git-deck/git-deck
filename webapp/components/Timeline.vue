@@ -62,12 +62,11 @@ import Vue from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import InfiniteLoading from 'vue-infinite-loading'
-
 import { Content, Issue, PullRequest, Label } from '@/models/types'
 import { getLabels } from '@/APIClient/labels'
 import { getIssues } from '@/APIClient/issues'
 import { getPullRequests } from '@/APIClient/pullRequests'
-import { RefreshScheme } from '@nuxtjs/auth-next'
+
 // @ts-ignore
 import VueResizable from '@/components/Resizable'
 
@@ -230,9 +229,10 @@ export default Vue.extend({
         filter.labels = labels
       }
 
-      const token: string = (
-        this.$auth.strategy as RefreshScheme
-      ).token.get() as string
+      const token = this.$accessor.auth.accessToken
+      if (token == null) {
+        return
+      }
       return await getIssues(
         token,
         this.owner,
@@ -270,9 +270,10 @@ export default Vue.extend({
         }
       }
 
-      const token: string = (
-        this.$auth.strategy as RefreshScheme
-      ).token.get() as string
+      const token = this.$accessor.auth.accessToken
+      if (token == null) {
+        return
+      }
       return await getPullRequests(
         token,
         this.owner,
@@ -288,7 +289,7 @@ export default Vue.extend({
         this.getIssues(this.issueEndCursor),
         this.getPullRequests(this.pullRequestEndCursor),
       ])
-        .then((values) => {
+        .then((values: any) => {
           this.issues.push(...values[0].issues)
           this.issueHasNextPage = values[0].pageInfo.hasNextPage
           this.issueEndCursor = values[0].pageInfo.endCursor
@@ -335,9 +336,10 @@ export default Vue.extend({
     },
 
     getLabels() {
-      const token: string = (
-        this.$auth.strategy as RefreshScheme
-      ).token.get() as string
+      const token = this.$accessor.auth.accessToken
+      if (token == null) {
+        return
+      }
       getLabels(token, this.owner, this.repo)
         .then((data) => {
           this.labelItems = data

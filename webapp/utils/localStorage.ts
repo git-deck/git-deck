@@ -1,6 +1,7 @@
 const ADDED_REPOSITORY = 'ADDED_REPOSITORY'
+const ACCESS_TOKEN = 'ACCESS_TOKEN'
 
-export const removeRepositoryToLocalStorage = (repositoryName: string) => {
+export const removeRepositoryFromLocalStorage = (repositoryName: string) => {
   if (typeof window === 'undefined') {
     return
   }
@@ -51,4 +52,17 @@ export const getSavedRepository = () => {
   } else {
     return []
   }
+}
+
+export const saveAccessTokenToLocalStorage = (accessToken: string | null) => {
+  if (accessToken == null) {
+    localStorage.removeItem(ACCESS_TOKEN)
+  } else {
+    localStorage.setItem(ACCESS_TOKEN, accessToken)
+  }
+}
+
+export const getAccessTokenFromLocalStorage = () => {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN)
+  return typeof accessToken === 'string' ? accessToken : null
 }

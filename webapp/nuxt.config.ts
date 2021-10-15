@@ -1,7 +1,8 @@
+import { NuxtConfig } from '@nuxt/types'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
-  target: 'server',
+  ssr: true,
+  target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -57,7 +58,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: "~/plugins/vue-js-modal", ssr: false },
+    { src: '~/plugins/vue-js-modal', mode: 'client' },
+    { src: '~/plugins/getAccessToken', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -67,6 +69,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    'nuxt-typed-vuex',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -74,15 +77,15 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-webfontloader',
-    '@nuxtjs/auth-next',
     '@nuxtjs/markdownit',
     '@nuxtjs/color-mode',
     '@nuxtjs/google-adsense',
+    '@nuxtjs/firebase',
   ],
 
-  'google-adsense': {
-    id: 'ca-pub-3253334117542861',
-  },
+  // 'google-adsense': {
+  //   id: 'ca-pub-3253334117542861',
+  // },
 
   markdownit: {
     injected: true,
@@ -91,11 +94,33 @@ export default {
     use: ['markdown-it-emoji'],
   },
 
+  firebase: {
+    config: {
+      apiKey: process.env.NUXT_ENV_API_KEY,
+      authDomain: process.env.NUXT_ENV_AUTH_DOMAIN,
+      projectId: process.env.NUXT_ENV_PROJECT_ID,
+      storageBucket: process.env.NUXT_ENV_STORAGE_BUCKET,
+      messagingSenderId: process.env.NUXT_ENV_MESSAGING_SENDER_ID,
+      appId: process.env.NUXT_ENV_APP_ID,
+      measurementId: process.env.NUXT_ENV_MEASUREMENT_ID,
+    },
+    services: {
+      auth: {
+        initialize: {
+          onAuthStateChangedAction: 'auth/onAuthStateChanged',
+        },
+        ssr: true,
+      },
+    },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [/typed-vuex/],
+  },
 
   // WebFontLoader
   webfontloader: {
@@ -106,25 +131,9 @@ export default {
 
   env: {},
 
-  auth: {
-    strategies: {
-      github: {
-        clientId: process.env.NUXT_ENV_GITHUB_CLIENT_ID || '',
-        clientSecret: process.env.NUXT_ENV_GITHUB_CLIENT_SECRET || '',
-        scope: 'repo',
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/login',
-      callback: '/callback',
-      home: '/',
-    },
-  },
-
   // typescript: {
   //  typeCheck: {
   //    async: false
   //  }
   // }
-}
+} as NuxtConfig

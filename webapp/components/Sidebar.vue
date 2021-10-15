@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="menu">
       <button @click="clickMyAvatar">
-        <Icon :avatar-url="avatarUrl" />
+        <Icon :avatar-url="authUser.avaterUrl" />
       </button>
       <div class="sidebar-button">
         <button style="padding-bottom: 0" @click="showModal('settings')">
@@ -154,9 +154,8 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { checkRepository, getMyRepositories } from '@/APIClient/repository'
-import { TimelineConfig } from '@/models/types'
+import { AuthUser, TimelineConfig } from '@/models/types'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
-import { RefreshScheme } from '@nuxtjs/auth-next'
 
 type DataType = {
   repositoryInput: string
@@ -176,14 +175,6 @@ Vue.directive('focus', {
 export default Vue.extend({
   name: 'Sidebar',
   props: {
-    userName: {
-      type: String,
-      required: true,
-    },
-    avatarUrl: {
-      type: String,
-      required: true,
-    },
     timelineConfig: {
       type: Array as PropType<Array<TimelineConfig>>,
       required: true,
@@ -201,6 +192,12 @@ export default Vue.extend({
     }
   },
   computed: {
+    authUser(): AuthUser {
+      return this.$accessor.auth.authUser as AuthUser
+    },
+    userName(): string | null {
+      return this.$accessor.auth.userName
+    },
     inputIsValid(): boolean {
       const res = this.repositoryInput.match(
         /^https:\/\/github\.com\/(?<owner>.+)\/(?<repo>.+)/
@@ -212,11 +209,13 @@ export default Vue.extend({
       )
     },
   },
-  async mounted() {
-    const token: string = (
-      this.$auth.strategy as RefreshScheme
-    ).token.get() as string
-    this.myRepositories = await getMyRepositories(token, this.userName)
+  watch: {
+    async userName() {
+      const token = this.$accessor.auth.accessToken
+      if (token != null && this.userName != null) {
+        this.myRepositories = await getMyRepositories(token, this.userName)
+      }
+    },
   },
   methods: {
     showModal(name: string) {
@@ -282,9 +281,10 @@ export default Vue.extend({
 
       const self = this
       try {
-        const token: string = (
-          this.$auth.strategy as RefreshScheme
-        ).token.get() as string
+        const token = this.$accessor.auth.accessToken
+        if (token == null) {
+          return
+        }
         await checkRepository(token, `${owner}/${repo}`)
         saveRepositoryToLocalStorage(`${owner}/${repo}`)
         this.$emit('appendTimeline', owner, repo)
@@ -307,8 +307,14 @@ export default Vue.extend({
     clickMyAvatar() {
       this.isOpenedPulldownMenu = !this.isOpenedPulldownMenu
     },
-    logout() {
-      this.$auth.logout()
+    async logout() {
+      try {
+        await this.$fire.auth.signOut()
+        this.$router.push('/login')
+      } catch (e) {
+        console.error(e)
+        alert('エラーが発生しました')
+      }
     },
   },
 })

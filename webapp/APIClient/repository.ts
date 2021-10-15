@@ -23,7 +23,7 @@ export const checkRepository = async (
   })
 
   const client = new GraphQLClient('https://api.github.com/graphql', {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   })
 
   return await client.request(query.query, query.variables)
@@ -76,13 +76,13 @@ export const getMyRepositories = async (
   })
 
   const client = new GraphQLClient('https://api.github.com/graphql', {
-    headers: { Authorization: token },
+    headers: { Authorization: `Bearer ${token}` },
   })
 
   const res = await client.request(query.query, query.variables)
-  const _repositories = res.repositoryOwner.repositories.nodes.map(
+  const _repositories = (res.repositoryOwner?.repositories?.nodes?.map(
     (node: any) => `${node.owner.login}/${node.name}`
-  ) as string[]
+  ) ?? []) as string[]
 
   const repositories = Array.from(new Set(_repositories)) // 重複排除
 
