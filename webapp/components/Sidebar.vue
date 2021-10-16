@@ -62,48 +62,51 @@
             </datalist>
           </fieldset>
           <hr class="separator" />
-          <p>または自分のレポジトリから選ぶ</p>
-          <div class="repository-recommend hide-scrollbar">
-            <button
-              v-for="repository in myRepositories.slice(0, 5)"
-              :key="repository.owner + '/' + repository.name"
-              class="recommended-button"
-              :class="{
-                selected:
-                  repositoryInput === repository.owner + '/' + repository.name,
-              }"
-              :aria-pressed="
-                repositoryInput === repository.owner + '/' + repository.name
-              "
-              @click="
-                repositoryInput = repository.owner + '/' + repository.name
-              "
-            >
-              {{ repository.owner + '/' + repository.name }}
-            </button>
-            <label
-              class="recommended-button show-all-button"
-              :class="{
-                selected:
-                  othersSelectedRepository === repositoryInput &&
-                  othersSelectedRepository !== '',
-              }"
-            >
-              <select
-                v-model="othersSelectedRepository"
-                @change="repositoryInput = $event.target.value"
+          <template v-if="myRepositories.length > 0">
+            <p>または自分のレポジトリから選ぶ</p>
+            <div class="repository-recommend hide-scrollbar">
+              <button
+                v-for="repository in myRepositories.slice(0, 5)"
+                :key="repository.owner + '/' + repository.name"
+                class="recommended-button"
+                :class="{
+                  selected:
+                    repositoryInput ===
+                    repository.owner + '/' + repository.name,
+                }"
+                :aria-pressed="
+                  repositoryInput === repository.owner + '/' + repository.name
+                "
+                @click="
+                  repositoryInput = repository.owner + '/' + repository.name
+                "
               >
-                <option value="">他のリポジトリ</option>
-                <option
-                  v-for="repository in myRepositories"
-                  :key="repository.owner + '/' + repository.name"
-                  :value="repository.owner + '/' + repository.name"
+                {{ repository.owner + '/' + repository.name }}
+              </button>
+              <label
+                class="recommended-button show-all-button"
+                :class="{
+                  selected:
+                    othersSelectedRepository === repositoryInput &&
+                    othersSelectedRepository !== '',
+                }"
+              >
+                <select
+                  v-model="othersSelectedRepository"
+                  @change="repositoryInput = $event.target.value"
                 >
-                  {{ repository.owner + '/' + repository.name }}
-                </option>
-              </select>
-            </label>
-          </div>
+                  <option value="">他のリポジトリ</option>
+                  <option
+                    v-for="repository in myRepositories"
+                    :key="repository.owner + '/' + repository.name"
+                    :value="repository.owner + '/' + repository.name"
+                  >
+                    {{ repository.owner + '/' + repository.name }}
+                  </option>
+                </select>
+              </label>
+            </div>
+          </template>
           <div style="color: red">{{ errorMsg }}</div>
           <button
             class="addButton"
@@ -272,13 +275,14 @@ export default Vue.extend({
       const repo: String = parsed[2]
 
       // 既に登録済みのリポジトリを追加しない
-      if (
-        this.timelineConfig.some(
-          (tl: TimelineConfig) => tl.owner === owner && tl.repo === repo
-        )
-      ) {
-        return
-      }
+      // if (
+      //   this.timelineConfig.some(
+      //     (tl: TimelineConfig) => tl.owner === owner && tl.repo === repo
+      //   )
+      // ) {
+      //   this.isSearchingRepository = false
+      //   return
+      // }
 
       const self = this
       try {
