@@ -1,23 +1,23 @@
 // タイムライン
 .column {
-  flex: 0 0 auto;
-  height: 100vh;
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
-  border-right: 6px solid;
+  height: 100vh;
   overflow-x: hidden;
+  border-right: 6px solid;
 
   // ヘッダー
   & > header {
-    border-bottom: 1px solid;
     display: flex;
-    padding: 20px 10px;
     height: 60px;
+    padding: 20px 10px;
     cursor: move;
+    border-bottom: 1px solid;
 
     .repoicon {
-      height: 18px;
       width: 18px;
+      height: 18px;
       padding-right: 6px;
       margin-left: 7px;
     }
@@ -29,13 +29,13 @@
       }
     }
     .tune {
-      border: none;
       width: 20px;
       height: 20px;
-      background: transparent;
-      cursor: pointer;
       padding: 0;
       margin-right: -8px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
       border-radius: 2px;
       .material-icons {
         font-size: 20px;
@@ -43,30 +43,30 @@
     }
 
     .refresh {
-      margin-right: 8px;
-      padding: 0;
-      border: none;
       width: 20px;
       height: 20px;
+      padding: 0;
+      margin-right: 8px;
       cursor: pointer;
+      border: none;
       .material-icons {
         font-size: 20px;
       }
     }
 
     .title {
-      flex: 1;
       // 2行を超えるタイトルは…で省略
       display: -webkit-box;
+      flex: 1;
+      margin-right: 7px;
+      overflow: hidden;
+      line-height: tight;
+      word-break: break-all;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-      overflow: hidden;
-      word-break: break-all;
-      line-height: tight;
       & > .reponame {
         font-weight: bold;
       }
-      margin-right: 7px;
     }
   }
 
@@ -76,71 +76,71 @@
     overflow-y: scroll;
 
     & .comment {
-      padding-top: 12px;
-      padding-left: 12px;
-      padding-right: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid;
       display: grid;
-      grid-template-rows: min-content 1fr;
-      grid-template-columns: 35px 1fr max-content min-content;
       grid-template-areas:
         'areaIcon         areaTitle areaDate areaMark'
         'areaIcon         areaText  areaText areaText'
         'threadLine readmore  readmore areaButton';
+      grid-template-rows: min-content 1fr;
+      grid-template-columns: 35px 1fr max-content min-content;
+      padding-top: 12px;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      border-bottom: 1px solid;
 
       &.reply > .iconItem::before {
-        content: '';
         position: absolute;
         top: 0;
         left: 50%;
-        transform: translateX(-70%); // 目測で調整
-        height: 12px;
         width: 3px;
+        height: 12px;
         margin-top: -12px;
+        content: '';
+        transform: translateX(-70%); // 目測で調整
       }
 
       & > .iconItem {
         position: relative;
-        grid-area: areaIcon;
         display: flex;
         flex-direction: column;
+        grid-area: areaIcon;
         align-items: center;
 
         & > .thread-line {
           flex: 1;
-          width: 3px;
           justify-content: center;
+          width: 3px;
         }
       }
 
       & > .threadLine {
         grid-area: threadLine;
+        margin: 0 auto;
         border-right: 3px solid $border;
+        transition: all 0.3s;
         &.dotted {
           border-right: 3px dotted $border;
         }
-        margin: 0 auto;
-        transition: all 0.3s;
       }
 
       & > .titleItem {
         grid-area: areaTitle;
         min-width: 0;
-        word-break: break-all;
         margin: 0 7px;
+        word-break: break-all;
         .titleLine {
-          cursor: pointer;
-          transition: all 0.2s;
           text-decoration: underline;
           text-decoration-color: transparent;
+          cursor: pointer;
+          transition: all 0.2s;
           &:hover {
             text-decoration-color: inherit;
           }
           & > .title {
-            font-weight: bold;
-            font-size: 12px;
             margin-bottom: 4px;
+            font-size: 12px;
+            font-weight: bold;
             & > .number {
               font-weight: normal;
             }
@@ -152,8 +152,8 @@
           align-items: flex-end;
           margin: 4px 0px 4px 0px;
           .assigner {
-            height: 20px;
             width: 20px;
+            height: 20px;
             margin-right: 1px;
           }
         }
@@ -161,9 +161,9 @@
       & > .markItem {
         grid-area: areaMark;
         .comment-type-mark {
-          height: 20px;
-          width: 20px;
           display: table-cell;
+          width: 20px;
+          height: 20px;
           border-radius: 50%;
         }
         .pull-request-open {
@@ -192,22 +192,22 @@
       & > .textItem {
         grid-area: areaText;
         margin: 0px 7px;
-        word-break: break-all;
-        font-size: 12px;
-        overflow-y: hidden;
         overflow-x: scroll;
+        overflow-y: hidden;
+        font-size: 12px;
+        word-break: break-all;
         .labels {
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
-
-          -webkit-box-orient: horizontal;
-          -webkit-box-direction: normal;
           -ms-flex-direction: row;
           flex-direction: row;
           -ms-flex-wrap: wrap;
           flex-wrap: wrap;
           align-items: center;
+
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
         }
         & > .textItemCon {
           margin-top: 4px;
@@ -233,8 +233,8 @@
         }
       }
       & > .readmoreItem {
-        margin-top: 4px;
         grid-area: readmore;
+        margin-top: 4px;
 
         & > .readmore {
           font-size: 12px;
@@ -248,15 +248,15 @@
 
       & > .buttonItem {
         grid-area: areaButton;
-        border: none;
         cursor: pointer;
         background-color: transparent;
+        border: none;
       }
     }
     & .thread {
+      min-height: 60px;
       padding-bottom: 0;
       border-bottom: none;
-      min-height: 60px;
     }
 
     .loading {

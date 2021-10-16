@@ -16,16 +16,16 @@
     }
 
     button {
-      background-color: $git-black;
       color: white;
+      background-color: $git-black;
     }
   }
 }
 
 .light-mode .setting-button {
+  color: $git-black;
   background: white;
   border: 2px solid $git-black;
-  color: $git-black;
   &:active,
   &:hover {
     background: rgb(239, 239, 239);

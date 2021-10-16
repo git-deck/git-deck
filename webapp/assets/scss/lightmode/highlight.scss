@@ -1,8 +1,8 @@
 .light-mode {
   pre code.hljs {
     display: block;
-    overflow-x: auto;
     padding: 1em;
+    overflow-x: auto;
   }
   code.hljs {
     padding: 3px 5px;
@@ -71,19 +71,19 @@
     color: #24292e;
   }
   .hljs-section {
-    color: #005cc5;
     font-weight: 700;
+    color: #005cc5;
   }
   .hljs-bullet {
     color: #735c0f;
   }
   .hljs-emphasis {
-    color: #24292e;
     font-style: italic;
+    color: #24292e;
   }
   .hljs-strong {
-    color: #24292e;
     font-weight: 700;
+    color: #24292e;
   }
   .hljs-addition {
     color: #22863a;

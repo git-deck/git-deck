@@ -16,13 +16,13 @@
     }
 
     button {
-      background-color: #21262c;
       color: $dark-text;
+      background-color: #21262c;
       border: 1px solid $border-dark;
       &:hover {
+        color: white;
         background-color: #31363b;
         border-color: $dark-gray;
-        color: white;
       }
     }
   }
