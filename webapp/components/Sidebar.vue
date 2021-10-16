@@ -153,7 +153,8 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
+import Vue from 'vue'
+import type { PropType } from 'vue'
 import { checkRepository, getMyRepositories } from '@/APIClient/repository'
 import { AuthUser, TimelineConfig } from '@/models/types'
 import { saveRepositoryToLocalStorage } from '@/utils/localStorage'
