@@ -9,7 +9,10 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --cache --quiet --ignore-path .gitignore .",
     "lint:css": "stylelint --cache --quiet --ignore-path .gitignore **/*.{css,scss,sass}",
+    "lint:css:fix": "stylelint --fix --ignore-path .gitignore **/*.{css,scss,sass}",
+    "lint:js:fix": "eslint --ext \".js,.vue\" --fix --ignore-path .gitignore .",
     "lint": "yarn lint:js & yarn lint:css",
+    "lint:fix": "yarn lint:js:fix & yarn lint:css:fix",
     "format": "prettier \"**/*.{js,ts,vue}\" --check --list-different --ignore-path .gitignore .",
     "format:fix": "prettier \"**/*.{js,ts,vue}\" --write --ignore-path .gitignore ."
   },
