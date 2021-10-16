@@ -10,6 +10,7 @@ jobs:
         with:
           node-version: "14.x"
           cache: "yarn"
+          cache-dependency-path: "./webapp/yarn.lock"
       - name: install
         run: |
           cd ./webapp
