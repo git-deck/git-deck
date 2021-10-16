@@ -13,8 +13,8 @@
     "lint:js:fix": "eslint --ext \".js,.vue\" --fix --ignore-path .gitignore .",
     "lint": "yarn lint:js & yarn lint:css",
     "lint:fix": "yarn lint:js:fix & yarn lint:css:fix",
-    "format": "prettier \"**/*.{js,ts,vue}\" --check --ignore-path .gitignore .",
-    "format:fix": "prettier \"**/*.{js,ts,vue}\" --write --ignore-path .gitignore ."
+    "format": "prettier  --check  \"**/*.{js,ts,vue}\"",
+    "format:fix": "prettier  --write \"**/*.{js,ts,vue}\""
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",

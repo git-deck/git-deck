@@ -5,7 +5,12 @@ module.exports = {
     browser: true,
     node: true,
   },
-  ignorePatterns: ["static/**/*", "dist/**/*", "**/node_modules/**/*", "asset/**/*"],
+  ignorePatterns: [
+    'static/**/*',
+    'dist/**/*',
+    '**/node_modules/**/*',
+    'asset/**/*',
+  ],
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended',
