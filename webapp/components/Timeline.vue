@@ -425,7 +425,7 @@ export default Vue.extend({
 })
 
 const DUMMY_GITDECK_AUTHOR = {
-  avatarUrl: 'https://avatars.githubusercontent.com/u/88451681?v=4',
+  avatarUrl: '/icon.png',
   login: 'git-deck',
   url: 'https://github.com/git-deck',
 }
