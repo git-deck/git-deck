@@ -12,9 +12,21 @@
       <header class="drag_handler">
         <span> <Octicon :icon="Octicons.repo" class-name="repoicon" /> </span>
         <span class="title">
-          <a class="username" :href="ownerUrl" target="_blank">{{ owner }}</a>
+          <a
+            class="username"
+            :href="ownerUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ owner }}</a
+          >
           /
-          <a class="reponame" :href="repoUrl" target="_blank">{{ repo }}</a>
+          <a
+            class="reponame"
+            :href="repoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ repo }}</a
+          >
         </span>
         <button class="refresh" @click="search">
           <span class="material-icons"> replay </span>
