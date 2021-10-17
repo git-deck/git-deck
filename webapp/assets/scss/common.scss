@@ -1,7 +1,7 @@
 // 共通で使うもの
 body {
   overscroll-behavior: none; // iOSでover scrollを防ぐ
-  // https://github.com/git-deck/git-deck/issues/167
+  font-family: sans-serif;
 }
 
 .hide-scrollbar {
