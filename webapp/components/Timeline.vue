@@ -302,7 +302,27 @@ export default Vue.extend({
         this.getPullRequests(this.pullRequestEndCursor),
       ])
         .then((values: any) => {
-          this.issues.push(...values[0].issues)
+          this.issues.push(
+            ...values[0].issues.map((issue: Issue): Issue => {
+              // FIXME: チュートリアルカラム用の暫定対応
+              if (
+                issue.url === 'https://github.com/git-deck/tutorial/issues/1'
+              ) {
+                return {
+                  ...issue,
+                  author: DUMMY_GITDECK_AUTHOR,
+                  comments: issue.comments.map((comment) => ({
+                    ...comment,
+                    author: DUMMY_GITDECK_AUTHOR,
+                    avatarUrl: DUMMY_GITDECK_AUTHOR.avatarUrl,
+                  })),
+                }
+              } else {
+                return issue
+              }
+            })
+          )
+
           this.issueHasNextPage = values[0].pageInfo.hasNextPage
           this.issueEndCursor = values[0].pageInfo.endCursor
           this.pullRequests.push(...values[1].pullRequests)
@@ -415,6 +435,12 @@ export default Vue.extend({
     },
   },
 })
+
+const DUMMY_GITDECK_AUTHOR = {
+  avatarUrl: '/icon.png',
+  login: 'git-deck',
+  url: 'https://github.com/git-deck',
+}
 
 const ALL_LABEL: LabelItem = {
   label: {
