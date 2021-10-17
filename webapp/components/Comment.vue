@@ -102,10 +102,19 @@
       </div>
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="textItemCon" v-html="htmlBody"></div>
+      <button
+        v-if="showFoldIcon"
+        class="fold-icon-button"
+        @click="LongCommentClick"
+      >
+        <span class="material-icons">{{
+          isLongCommentOpened ? 'unfold_less' : 'unfold_more'
+        }}</span>
+      </button>
     </div>
-    <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
+    <!-- <button v-if="showFoldIcon" class="buttonItem" @click="LongCommentClick">
       {{ buttonMark }}
-    </button>
+    </button> -->
     <div v-if="readmore" class="readmoreItem">
       <a class="readmore" @click="$emit('toggleShowingAll')">
         返信をさらに表示
@@ -121,11 +130,11 @@
 
 <script lang="ts">
 import Vue, { PropType, PropOptions } from 'vue'
-import { Label, User } from '@/models/types'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import hljs from 'highlight.js'
 import sanitizeHTML from 'sanitize-html'
+import { Label, User } from '@/models/types'
 
 type DataType = {
   Octicons: any
@@ -225,7 +234,7 @@ export default Vue.extend({
     },
     textHeight(): string {
       if (!this.isLongCommentOpened && this.height > this.MAX_COMMENT_HEIGT) {
-        return '100px'
+        return '250px'
       } else {
         return '100%'
       }
