@@ -76,10 +76,8 @@
     overflow-y: scroll;
 
     & .comment {
-      padding-top: 12px;
-      padding-left: 12px;
-      padding-right: 12px;
-      padding-bottom: 12px;
+      position: relative;
+      padding: 12px;
       border-bottom: 1px solid;
       display: grid;
       grid-template-rows: min-content 1fr;
@@ -142,6 +140,7 @@
             font-size: 12px;
             margin-bottom: 4px;
             & > .number {
+              display: inline-block;
               font-weight: normal;
             }
           }
@@ -194,8 +193,8 @@
         margin: 0px 7px;
         word-break: break-all;
         font-size: 12px;
-        overflow-y: hidden;
         overflow-x: scroll;
+        overflow-y: scroll;
         .labels {
           display: -webkit-box;
           display: -ms-flexbox;
@@ -229,6 +228,28 @@
               padding: 4px 12px;
               border: 1px solid;
             }
+          }
+        }
+
+        & > .fold-icon-button {
+          position: absolute;
+          bottom: 12px;
+          right: 18px;
+          background-color: rgba(0, 0, 0, 0.2);
+          border: none;
+          border-radius: 100%;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          & > span {
+            font-size: 14px;
           }
         }
       }
