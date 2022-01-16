@@ -20,7 +20,7 @@
         class="label-option"
         @click="() => $emit('clickLabel', 'labels', label.label.name)"
       >
-        <!-- 
+        <!--
         今の仕様的にlabel.label.nameをキーにして
         どの配列を触るかは'labels'というキーフレーズによって操作しているので
         このvueファイル内でcopyを作ってそれをクリックしてもうまくlabelOpenedを操作できる
@@ -46,7 +46,8 @@
   </div>
 </template>
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import Vue from 'vue'
+import type { PropOptions } from 'vue'
 import { Label } from '@/models/types'
 import compareWithDistance from '@/utils/sortWithDistance'
 
