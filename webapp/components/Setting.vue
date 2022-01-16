@@ -65,7 +65,9 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import Vue from 'vue'
+import type { PropOptions } from 'vue'
+
 import { Label } from '@/models/types'
 import Label0 from '@/components/Label.vue'
 import LabelSearchBox from '@/components/LabelSearchBox.vue'

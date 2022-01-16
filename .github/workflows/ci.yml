@@ -1,0 +1,22 @@
+name: CI
+"on": pull_request
+jobs:
+  lint_and_format_check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./webapp
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          cache: "yarn"
+          cache-dependency-path: "./webapp/yarn.lock"
+      - name: install
+        run: yarn
+      - name: format
+        run: yarn format
+      - name: lint
+        run: yarn lint
