@@ -120,12 +120,13 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType, PropOptions } from 'vue'
-import { Label, User } from '@/models/types'
+import Vue from 'vue'
+import type { PropType, PropOptions } from 'vue'
 // @ts-ignore
 import { Octicon, Octicons } from 'octicons-vue'
 import hljs from 'highlight.js'
 import sanitizeHTML from 'sanitize-html'
+import { Label, User } from '@/models/types'
 
 type DataType = {
   Octicons: any
