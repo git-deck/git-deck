@@ -20,17 +20,17 @@
 
     & > .main-contents {
       & > .addButton {
-        background: $git-black;
         color: white;
+        background: $git-black;
       }
       & > .addButton:disabled {
-        background: #ccc;
         color: white;
+        background: #ccc;
       }
 
       & > .postButton {
-        background-color: $idea-color;
         color: white;
+        background-color: $idea-color;
       }
     }
   }

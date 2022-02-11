@@ -1,31 +1,31 @@
 .login-page {
-  height: 100%;
-  width: 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: $git-black;
-  color: white;
+  position: absolute;
+  box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
   align-items: center;
-  padding: 80px;
-  position: absolute;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
   min-height: 500px;
-  box-sizing: border-box;
+  padding: 80px;
+  color: white;
+  background-color: $git-black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
   & > .caption {
     width: 500px;
     & > .title {
       display: inline-flex;
-      font-weight: bold;
-      font-size: 36px;
-      margin-bottom: 16px;
       align-items: flex-end;
+      margin-bottom: 16px;
+      font-size: 36px;
+      font-weight: bold;
       .cat-icon {
-        height: 60px;
         width: 60px;
+        height: 60px;
         margin-left: 12px;
       }
     }
@@ -33,49 +33,49 @@
   .footer {
     position: absolute;
     bottom: 0;
-    text-align: right;
-    margin: 0px 15px 5px 0px;
     width: 100%;
+    margin: 0px 15px 5px 0px;
+    text-align: right;
   }
 
   .login-button {
     width: 400px;
-    background-color: white;
-    color: black;
     padding: 20px;
+    color: black;
+    background-color: white;
     & > .caption {
-      border-bottom: 2px solid;
-      border-color: $border;
-      margin-bottom: 20px;
       padding-bottom: 10px;
-      font-weight: bold;
+      margin-bottom: 20px;
       font-size: 16px;
+      font-weight: bold;
+      border-color: $border;
+      border-bottom: 2px solid;
     }
     & > button {
       width: 360px;
-      border: none;
-      border-radius: 24px;
-      background-color: $git-black;
-      color: white;
       padding: 10px;
       font-size: 16px;
       font-weight: bold;
+      color: white;
+      background-color: $git-black;
+      border: none;
+      border-radius: 24px;
       &:hover {
         cursor: pointer;
       }
       & > .github-mark {
-        color: white;
-        margin-right: 10px;
-        height: 18px;
         width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        color: white;
       }
     }
 
     & > .link {
-      border-top: 2px solid;
-      border-color: $border;
-      margin-top: 20px;
       padding-top: 10px;
+      margin-top: 20px;
+      border-color: $border;
+      border-top: 2px solid;
     }
   }
 }

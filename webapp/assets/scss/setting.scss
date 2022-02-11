@@ -1,7 +1,7 @@
 .label_column {
   & > header {
-    border-bottom: 1px solid;
     padding: 5px 15px;
+    border-bottom: 1px solid;
 
     & > .labelsBlock {
       padding: 2px 0px 0px 0px;
@@ -12,14 +12,14 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
         -ms-flex-direction: row;
         flex-direction: row;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         align-items: center;
+
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
         .labels {
           font-size: 0;
         }
@@ -33,14 +33,14 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
         -ms-flex-direction: row;
         flex-direction: row;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         align-items: center;
+
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
         .labels {
           font-size: 0;
         }
@@ -48,14 +48,14 @@
     }
   }
   & > .bottom {
-    border-bottom: 1px solid;
-    padding: 4px 5px;
     display: flex;
+    padding: 4px 5px;
+    border-bottom: 1px solid;
     .bottomContent {
       margin: 0 0 0 auto;
       .closemessage {
-        cursor: pointer;
         font-size: 10px;
+        cursor: pointer;
         &:hover {
           text-decoration: underline;
         }

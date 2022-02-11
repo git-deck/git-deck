@@ -3,22 +3,22 @@ $sidebar-width: 60px;
 
 .sidebar {
   position: fixed;
-  left: 0;
   top: 0;
   bottom: 0;
+  left: 0;
+  z-index: 9999;
   flex: 0 0 auto;
-  background-color: $git-black;
   width: $sidebar-width;
   height: 100%;
-  z-index: 9999;
+  background-color: $git-black;
 
   & > .menu {
     position: relative;
     height: 100%;
     .material-icons {
-      color: #aab8c2;
-      font-size: 40px;
       margin-top: 12px;
+      font-size: 40px;
+      color: #aab8c2;
       &:hover {
         color: white;
       }
@@ -33,11 +33,11 @@ $sidebar-width: 60px;
       bottom: 0;
     }
     button {
-      padding: 20px 0;
       width: 100%;
-      border: none;
-      background: transparent;
+      padding: 20px 0;
       cursor: pointer;
+      background: transparent;
+      border: none;
     }
 
     img {
@@ -58,75 +58,75 @@ $sidebar-width: 60px;
     position: absolute;
     top: 15px;
     left: 70px;
-    padding: 10px;
-    border-radius: 5px;
     z-index: 100000;
     width: 120px;
+    padding: 10px;
+    border-radius: 5px;
 
     &:before {
-      content: '';
       position: absolute;
       top: 30%;
       left: -25px;
-      margin-top: -10px;
-      border: 10px solid transparent;
       z-index: 2;
+      margin-top: -10px;
+      content: '';
+      border: 10px solid transparent;
     }
 
     &:after {
-      content: '';
       position: absolute;
       top: 30%;
       left: -28px;
-      margin-top: -11px;
-      border: 11px solid transparent;
       z-index: 1;
+      margin-top: -11px;
+      content: '';
+      border: 11px solid transparent;
     }
 
     .header {
-      border-bottom: 1.5px solid;
       margin-bottom: 5px;
+      border-bottom: 1.5px solid;
     }
     .user-name {
       font-weight: bold;
     }
 
     button {
+      padding: 5px 10px;
+      font-size: 12px;
       font-weight: bold;
+      cursor: pointer;
       border: none;
       border-radius: 5px;
-      font-size: 12px;
-      padding: 5px 10px;
-      cursor: pointer;
     }
   }
 }
 
 .vertical-panes {
-  margin-left: $sidebar-width;
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
   flex-wrap: nowrap;
+  margin-left: $sidebar-width;
+  overflow-x: scroll;
 }
 
 .column-add-modal .main-contents {
   & > .inputFieldset {
-    border: none;
     padding: 0;
+    border: none;
 
     & > .inputField {
+      width: 100%;
       padding: 12px 16px;
       border-radius: 4px;
-      width: 100%;
     }
   }
 
   & > .separator {
     width: 100%;
-    color: rgb(231, 231, 231);
     margin-top: 24px;
     margin-bottom: 20px;
+    color: rgb(231, 231, 231);
   }
 
   & > .repository-recommend {
@@ -137,23 +137,23 @@ $sidebar-width: 60px;
     margin-bottom: 12px;
 
     & > .recommended-button {
-      padding: 4px 12px;
       flex-shrink: 0;
-      border-radius: 99px;
+      padding: 4px 12px;
+      margin-top: 4px;
+      margin-right: 8px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      color: $git-black;
+      cursor: pointer;
       background: white;
       border: 2px solid $git-black;
-      color: $git-black;
-      font-weight: bold;
-      margin-top: 4px;
-      margin-bottom: 12px;
-      margin-right: 8px;
-      font-size: 12px;
-      cursor: pointer;
+      border-radius: 99px;
 
       &.selected {
+        color: white;
         text-decoration: underline;
         background: $git-black;
-        color: white;
         transition: none;
 
         &:hover {
@@ -168,11 +168,11 @@ $sidebar-width: 60px;
       }
 
       &.selected.show-all-button > select {
-        background: $git-black;
+        padding: 4px 12px;
         color: white;
+        background: $git-black;
         border: none;
         outline: none;
-        padding: 4px 12px;
       }
 
       &.show-all-button {
@@ -187,15 +187,15 @@ $sidebar-width: 60px;
         }
 
         & > select {
-          background: transparent;
           padding: 4px 12px;
           cursor: pointer;
-          outline: none;
+          background: transparent;
           border: none;
+          outline: none;
           &:focus,
           &:active {
-            outline: none;
             border: none;
+            outline: none;
           }
         }
       }
@@ -204,26 +204,26 @@ $sidebar-width: 60px;
 }
 
 .setting-button {
-  padding: 4px 12px;
   flex-shrink: 0;
-  border-radius: 99px;
-  font-weight: bold;
+  padding: 4px 12px;
   margin-top: 4px;
-  margin-bottom: 1.5rem;
   margin-right: 8px;
+  margin-bottom: 1.5rem;
   font-size: 12px;
+  font-weight: bold;
   cursor: pointer;
+  border-radius: 99px;
 
   select,button {
-    background: transparent;
     padding: 4px 12px;
     cursor: pointer;
-    outline: none;
+    background: transparent;
     border: none;
+    outline: none;
     &:focus,
     &:active {
-      outline: none;
       border: none;
+      outline: none;
     }
   }
 }

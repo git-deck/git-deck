@@ -13,15 +13,15 @@
       .tune {
         color: $git-black;
         &:hover {
-          background: rgb(240, 240, 240);
           color: $git-green;
+          background: rgb(240, 240, 240);
         }
       }
       .refresh {
         color: $git-black;
         &:hover {
-          background: rgb(240, 240, 240);
           color: $git-green;
+          background: rgb(240, 240, 240);
         }
       }
       .title {
@@ -87,8 +87,8 @@
         & > .textItem {
           & > .textItemCon {
             & blockquote {
-              border-color: $border;
               color: #57606a;
+              border-color: $border;
             }
 
             & table {

@@ -19,23 +19,23 @@
 
     & > .main-contents {
       & > .addButton {
-        background-color: #0e1117;
         color: $dark-text;
+        background-color: #0e1117;
         border: 1px solid $border-dark;
         &:hover {
+          color: white;
           background-color: #31363b;
           border-color: $dark-gray;
-          color: white;
         }
       }
       & > .addButton:disabled {
-        background: #ccc;
         color: white;
+        background: #ccc;
       }
 
       & > .postButton {
-        background-color: $idea-color;
         color: white;
+        background-color: $idea-color;
       }
     }
   }
